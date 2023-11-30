@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("ru.practicum.android.diploma.plugins.developproperties")
+    id("kotlin-kapt")
 }
 
 android {
@@ -55,4 +56,29 @@ dependencies {
     androidTestImplementation(libs.uiTests.junitExt)
     androidTestImplementation(libs.uiTests.espressoCore)
     // endregion
+
+    // Fragments and JetpackNavigation
+    implementation(libs.fragments.navigationFragment)
+    implementation(libs.fragments.navigationUi)
+    implementation(libs.fragments.fragmentKtx)
+
+    // Glide
+    implementation(libs.glide)
+    kapt(libs.glide.compiler)
+
+    // Hilt
+    implementation(libs.hilt)
+    kapt(libs.hilt.compiler)
+
+    // Room
+    implementation(libs.room.runtime)
+    kapt(libs.room.compiler)
+    implementation(libs.room.ktx)
+
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converterGson)
+
+    // LeakCanary
+    debugImplementation(libs.leakCanary)
 }

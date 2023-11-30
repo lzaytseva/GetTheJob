@@ -37,4 +37,29 @@ unitTests-junit = "junit:junit:4.13.2"
 uiTests-junitExt = "androidx.test.ext:junit:1.1.5"
 uiTests-espressoCore = "androidx.test.espresso:espresso-core:3.5.1"
 
+# Room
+room-runtime = "androidx.room:room-runtime:2.6.0"
+room-ktx = "androidx.room:room-ktx:2.6.0"
+room-compiler = "androidx.room:room-compiler:2.6.0"
+
+# Retrofit
+retrofit-converterGson = "com.squareup.retrofit2:converter-gson:2.9.0"
+retrofit = "com.squareup.retrofit2:retrofit:2.9.0"
+
+# Glide
+glide = "com.github.bumptech.glide:glide:4.15.1"
+glide-compiler = "com.github.bumptech.glide:compiler:4.15.1"
+
+# Fragments
+fragments-navigationFragment = "androidx.navigation:navigation-fragment-ktx:2.7.5"
+fragments-navigationUi = "androidx.navigation:navigation-ui-ktx:2.7.5"
+fragments-fragmentKtx = "androidx.fragment:fragment-ktx:1.6.2"
+
+# Hilt
+hilt = "com.google.dagger:hilt-android:2.44"
+hilt-compiler = "com.google.dagger:hilt-android-compiler:2.44"
+
+# LeakCanary
+leakCanary = "com.squareup.leakcanary:leakcanary-android:2.12"
+
 [bundles]
