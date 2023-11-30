@@ -13,4 +13,9 @@
     <color name="edit_text_bg">@color/light_gray</color>
     <!--  цвет кнопок применить/выбрать/похожие вакансии  -->
     <color name="btn_bg">@color/blue</color>
+
+    <!--  цвет иконок навигации: фильтры, стрелка назад, стрелка вперед  -->
+    <color name="navigation_icons_tint">@color/black</color>
+    <!--  цвет иконок в edit text поиска: поиск и сбросить  -->
+    <color name="et_icons_tint">@color/black</color>
 </resources>
