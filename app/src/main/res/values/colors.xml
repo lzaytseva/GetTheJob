@@ -6,4 +6,11 @@
     <color name="soft_red">#F56B6C</color>
     <color name="gray">#AEAFB4</color>
     <color name="light_gray">#E6E8EB</color>
+
+    <!--  цвет фона экранов  -->
+    <color name="screen_bg">@color/white</color>
+    <!--  цвет фона edit text'ов поиска и ожидаемой запрлаты  -->
+    <color name="edit_text_bg">@color/light_gray</color>
+    <!--  цвет кнопок применить/выбрать/похожие вакансии  -->
+    <color name="btn_bg">@color/blue</color>
 </resources>
