@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  Название вакансии в деталях, текст "над приложением работали"  -->
+    <dimen name="large_text_size">32sp</dimen>
+    <!--  Заголовки экранов, текст плейсхолдеров, название вакансии в поиске  -->
+    <dimen name="medium_text_size">22sp</dimen>
+    <!--  Основной текст  -->
+    <dimen name="regular_text_size">16sp</dimen>
+    <!--  Текст табов BottomNavigationView  -->
+    <dimen name="small_text_size">12sp</dimen>
+</resources>
