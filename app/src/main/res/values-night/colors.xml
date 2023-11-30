@@ -2,5 +2,9 @@
 <resources>
     <color name="screen_bg">@color/black</color>
     <color name="edit_text_bg">@color/gray</color>
+
     <color name="navigation_icons_tint">@color/white</color>
+    <color name="basic_text_color">@color/white</color>
+
+    <color name="et_hint_text_color">@color/white</color>
 </resources>
