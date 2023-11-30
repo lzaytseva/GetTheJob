@@ -7,7 +7,7 @@
     <color name="gray">#AEAFB4</color>
     <color name="light_gray">#E6E8EB</color>
 
-    <!--  цвет фона экранов  -->
+    <!--  цвет фона экранов и BottomNavigationView  -->
     <color name="screen_bg">@color/white</color>
     <!--  цвет фона edit text'ов поиска и ожидаемой запрлаты  -->
     <color name="edit_text_bg">@color/light_gray</color>
