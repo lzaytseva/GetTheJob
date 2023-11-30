@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  Заголовки экранов, текст плейсхолдеров, название вакансии в поиске  -->
+    <style name="medium_text_style">
+        <item name="android:textSize">@dimen/medium_text_size</item>
+        <item name="android:textColor">@color/basic_text_color</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
+    </style>
+
+    <!--  Название вакансии в деталях, текст "над приложением работали"  -->
+    <style name="large_text_style">
+        <item name="android:textSize">@dimen/large_text_size</item>
+        <item name="android:textColor">@color/basic_text_color</item>
+        <item name="fontFamily">@font/ys_display_bold</item>
+    </style>
+
+    <!--  Жирный текст 16sp для подразделов в описании вакансии и имен разработчиков  -->
+    <style name="bold_regular_text_style">
+        <item name="android:textSize">@dimen/regular_text_size</item>
+        <item name="android:textColor">@color/basic_text_color</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
+    </style>
+
+    <!--  текст кнопок "применить", "выбрать", "похожие вакансии"  -->
+    <style name="btn_text_style">
+        <item name="android:textSize">@dimen/regular_text_size</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <!--  стиль для кнопок "применить", "выбрать", "похожие вакансии"  -->
+    <style name="btn_style" parent="@style/Widget.AppCompat.Button">
+        <item name="android:textAppearance">@style/btn_text_style</item>
+        <item name="android:paddingVertical">20dp</item>
+        <item name="android:background">@drawable/btn_bg</item>
+    </style>
+
+
+    <!--  Стиль текста для edit text'ов поиска и ожидаемой зп  -->
+    <style name="et_text_style">
+        <item name="android:textSize">@dimen/regular_text_size</item>
+        <item name="android:textColor">@color/basic_text_color</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="hintTextColor">@color/et_hint_text_color</item>
+    </style>
+
+    <!--  Стиль для самих edit text'ов  -->
+    <style name="edit_text_style" parent="@style/Widget.AppCompat.EditText">
+        <item name="android:padding">16dp</item>
+        <item name="android:textAppearance">@style/et_text_style</item>
+        <item name="android:background">@drawable/edit_text_bg</item>
+    </style>
+</resources>
