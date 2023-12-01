@@ -84,7 +84,4 @@ dependencies {
 
     // LeakCanary
     debugImplementation(libs.leakCanary)
-
-    //Binding
-    implementation(libs.viewbinding)
 }
