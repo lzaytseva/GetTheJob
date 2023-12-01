@@ -51,4 +51,10 @@
         <item name="android:textAppearance">@style/et_text_style</item>
         <item name="android:background">@drawable/edit_text_bg</item>
     </style>
+
+    <!--  Стиль текста для bottom navigation view  -->
+    <style name="bottom_navigation_text">
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="android:textSize">12sp</item>
+    </style>
 </resources>

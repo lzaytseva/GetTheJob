@@ -6,6 +6,10 @@ import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.R
 
 class RootActivity : AppCompatActivity() {
+
+    private val binding by lazy {
+        //ActivityRootBinding.inflate(layoutInflater)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_root)

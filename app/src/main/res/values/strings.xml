@@ -6,4 +6,6 @@
     <string name="team_screen_developer_2">Евгений Пименов</string>
     <string name="team_screen_developer_3">Дмитрий Крюшников</string>
     <string name="team_screen_developer_4">Максим Беспалов</string>
+    <string name="main">Главная</string>
+    <string name="favorite">Избранное</string>
 </resources>
