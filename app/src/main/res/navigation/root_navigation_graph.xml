@@ -33,7 +33,7 @@
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites">
         <action
-            android:id="@+id/action_favouritesFragment_to_vacancyDetailsFragment"
+            android:id="@+id/action_favoritesFragment_to_vacancyDetailsFragment"
             app:destination="@id/vacancyDetailsFragment" />
     </fragment>
     <fragment
