@@ -8,4 +8,7 @@
     <dimen name="regular_text_size">16sp</dimen>
     <!--  Текст табов BottomNavigationView  -->
     <dimen name="small_text_size">12sp</dimen>
+
+    <!--  Горизонтальные отступы на экране Команда  -->
+    <dimen name="team_screen_horizontal_margin">12sp</dimen>
 </resources>
