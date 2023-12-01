@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="@dimen/team_screen_horizontal_margin"
-    android:orientation="vertical">
-<!--  TODO add when there will be fragment class  tools:context=".team.ui.TeamFragment"-->
-
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/team_screen_horizontal_margin">
+    <!--  TODO add when there will be fragment class  tools:context=".team.ui.TeamFragment"-->
 
     <TextView
         android:id="@+id/team_screen_title"
