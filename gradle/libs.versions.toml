@@ -55,6 +55,9 @@ fragments-navigationFragment = "androidx.navigation:navigation-fragment-ktx:2.7.
 fragments-navigationUi = "androidx.navigation:navigation-ui-ktx:2.7.5"
 fragments-fragmentKtx = "androidx.fragment:fragment-ktx:1.6.2"
 
+# SafeArgs
+safeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:2.7.5"
+
 # Hilt
 hilt = "com.google.dagger:hilt-android:2.44"
 hilt-compiler = "com.google.dagger:hilt-android-compiler:2.44"
