@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="@dimen/team_screen_horizontal_margin"
-    tools:context=".team.ui.TeamFragment"
     android:orientation="vertical">
+<!--  TODO add when there will be fragment class  tools:context=".team.ui.TeamFragment"-->
+
 
     <TextView
         android:id="@+id/team_screen_title"
