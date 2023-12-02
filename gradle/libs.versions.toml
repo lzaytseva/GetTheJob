@@ -1,6 +1,6 @@
 [versions]
 
-java = "VERSION_1_8"
+java = "VERSION_17"
 
 # Build constants
 minSdk = "26"
@@ -63,8 +63,8 @@ fragments-fragmentKtx = "androidx.fragment:fragment-ktx:1.6.2"
 safeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:2.7.5"
 
 # Hilt
-hilt = "com.google.dagger:hilt-android:2.44"
-hilt-compiler = "com.google.dagger:hilt-android-compiler:2.44"
+hilt = "com.google.dagger:hilt-android:2.46"
+hilt-compiler = "com.google.dagger:hilt-android-compiler:2.46"
 
 # LeakCanary
 leakCanary = "com.squareup.leakcanary:leakcanary-android:2.12"

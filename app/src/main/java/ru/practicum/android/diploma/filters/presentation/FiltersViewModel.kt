@@ -1,5 +1,8 @@
 package ru.practicum.android.diploma.filters.presentation
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class FiltersViewModel : ViewModel()
+@HiltViewModel
+class FiltersViewModel @Inject constructor() : ViewModel()

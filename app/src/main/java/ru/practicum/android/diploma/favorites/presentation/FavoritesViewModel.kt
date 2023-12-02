@@ -1,5 +1,8 @@
 package ru.practicum.android.diploma.favorites.presentation
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class FavoritesViewModel : ViewModel()
+@HiltViewModel
+class FavoritesViewModel @Inject constructor() : ViewModel()
