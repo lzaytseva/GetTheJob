@@ -19,6 +19,8 @@ class ConnectionChecker(context: Context) {
                 networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
                 else -> false
             }
-        } else false
+        } else {
+            false
+        }
     }
 }
