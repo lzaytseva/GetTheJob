@@ -1,9 +1,17 @@
 <resources>
     <string name="app_name">GetTheJob</string>
+    <!--   Команда -->
     <string name="team">Команда</string>
     <string name="team_screen_subtitle">Над приложением работали</string>
     <string name="team_screen_developer_1">Людмила Зайцева</string>
     <string name="team_screen_developer_2">Евгений Пименов</string>
     <string name="team_screen_developer_3">Дмитрий Крюшников</string>
     <string name="team_screen_developer_4">Максим Беспалов</string>
+    <!--  Плейсхолдеры  -->
+    <string name="error_no_internet">Нет интернета</string>
+    <string name="error_getting_vacancies">Не удалось получить список вакансий</string>
+    <string name="error_no_such_region">Такого региона нет</string>
+    <string name="error_getting_list">Не удалось получить список</string>
+    <string name="error_server">Ошибка сервера</string>
+    <string name="error_empty_list">Список пуст</string>
 </resources>
