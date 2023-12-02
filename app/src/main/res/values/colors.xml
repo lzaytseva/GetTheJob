@@ -22,5 +22,10 @@
     <!--  Весь черно-белый текст  -->
     <color name="basic_text_color">@color/black</color>
     <!--  Цвет подсказки edit text'ов поиска  -->
-    <color name="et_hint_text_color">@color/gray</color>
+    <color name="et_hint_text_color">@color/gray</color> bottom_navigation_icon_unchecked
+
+    <!--  Цвет элементов bottom navigation view'  -->
+    <color name="bottom_navigation_icon_unchecked">@color/gray</color>
+    <color name="bottom_navigation_icon_checked">@color/blue</color>
+
 </resources>

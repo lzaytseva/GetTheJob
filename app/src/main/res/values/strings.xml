@@ -14,4 +14,8 @@
     <string name="error_getting_list">Не удалось получить список</string>
     <string name="error_server">Ошибка сервера</string>
     <string name="error_empty_list">Список пуст</string>
+
+    <!--  Bottom nav view titles  -->
+    <string name="main">Главная</string>
+    <string name="favorite">Избранное</string>
 </resources>
