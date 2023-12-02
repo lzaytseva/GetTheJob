@@ -2,4 +2,4 @@ package ru.practicum.android.diploma.filters.presentation
 
 import androidx.lifecycle.ViewModel
 
-class ChoiceIndustryViewModel: ViewModel()
+class ChoiceIndustryViewModel : ViewModel()
