@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.core.data.dto
 
-import ru.practicum.android.diploma.core.data.dto.support_dto.Employer
-import ru.practicum.android.diploma.core.data.dto.support_dto.Salary
+import ru.practicum.android.diploma.core.data.dto.supportDto.Employer
+import ru.practicum.android.diploma.core.data.dto.supportDto.Salary
 
 data class VacancySearchDto(
     val id: String,

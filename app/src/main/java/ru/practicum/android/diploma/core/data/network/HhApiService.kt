@@ -3,49 +3,48 @@ package ru.practicum.android.diploma.core.data.network
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.QueryMap
+import ru.practicum.android.diploma.BuildConfig.HH_ACCESS_TOKEN
 import ru.practicum.android.diploma.core.data.dto.AreaDto
-import ru.practicum.android.diploma.search.data.responses.SearchRegionResponse
 import ru.practicum.android.diploma.core.data.dto.VacancyFullDto
+import ru.practicum.android.diploma.search.data.responses.IndustriesResponse
+import ru.practicum.android.diploma.search.data.responses.SearchRegionResponse
 import ru.practicum.android.diploma.search.data.responses.VacancySearchResponse
 
 interface HhApiService {
 
-    @GET("/vacancies")
+    @GET("/vacancies?access_token=$HH_ACCESS_TOKEN")
     fun getVacancies(
-        @Query("access_token") accessToken: String,
-        @Query("text") text: String,
-        @Query("area") areaId: String
-    )
-
-    @GET("/vacancies")
-    fun getVacancies(
-        @Query("access_token") accessToken: String,
-        @Query("text") text: String
+        @QueryMap params: Map<String, String>
     ): VacancySearchResponse
 
-    @GET("/vacancies/{id}")
+    @GET("/vacancies/{id}/similar_vacancies?access_token=$HH_ACCESS_TOKEN")
+    fun getSimilarVacancies(
+        @Path("id") vacancyId: String
+    ): VacancySearchResponse
+
+    @GET("/vacancies/{id}?access_token=$HH_ACCESS_TOKEN")
     fun getVacancy(
         @Path("id") vacancyId: String,
-        @Query("access_token") accessToken: String
     ): VacancyFullDto
 
-    @GET("/areas/countries")
-    fun getCountries(
-        @Query("access_token") accessToken: String,
-        @Query("text") query: String
-    ): List<AreaDto>
+    @GET("/areas/countries?access_token=$HH_ACCESS_TOKEN")
+    fun getCountries(): List<AreaDto>
 
-    @GET("/areas/{id}")
+    @GET("/areas/{id}?access_token=$HH_ACCESS_TOKEN")
     fun getRegions(
         @Path("id") id: String,
-        @Query("access_token") accessToken: String
     ): List<AreaDto>
 
-    @GET("/suggests/area_leaves")
+    @GET("/suggests/area_leaves?access_token=$HH_ACCESS_TOKEN")
     fun searchRegions(
-        @Query("access_token") accessToken: String,
         @Query("text") text: String,
         @Query("area_id") areaId: String
     ): SearchRegionResponse
+
+    @GET("/industries?access_token=$HH_ACCESS_TOKEN")
+    fun getIndustries(
+        @Query("locale") locale: String
+    ): IndustriesResponse
 
 }

@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.core.data.dto.support_dto
+package ru.practicum.android.diploma.core.data.dto.supportDto
 
 data class Employer(
     val name: String,
