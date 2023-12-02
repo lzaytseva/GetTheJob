@@ -12,13 +12,13 @@ class ConnectionChecker(context: Context) {
     fun isConnected(): Boolean {
         val networkCapabilities =
             connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-        if (networkCapabilities != null) {
+        return if (networkCapabilities != null) {
             when {
-                networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> return true
-                networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> return true
-                networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> return true
+                networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                else -> false
             }
-        }
-        return false
+        } else false
     }
 }
