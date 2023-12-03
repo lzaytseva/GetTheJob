@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -30,7 +31,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="@string/team_screen_developer_1" />
+        android:text="@string/team_screen_developer_1"
+        app:drawableEndCompat="@drawable/ic_mail" />
 
     <TextView
         android:id="@+id/developer2"
@@ -38,7 +40,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="@string/team_screen_developer_2" />
+        android:text="@string/team_screen_developer_2"
+        app:drawableEndCompat="@drawable/ic_mail"/>
 
     <TextView
         android:id="@+id/developer3"
@@ -46,12 +49,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="@string/team_screen_developer_3" />
+        android:text="@string/team_screen_developer_3"
+        app:drawableEndCompat="@drawable/ic_mail"/>
 
     <TextView
         android:id="@+id/developer4"
         style="@style/bold_regular_text_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/team_screen_developer_4" />
+        android:text="@string/team_screen_developer_4"
+        app:drawableEndCompat="@drawable/ic_mail"/>
 </LinearLayout>
