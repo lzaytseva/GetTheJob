@@ -21,7 +21,6 @@ class TeamViewModel @Inject constructor(
     val showError: LiveData<String>
         get() = _showError
 
-
     fun contactWithDeveloper(option: Developers) {
         try {
             externalNavigator.sendEmail(
