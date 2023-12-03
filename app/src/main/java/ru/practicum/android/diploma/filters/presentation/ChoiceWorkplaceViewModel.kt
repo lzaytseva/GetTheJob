@@ -5,4 +5,4 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ChoiceWorkplaceViewModel  @Inject constructor() : ViewModel()
+class ChoiceWorkplaceViewModel @Inject constructor() : ViewModel()
