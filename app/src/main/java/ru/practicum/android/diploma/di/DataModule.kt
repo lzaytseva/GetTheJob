@@ -7,7 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import ru.practicum.android.diploma.core.data.ExternalNavigatorImpl
+import ru.practicum.android.diploma.core.data.navigation.ExternalNavigatorImpl
 import ru.practicum.android.diploma.core.data.room.GtjDatabase
 import ru.practicum.android.diploma.core.domain.api.ExternalNavigator
 

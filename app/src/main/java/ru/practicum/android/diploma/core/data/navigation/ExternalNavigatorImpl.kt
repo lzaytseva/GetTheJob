@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.core.data
+package ru.practicum.android.diploma.core.data.navigation
 
 import android.content.Context
 import android.content.Intent
