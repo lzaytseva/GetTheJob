@@ -5,8 +5,9 @@ import androidx.room.RoomDatabase
 import ru.practicum.android.diploma.core.data.room.dao.VacancyDao
 
 @Database(
-//    entities = [VacancyDto::class],
-    version = 0
+    entities = [VacancyDto::class],
+    version = 0,
+    exportSchema = false
 )
 abstract class GtjDatabase : RoomDatabase() {
 
