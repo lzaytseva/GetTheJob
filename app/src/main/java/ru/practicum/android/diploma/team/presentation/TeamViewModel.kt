@@ -30,10 +30,7 @@ class TeamViewModel @Inject constructor(
         )
     }
 
-    companion object {
-        enum class Developers {
-            DEV1, DEV2, DEV3, DEV4
-        }
+    enum class Developers {
+        DEV1, DEV2, DEV3, DEV4
     }
-
 }

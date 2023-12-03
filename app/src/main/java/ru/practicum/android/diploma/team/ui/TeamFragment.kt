@@ -22,19 +22,19 @@ class TeamFragment : BindingFragment<FragmentTeamBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.developer1.setOnClickListener {
-            viewModel.contactWithDeveloper(TeamViewModel.Companion.Developers.DEV1)
+            viewModel.contactWithDeveloper(TeamViewModel.Developers.DEV1)
         }
 
         binding.developer2.setOnClickListener {
-            viewModel.contactWithDeveloper(TeamViewModel.Companion.Developers.DEV2)
+            viewModel.contactWithDeveloper(TeamViewModel.Developers.DEV2)
         }
 
         binding.developer3.setOnClickListener {
-            viewModel.contactWithDeveloper(TeamViewModel.Companion.Developers.DEV3)
+            viewModel.contactWithDeveloper(TeamViewModel.Developers.DEV3)
         }
 
         binding.developer4.setOnClickListener {
-            viewModel.contactWithDeveloper(TeamViewModel.Companion.Developers.DEV4)
+            viewModel.contactWithDeveloper(TeamViewModel.Developers.DEV4)
         }
     }
 }
