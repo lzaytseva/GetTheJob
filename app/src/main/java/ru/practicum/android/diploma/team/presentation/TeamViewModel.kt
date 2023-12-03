@@ -38,6 +38,8 @@ class TeamViewModel @Inject constructor(
             )
         } catch (e: ActivityNotFoundException) {
             _showError.value = appContext.getString(R.string.no_applications_found)
+        } catch (e: Exception) {
+            _showError.value = appContext.getString(R.string.something_went_wrong)
         }
     }
 
