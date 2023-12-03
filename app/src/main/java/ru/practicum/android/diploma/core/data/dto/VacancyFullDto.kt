@@ -1,9 +1,9 @@
 package ru.practicum.android.diploma.core.data.dto
 
-import ru.practicum.android.diploma.core.data.dto.supportDto.Contacts
-import ru.practicum.android.diploma.core.data.dto.supportDto.Experience
-import ru.practicum.android.diploma.core.data.dto.supportDto.Salary
-import ru.practicum.android.diploma.core.data.dto.supportDto.Schedule
+import ru.practicum.android.diploma.core.data.dto.innerdto.Contacts
+import ru.practicum.android.diploma.core.data.dto.innerdto.Experience
+import ru.practicum.android.diploma.core.data.dto.innerdto.Salary
+import ru.practicum.android.diploma.core.data.dto.innerdto.Schedule
 
 data class VacancyFullDto(
     val id: String,

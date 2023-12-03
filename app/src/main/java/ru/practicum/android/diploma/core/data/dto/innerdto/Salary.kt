@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.core.data.dto.supportDto
+package ru.practicum.android.diploma.core.data.dto.innerdto
 
 data class Salary(
     val currency: String?,
