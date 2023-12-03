@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.team.presentation
 
 import android.content.ActivityNotFoundException
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,9 +38,8 @@ class TeamViewModel @Inject constructor(
                 )
             )
         } catch (e: ActivityNotFoundException) {
+            Log.e("TeamViewModel", e.message.toString())
             _showError.value = appContext.getString(R.string.no_applications_found)
-        } catch (e: Exception) {
-            _showError.value = appContext.getString(R.string.something_went_wrong)
         }
     }
 
