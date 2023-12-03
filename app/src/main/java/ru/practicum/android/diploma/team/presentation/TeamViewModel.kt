@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.team.presentation
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -17,7 +18,7 @@ class TeamViewModel @Inject constructor(
     private val externalNavigator: ExternalNavigator,
 ) : ViewModel() {
 
-    private val _showError =  SingleLiveEvent<String>()
+    private val _showError = SingleLiveEvent<String>()
     val showError: LiveData<String>
         get() = _showError
 
@@ -35,7 +36,7 @@ class TeamViewModel @Inject constructor(
                     text = appContext.resources.getString(R.string.team_screen_email_text)
                 )
             )
-        } catch (t: Throwable) {
+        } catch (e: ActivityNotFoundException) {
             _showError.value = appContext.getString(R.string.no_applications_found)
         }
     }
