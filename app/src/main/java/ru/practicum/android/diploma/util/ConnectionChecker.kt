@@ -4,12 +4,12 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 
-class ConnectionChecker(context: Context) {
+object ConnectionChecker {
 
-    private val connectivityManager: ConnectivityManager =
-        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    fun isConnected(context: Context): Boolean {
+        val connectivityManager: ConnectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-    fun isConnected(): Boolean {
         val networkCapabilities =
             connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
         return if (networkCapabilities != null) {
