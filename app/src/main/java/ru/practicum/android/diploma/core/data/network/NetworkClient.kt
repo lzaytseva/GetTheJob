@@ -4,7 +4,7 @@ import ru.practicum.android.diploma.core.data.dto.Response
 
 interface NetworkClient {
 
-    fun doSearch(): Response
+    fun doRequest(): Response
 }
 
 
