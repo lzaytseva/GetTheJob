@@ -21,6 +21,13 @@
         <item name="fontFamily">@font/ys_display_medium</item>
     </style>
 
+    <!--  Текст 16sp для подразделов в описании вакансии и имен разработчиков  -->
+    <style name="regular_text_style">
+        <item name="android:textSize">@dimen/regular_text_size</item>
+        <item name="android:textColor">@color/basic_text_color</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
+    </style>
+
     <!--  текст кнопок "применить", "выбрать", "похожие вакансии"  -->
     <style name="btn_text_style">
         <item name="android:textSize">@dimen/regular_text_size</item>

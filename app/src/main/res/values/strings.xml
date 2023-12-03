@@ -18,4 +18,35 @@
     <!--  Bottom nav view titles  -->
     <string name="main">Главная</string>
     <string name="favorite">Избранное</string>
+
+    <!--   Вакансия -->
+    <string name="vacancy">Вакансия</string>
+    <string name="vacancy_description">Описание вакансии</string>
+    <string name="vacancy_experience_title">Требуемый опыт</string>
+    <string name="vacancy_experience">От %1$s года до %2$s лет</string>
+
+    <string name="mock_description">Обязанности\n
+Разрабатывать новую функциональность приложения\n
+Помогать с интеграцией нашего SDK в другие приложения\n
+Проектировать большие новые модули\n
+Писать UI- и unit-тесты\n
+Следить за работоспособностью сервиса и устранять технический долг\n
+Требования\n
+100% Kotlin\n
+WebRTC\n
+CI по модели Trunk Based Development\n
+Условия\n
+сильная команда, с которой можно расти\n
+возможность влиять на процесс и результат\n
+расширенная программа ДМС: стоматология, обследования, вызов врача на дом и многое другое</string>
+    <string name="vacancy_key_skills">Ключевые навыки</string>
+    <string name="vacancy_key_skills_mock">Знание классических алгоритмов и структуры данных\n
+Программирование для Android больше одного года\n
+Знание WebRTC</string>
+    <string name="contacts">Контакты</string>
+    <string name="vacancy_contact_person">Контактное лицо</string>
+    <string name="e_mail">E-mail</string>
+    <string name="phone">Телефон</string>
+    <string name="comment">Комментарий</string>
+    <string name="vacancy_similar_vacancies">Похожие вакансии</string>
 </resources>

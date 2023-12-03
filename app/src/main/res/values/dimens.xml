@@ -11,4 +11,7 @@
 
     <!--  Горизонтальные отступы на экране Команда  -->
     <dimen name="team_screen_horizontal_margin">12sp</dimen>
+
+    <!--  Горизонтальные отступы на экране Вакансия  -->
+    <dimen name="vacancy_screen_horizontal_margin">16dp</dimen>
 </resources>
