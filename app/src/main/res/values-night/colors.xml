@@ -7,4 +7,8 @@
     <color name="basic_text_color">@color/white</color>
 
     <color name="et_hint_text_color">@color/white</color>
+
+    <!--  Snackbar  -->
+    <color name="snackbar_bg">@color/white</color>
+    <color name="snackbar_text_color">@color/black</color>
 </resources>
