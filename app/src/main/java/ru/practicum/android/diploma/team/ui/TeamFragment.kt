@@ -9,6 +9,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.databinding.FragmentTeamBinding
 import ru.practicum.android.diploma.team.presentation.TeamViewModel
 import ru.practicum.android.diploma.util.BindingFragment
+import ru.practicum.android.diploma.util.FeedbackUtils
 
 @AndroidEntryPoint
 class TeamFragment : BindingFragment<FragmentTeamBinding>() {
@@ -20,6 +21,10 @@ class TeamFragment : BindingFragment<FragmentTeamBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.showError.observe(viewLifecycleOwner) {
+            FeedbackUtils.showSnackbar(root = requireView(), text = it)
+        }
 
         binding.developer1.setOnClickListener {
             viewModel.contactWithDeveloper(TeamViewModel.Developers.DEV1)
