@@ -10,7 +10,7 @@
     <dimen name="small_text_size">12sp</dimen>
 
     <!--  Горизонтальные отступы на экране Команда  -->
-    <dimen name="team_screen_horizontal_margin">12sp</dimen>
+    <dimen name="team_screen_horizontal_margin">16dp</dimen>
 
     <!--  Горизонтальные отступы на экране Вакансия  -->
     <dimen name="vacancy_screen_horizontal_margin">16dp</dimen>
