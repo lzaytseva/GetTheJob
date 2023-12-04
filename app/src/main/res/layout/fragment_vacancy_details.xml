@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="-16dp"
             android:layout_weight="1"
+
             app:navigationIcon="@drawable/ic_arrow_back"
             app:title="@string/vacancy" />
 
