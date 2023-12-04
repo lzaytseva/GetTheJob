@@ -124,6 +124,7 @@
                         <TextView
                             android:id="@+id/company_name"
                             style="@style/medium_text_style"
+                            android:textColor="@color/black"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             tools:text="ИП Иванов А.А." />
@@ -131,6 +132,7 @@
                         <TextView
                             android:id="@+id/company_location"
                             style="@style/regular_text_style"
+                            android:textColor="@color/black"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             tools:text="Пермь" />
