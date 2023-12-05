@@ -6,5 +6,3 @@ interface NetworkClient {
 
     fun doRequest(request: Any): Response
 }
-
-

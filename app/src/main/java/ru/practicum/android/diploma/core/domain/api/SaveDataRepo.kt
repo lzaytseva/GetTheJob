@@ -1,6 +1,6 @@
 package ru.practicum.android.diploma.core.domain.api
 
-interface StoreDataRepo<T> {
+interface SaveDataRepo<T> {
 
-    fun store(data: T)
+    fun save(data: T)
 }
