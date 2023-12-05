@@ -2,6 +2,9 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("ru.practicum.android.diploma.plugins.developproperties")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
+    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -27,15 +30,16 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 
     buildFeatures {
         buildConfig = true
+        viewBinding = true
     }
 }
 
@@ -55,4 +59,33 @@ dependencies {
     androidTestImplementation(libs.uiTests.junitExt)
     androidTestImplementation(libs.uiTests.espressoCore)
     // endregion
+
+    // Fragments and JetpackNavigation
+    implementation(libs.fragments.navigationFragment)
+    implementation(libs.fragments.navigationUi)
+    implementation(libs.fragments.fragmentKtx)
+
+    // Glide
+    implementation(libs.glide)
+    kapt(libs.glide.compiler)
+
+    // Hilt
+    implementation(libs.hilt)
+    kapt(libs.hilt.compiler)
+
+    // Room
+    implementation(libs.room.runtime)
+    kapt(libs.room.compiler)
+    implementation(libs.room.ktx)
+
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converterGson)
+
+    // LeakCanary
+    debugImplementation(libs.leakCanary)
+}
+
+kapt {
+    correctErrorTypes = true
 }

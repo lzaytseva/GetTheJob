@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="black">#1A1B22</color>
+    <color name="white">#FDFDFD</color>
+    <color name="blue">#3772E7</color>
+    <color name="soft_red">#F56B6C</color>
+    <color name="gray">#AEAFB4</color>
+    <color name="light_gray">#E6E8EB</color>
+
+    <!--  цвет фона экранов и BottomNavigationView  -->
+    <color name="screen_bg">@color/white</color>
+    <!--  цвет фона edit text'ов поиска и ожидаемой запрлаты  -->
+    <color name="edit_text_bg">@color/light_gray</color>
+    <!--  цвет кнопок применить/выбрать/похожие вакансии  -->
+    <color name="btn_bg">@color/blue</color>
+
+    <!--  цвет иконок навигации: фильтры, стрелка назад, стрелка вперед  -->
+    <color name="navigation_icons_tint">@color/black</color>
+    <!--  цвет иконок в edit text поиска: поиск и сбросить  -->
+    <color name="et_icons_tint">@color/black</color>
+
+    <!--  Весь черно-белый текст  -->
+    <color name="basic_text_color">@color/black</color>
+    <!--  Цвет подсказки edit text'ов поиска  -->
+    <color name="et_hint_text_color">@color/gray</color>
+    bottom_navigation_icon_unchecked
+
+    <!--  Цвет элементов bottom navigation view'  -->
+    <color name="bottom_navigation_icon_unchecked">@color/gray</color>
+    <color name="bottom_navigation_icon_checked">@color/blue</color>
+
+    <!--  Snackbar  -->
+    <color name="snackbar_bg">@color/black</color>
+    <color name="snackbar_text_color">@color/white</color>
+
 </resources>

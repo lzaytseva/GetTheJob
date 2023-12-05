@@ -1,3 +1,33 @@
 <resources>
-    <string name="app_name">Practicum-Android-Diploma</string>
+    <string name="app_name">GetTheJob</string>
+    <!--   Команда -->
+    <string name="team">Команда</string>
+    <string name="team_screen_subtitle">Над приложением работали</string>
+    <string name="team_screen_developer_1">Людмила Зайцева</string>
+    <string name="team_screen_developer_2">Евгений Пименов</string>
+    <string name="team_screen_developer_3">Дмитрий Крюшников</string>
+    <string name="team_screen_developer_4">Максим Беспалов</string>
+    <string name="team_screen_email_subject">Обратная связь GetTheJob</string>
+    <string name="team_screen_email_text">Спасибо большое вам за приложение!</string>
+
+    <!--  Плейсхолдеры  -->
+    <string name="error_no_internet">Нет интернета</string>
+    <string name="error_getting_vacancies">Не удалось получить список вакансий</string>
+    <string name="error_no_such_region">Такого региона нет</string>
+    <string name="error_getting_list">Не удалось получить список</string>
+    <string name="error_server">Ошибка сервера</string>
+    <string name="error_empty_list">Список пуст</string>
+
+    <!--  Bottom nav view titles  -->
+    <string name="main">Главная</string>
+    <string name="favorite">Избранное</string>
+
+    <!--  Эл. адреса разработчиков  -->
+    <string name="dev1_email">lvzaytseva1@gmail.com</string>
+    <string name="dev2_email">eu.pim@yandex.ru</string>
+    <string name="dev3_email">kryushnikov.d@gmail.com</string>
+    <string name="dev4_email">bespalov.m.9@ya.ru</string>
+    <string name="no_applications_found">На Вашем устройстве нет подходящего приложения</string>
+    <string name="something_went_wrong">Что-то пошло не так…</string>
+
 </resources>
