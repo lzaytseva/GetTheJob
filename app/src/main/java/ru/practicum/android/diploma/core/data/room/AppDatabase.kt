@@ -10,7 +10,7 @@ import ru.practicum.android.diploma.core.data.room.entity.VacancyEntity
     version = 0,
     exportSchema = false
 )
-abstract class GtjDatabase : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
     abstract val vacancyDao: VacancyDao
 }
