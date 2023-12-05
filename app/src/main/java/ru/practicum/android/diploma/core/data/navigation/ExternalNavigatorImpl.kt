@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.core.content.ContextCompat.startActivity
 import dagger.hilt.android.qualifiers.ApplicationContext
+import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.domain.api.ExternalNavigator
 import ru.practicum.android.diploma.core.domain.models.EmailData
 
@@ -22,7 +23,7 @@ class ExternalNavigatorImpl(
     override fun sendEmail(emailData: EmailData) {
         val sendEmailIntent = Intent().apply {
             action = Intent.ACTION_SENDTO
-            data = Uri.parse("mailto:")
+            data = Uri.parse(appContext.getString(R.string.uri_mailto))
             putExtra(Intent.EXTRA_EMAIL, arrayOf(emailData.emailAddress))
             putExtra(Intent.EXTRA_SUBJECT, emailData.subject)
             putExtra(Intent.EXTRA_TEXT, emailData.text)

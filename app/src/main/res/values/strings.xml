@@ -29,5 +29,6 @@
     <string name="dev4_email">bespalov.m.9@ya.ru</string>
     <string name="no_applications_found">На Вашем устройстве нет подходящего приложения</string>
     <string name="something_went_wrong">Что-то пошло не так…</string>
+    <string name="uri_mailto">mailto:</string>
 
 </resources>
