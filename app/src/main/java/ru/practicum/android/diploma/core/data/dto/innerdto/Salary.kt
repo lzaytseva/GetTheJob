@@ -5,5 +5,4 @@ data class Salary(
     val from: Int?,
     val to: Int?,
     val gross: Boolean?
-
 )

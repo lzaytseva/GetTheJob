@@ -70,7 +70,7 @@
 
     <!-- Сообщение о результате -->
     <TextView
-        android:id="@+id/result_message_edit_text"
+        android:id="@+id/result_message_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/search_small_padding"
@@ -96,7 +96,7 @@
         android:layout_marginHorizontal="@dimen/search_medium_padding"
         android:scaleType="fitCenter"
         android:src="@drawable/ph_start_search"
-        app:layout_constraintBottom_toTopOf="@id/no_results_text_view"
+        app:layout_constraintBottom_toTopOf="@id/on_error_text_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_field"
@@ -104,7 +104,7 @@
 
     <!-- Сообщение об ошибке -->
     <TextView
-        android:id="@+id/no_results_text_view"
+        android:id="@+id/on_error_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/search_medium_padding"
