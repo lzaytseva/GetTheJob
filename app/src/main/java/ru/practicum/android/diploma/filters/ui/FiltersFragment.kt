@@ -1,12 +1,11 @@
 package ru.practicum.android.diploma.filters.ui
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
@@ -53,15 +52,9 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
     }
 
     private fun setSalaryTextWatcher() {
-        binding.etSalary.addTextChangedListener(object: TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                setBtnsVisibility()
-            }
-
-            override fun afterTextChanged(s: Editable?) {}
-        })
+        binding.etSalary.doOnTextChanged { text, start, before, count ->
+            setBtnsVisibility()
+        }
     }
 
     private fun setFilterFieldsEndIcon() {
@@ -94,7 +87,7 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
     }
 
     private fun hasNonEmptyFields(): Boolean {
-        return with (binding) {
+        return with(binding) {
             !etIndustry.text.isNullOrBlank() ||
                 !etPlace.text.isNullOrBlank() ||
                 !etSalary.text.isNullOrBlank() ||
