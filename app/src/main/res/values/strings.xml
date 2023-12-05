@@ -31,4 +31,9 @@
     <string name="something_went_wrong">Что-то пошло не так…</string>
     <string name="uri_mailto">mailto:</string>
 
+    <!-- Экран поиска -->
+    <string name="et_search_hint">Введите запрос</string>
+    <string name="tv_no_vacancies">Таких вакансий нет</string>
+    <string name="search">Поиск</string>
+
 </resources>
