@@ -74,6 +74,11 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
     }
 
     private fun onError(error: ErrorType) {
+        when (error) {
+            ErrorType.NO_INTERNET -> { }
+            ErrorType.SERVER_ERROR -> { }
+            ErrorType.NO_CONTENT -> { }
+        }
     }
 
     private fun onContent(content: List<VacancyInList>) {
