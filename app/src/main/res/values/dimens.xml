@@ -11,4 +11,11 @@
 
     <!--  Горизонтальные отступы на экране Команда  -->
     <dimen name="team_screen_horizontal_margin">16dp</dimen>
+
+    <!-- Отступы на экране Поиск -->
+    <dimen name="search_medium_padding">@dimen/team_screen_horizontal_margin</dimen>
+    <dimen name="search_small_padding">8dp</dimen>
+    <dimen name="search_field_corner_radius">12dp</dimen>
+    <dimen name="search_tiny_padding">4dp</dimen>
+
 </resources>

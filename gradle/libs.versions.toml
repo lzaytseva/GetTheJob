@@ -71,6 +71,7 @@ leakCanary = "com.squareup.leakcanary:leakcanary-android:2.12"
 legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacy-support-v4" }
 lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle-livedata-ktx" }
 lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle-viewmodel-ktx" }
+viewbinding = { group = "androidx.databinding", name = "viewbinding", version = "8.2.0" }
 
 [bundles]
 [plugins]
