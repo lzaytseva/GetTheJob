@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/screen_bg"
+    android:orientation="vertical"
     tools:context=".vacancydetails.ui.VacancyDetailsFragment">
 
     <LinearLayout
@@ -20,9 +21,9 @@
             style="@style/medium_text_style"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="top"
             android:layout_marginStart="-16dp"
             android:layout_weight="1"
-
             app:navigationIcon="@drawable/ic_arrow_back"
             app:title="@string/vacancy" />
 
@@ -43,13 +44,10 @@
 
     </LinearLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:layout_anchor="@id/top_bar"
-        app:layout_anchorGravity="bottom">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -74,7 +72,7 @@
                 style="@style/large_text_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
+                android:layout_marginTop="24dp"
                 app:layout_constraintEnd_toEndOf="@id/guideline_end"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/guideline_start"
@@ -125,17 +123,17 @@
                         <TextView
                             android:id="@+id/company_name"
                             style="@style/medium_text_style"
-                            android:textColor="@color/black"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/black"
                             tools:text="ИП Иванов А.А." />
 
                         <TextView
                             android:id="@+id/company_location"
                             style="@style/regular_text_style"
-                            android:textColor="@color/black"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/black"
                             tools:text="Пермь" />
 
                     </LinearLayout>
@@ -337,7 +335,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <ProgressBar
         android:id="@+id/loading"
@@ -358,17 +356,17 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/ph_server_error_vacancy"/>
+            android:src="@drawable/ph_server_error_vacancy" />
 
         <TextView
             style="@style/medium_text_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/error_server"/>
+            android:text="@string/error_server" />
 
     </LinearLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>
 
 
