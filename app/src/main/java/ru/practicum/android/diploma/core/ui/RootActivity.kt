@@ -27,7 +27,9 @@ class RootActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.teamFragment, R.id.favoritesFragment, R.id.searchFragment -> {
+                R.id.teamFragment,
+                R.id.favoritesFragment,
+                R.id.searchFragment -> {
                     binding.bottomNavigationView.visibility = View.VISIBLE
                     binding.bottomNavigationViewLineAbove.visibility = View.VISIBLE
                 }
