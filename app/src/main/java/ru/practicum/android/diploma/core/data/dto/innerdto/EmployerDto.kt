@@ -1,6 +1,6 @@
 package ru.practicum.android.diploma.core.data.dto.innerdto
 
-data class Employer(
+data class EmployerDto(
     val name: String,
-    val logoUrls: LogoUrls?
+    val logoUrlsDto: LogoUrlsDto?
 )
