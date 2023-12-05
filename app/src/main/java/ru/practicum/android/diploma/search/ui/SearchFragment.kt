@@ -82,5 +82,6 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
     }
 
     private fun onContent(content: List<VacancyInList>) {
+        // set content of recyclerView list
     }
 }
