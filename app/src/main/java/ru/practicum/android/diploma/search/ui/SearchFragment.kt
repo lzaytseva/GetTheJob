@@ -59,7 +59,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
     }
 
     private fun changeIcon(flag: Boolean) {
-        val image = if (flag) R.drawable.ic_close else R.drawable.ic_search
+        val image = if (flag) R.drawable.ic_clear else R.drawable.ic_search
         binding.searchFieldImageView.setImageResource(image)
     }
 
