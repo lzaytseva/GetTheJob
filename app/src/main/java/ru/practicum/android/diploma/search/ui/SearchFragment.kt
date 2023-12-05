@@ -17,6 +17,7 @@ import ru.practicum.android.diploma.search.presentation.SearchScreenState
 import ru.practicum.android.diploma.search.presentation.SearchViewModel
 import ru.practicum.android.diploma.util.BindingFragment
 
+@AndroidEntryPoint
 class SearchFragment : BindingFragment<FragmentSearchBinding>() {
 
     private val viewModel: SearchViewModel by viewModels()
