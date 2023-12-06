@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.core.data.network
 
 import android.content.Context
-import ru.practicum.android.diploma.core.data.dto.Response
+import ru.practicum.android.diploma.core.data.dto.responses.Response
 import ru.practicum.android.diploma.util.ConnectionChecker
 
 class RetrofitNetworkClient(
