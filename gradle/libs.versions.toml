@@ -9,7 +9,7 @@ targetSdk = "33"
 
 # Detekt
 detekt = "1.23.3"
-detektTwitterComposeRules ="0.0.26"
+detektTwitterComposeRules = "0.0.26"
 org-jetbrains-kotlin-android = "1.9.0"
 legacy-support-v4 = "1.0.0"
 lifecycle-livedata-ktx = "2.6.2"

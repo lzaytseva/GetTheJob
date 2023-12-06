@@ -16,8 +16,10 @@ interface HhApiService {
         @QueryMap params: Map<String, String>
     ): Call<VacancySearchResponse>
 
-    @Headers("Authorization: Bearer YOUR_TOKEN",
-        "HH-User-Agent: Application Name (name@example.com)")
+    @Headers(
+        "Authorization: Bearer $HH_ACCESS_TOKEN",
+        "HH-User-Agent: GetTheJob (lvzaytseva1@gmail.com)"
+    )
     @GET("/vacancies/{vacancy_id}")
     suspend fun getVacancyDetailsById(@Path("vacancy_id") vacancyId: String): VacancyDetailsSearchResponse
 
