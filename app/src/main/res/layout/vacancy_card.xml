@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/vacancy_card_horizontal_padding"
+    android:paddingVertical="@dimen/vacancy_card_vertical_padding">
+
+    <ImageView
+        android:id="@+id/vacancy_icon_image_view"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:scaleType="center"
+        android:src="@drawable/vacancy_icon_placeholder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/vacancy_name_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/vacancy_card_gap"
+        android:textAppearance="@style/medium_text_style"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/vacancy_icon_image_view"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Junior Android developer in Google" />
+
+    <TextView
+        android:id="@+id/employer_name_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/regular_text_style"
+        app:layout_constraintBottom_toTopOf="@id/salary_info_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/vacancy_name_text_view"
+        app:layout_constraintTop_toBottomOf="@id/vacancy_name_text_view"
+        tools:text="Google(Sakhalin)" />
+
+    <TextView
+        android:id="@+id/salary_info_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/regular_text_style"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/vacancy_name_text_view"
+        app:layout_constraintTop_toBottomOf="@id/employer_name_text_view"
+        tools:text="Salary? Really?" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

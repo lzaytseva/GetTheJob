@@ -24,6 +24,11 @@
     <dimen name="search_field_corner_radius">12dp</dimen>
     <dimen name="search_tiny_padding">4dp</dimen>
 
+    <!-- Отступы на vacancyCard -->
+    <dimen name="vacancy_card_horizontal_padding">@dimen/vacancy_screen_horizontal_margin</dimen>
+    <dimen name="vacancy_card_vertical_padding">9dp</dimen>
+    <dimen name="vacancy_card_gap">@dimen/search_field_corner_radius</dimen>
+
     <!--  Экран настроек фильтрации  -->
     <dimen name="horizontal_padding">16dp</dimen>
     <dimen name="header_padding">16dp</dimen>
