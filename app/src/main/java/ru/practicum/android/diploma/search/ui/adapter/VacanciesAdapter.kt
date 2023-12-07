@@ -11,7 +11,9 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.VacancyCardBinding
 import ru.practicum.android.diploma.search.domain.model.VacancyInList
 
-class VacanciesAdapter(private val onClick: (String) -> Unit) : RecyclerView.Adapter<VacanciesAdapter.VacancyViewHolder>() {
+class VacanciesAdapter(
+    private val onClick: (String) -> Unit
+) : RecyclerView.Adapter<VacanciesAdapter.VacancyViewHolder>() {
 
     private val vacanciesList: ArrayList<VacancyInList> = ArrayList()
 

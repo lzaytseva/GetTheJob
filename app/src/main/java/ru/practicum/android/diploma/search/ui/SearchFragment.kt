@@ -83,7 +83,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
     }
 
     private fun onContent(content: ArrayList<VacancyInList>) {
-        val adapter = (binding.resultsListRecyclerView.adapter as? VacanciesAdapter)
+        val adapter = binding.resultsListRecyclerView.adapter as? VacanciesAdapter
         adapter?.setContent(content)
     }
 }
