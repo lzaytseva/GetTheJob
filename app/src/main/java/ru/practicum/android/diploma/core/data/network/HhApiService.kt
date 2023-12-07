@@ -1,11 +1,13 @@
 package ru.practicum.android.diploma.core.data.network
 
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.QueryMap
 import ru.practicum.android.diploma.BuildConfig.HH_ACCESS_TOKEN
+import ru.practicum.android.diploma.core.data.dto.VacancyDetailsDto
 import ru.practicum.android.diploma.core.data.dto.responses.VacancyDetailsSearchResponse
 import ru.practicum.android.diploma.search.data.responses.VacancySearchResponse
 
@@ -21,6 +23,6 @@ interface HhApiService {
         "HH-User-Agent: GetTheJob (lvzaytseva1@gmail.com)"
     )
     @GET("/vacancies/{vacancy_id}")
-    suspend fun getVacancyDetailsById(@Path("vacancy_id") vacancyId: String): VacancyDetailsSearchResponse
+    suspend fun getVacancyDetailsById(@Path("vacancy_id") vacancyId: String): Response<VacancyDetailsDto>
 
 }
