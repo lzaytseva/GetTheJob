@@ -1,10 +1,14 @@
 package ru.practicum.android.diploma.core.data.network
 
 import android.content.Context
+import android.util.Log
+import retrofit2.HttpException
 import ru.practicum.android.diploma.core.data.dto.requests.VacancyDetailsSearchRequest
 import ru.practicum.android.diploma.core.data.dto.responses.Response
 import ru.practicum.android.diploma.core.data.dto.responses.VacancyDetailsSearchResponse
 import ru.practicum.android.diploma.util.ConnectionChecker
+
+private const val TAG = "RetrofitNetworkClient"
 
 class RetrofitNetworkClient(
     private val context: Context,
@@ -16,25 +20,26 @@ class RetrofitNetworkClient(
             return Response().apply { resultCode = RC_NO_INTERNET }
         }
 
-        when (request) {
-            is VacancyDetailsSearchRequest -> {
-                return try {
-                    val response = hhService.getVacancyDetailsById(request.id)
-                    if (response.code() == RC_OK && response.body() != null) {
-                        VacancyDetailsSearchResponse(response.body()!!)
-                            .apply { resultCode = RC_OK }
-                    } else {
-                        Response().apply { resultCode = RC_NOK }
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    Response().apply { resultCode = RC_NOK }
-                }
-            }
+        return when (request) {
+            is VacancyDetailsSearchRequest -> getVacancyDetailsById(request.id)
 
-            else -> {
-                return Response().apply { resultCode = RC_NOK_SERVER_ERROR }
+            else -> Response().apply { resultCode = RC_NOK_SERVER_ERROR }
+
+        }
+    }
+
+    private suspend fun getVacancyDetailsById(id: String): Response {
+        return try {
+            val response = hhService.getVacancyDetailsById(id)
+            if (response.code() == RC_OK && response.body() != null) {
+                VacancyDetailsSearchResponse(response.body()!!)
+                    .apply { resultCode = RC_OK }
+            } else {
+                Response().apply { resultCode = RC_NOK }
             }
+        } catch (e: HttpException) {
+            Log.e(TAG, e.toString())
+            Response().apply { resultCode = RC_NOK }
         }
     }
 
