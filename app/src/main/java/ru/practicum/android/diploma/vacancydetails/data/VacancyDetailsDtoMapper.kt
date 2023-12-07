@@ -28,7 +28,7 @@ object VacancyDetailsDtoMapper {
             employerUrl = dto.employer?.alternateUrl,
             employerName = dto.employer?.name,
             employment = dto.employment?.name,
-            keySkills = dto.keySkills.map { skillDto ->
+            keySkills = dto.keySkills?.map { skillDto ->
                 skillDto.name
             },
         )
