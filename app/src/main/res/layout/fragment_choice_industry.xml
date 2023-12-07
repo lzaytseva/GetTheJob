@@ -1,9 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/screen_bg"
+    android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".filters.ui.ChoiceIndustryFragment">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        style="@style/medium_text_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/arrow_back_padding"
+        android:text="@string/header_industry"
+        app:drawableStartCompat="@drawable/ic_arrow_back" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_search_industry"
+        style="@style/salary_til_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:theme="@style/salary_til_style"
+        app:endIconDrawable="@drawable/ic_search"
+        app:endIconMode="custom"
+        app:expandedHintEnabled="false"
+        app:hintEnabled="false">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_search_industry"
+            style="@style/salary_edit_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_bg"
+            android:hint="@string/hint_enter_industry"
+            android:inputType="textShortMessage"
+            android:maxLines="1"
+            android:padding="16dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_industries"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>

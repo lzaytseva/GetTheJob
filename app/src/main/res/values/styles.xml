@@ -103,6 +103,7 @@
         <item name="endIconDrawable">@drawable/ic_clear</item>
         <item name="endIconMode">clear_text</item>
         <item name="endIconTint">@color/black</item>
+        <item name="endIconCheckable">false</item>
         <item name="expandedHintEnabled">false</item>
         <item name="colorControlActivated">@color/blue</item>
     </style>
