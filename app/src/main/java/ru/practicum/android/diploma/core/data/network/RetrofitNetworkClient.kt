@@ -18,17 +18,17 @@ class RetrofitNetworkClient(
 
         when (request) {
             is VacancyDetailsSearchRequest -> {
-                try {
+                return try {
                     val response = hhService.getVacancyDetailsById(request.id)
                     if (response.code() == RC_OK && response.body() != null) {
-                        return VacancyDetailsSearchResponse(response.body()!!)
+                        VacancyDetailsSearchResponse(response.body()!!)
                             .apply { resultCode = RC_OK }
                     } else {
-                        return Response().apply { resultCode = RC_NOK }
+                        Response().apply { resultCode = RC_NOK }
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    return Response().apply { resultCode = RC_NOK }
+                    Response().apply { resultCode = RC_NOK }
                 }
             }
 
