@@ -6,5 +6,5 @@ import ru.practicum.android.diploma.util.Resource
 
 interface VacancyDetailsRepository {
 
-    fun getVacancyDetailsById(vacancyId: String) : Flow<Resource<VacancyDetails>>
+    fun getVacancyDetailsById(vacancyId: String): Flow<Resource<VacancyDetails>>
 }
