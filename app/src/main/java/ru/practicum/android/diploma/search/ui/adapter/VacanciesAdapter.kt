@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.search.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -25,8 +26,15 @@ class VacanciesAdapter(private val onClick: (String) -> Unit) : RecyclerView.Ada
         holder.itemView.setOnClickListener {
             onClick(vacanciesList[position].id)
         }
-
         holder.bind(vacanciesList[position])
+    }
+
+    fun setContent(newList: ArrayList<VacancyInList>) {
+        val diffCallback = VacanciesDiffCallback(vacanciesList, newList)
+        val diffVacancies = DiffUtil.calculateDiff(diffCallback)
+        vacanciesList.clear()
+        vacanciesList.addAll(newList)
+        diffVacancies.dispatchUpdatesTo(this)
     }
 
     inner class VacancyViewHolder(private val binding: VacancyCardBinding) : RecyclerView.ViewHolder(binding.root) {

@@ -15,6 +15,7 @@ import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.search.domain.model.VacancyInList
 import ru.practicum.android.diploma.search.presentation.SearchScreenState
 import ru.practicum.android.diploma.search.presentation.SearchViewModel
+import ru.practicum.android.diploma.search.ui.adapter.VacanciesAdapter
 import ru.practicum.android.diploma.util.BindingFragment
 
 @AndroidEntryPoint
@@ -81,7 +82,8 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
         }
     }
 
-    private fun onContent(content: List<VacancyInList>) {
-        // set content of recyclerView list
+    private fun onContent(content: ArrayList<VacancyInList>) {
+        val adapter = (binding.resultsListRecyclerView.adapter as? VacanciesAdapter)
+        adapter?.setContent(content)
     }
 }
