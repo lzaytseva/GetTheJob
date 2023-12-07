@@ -24,7 +24,7 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.vacancyDetailsScreenState.observe(viewLifecycleOwner) { screenState ->
-            when(screenState) {
+            when (screenState) {
                 is VacancyDetailsScreenState.Content -> showContent(screenState.vacancyDetails)
                 is VacancyDetailsScreenState.Loading -> showLoading()
                 is VacancyDetailsScreenState.Error -> showError()

@@ -8,7 +8,6 @@ import retrofit2.http.Path
 import retrofit2.http.QueryMap
 import ru.practicum.android.diploma.BuildConfig.HH_ACCESS_TOKEN
 import ru.practicum.android.diploma.core.data.dto.VacancyDetailsDto
-import ru.practicum.android.diploma.core.data.dto.responses.VacancyDetailsSearchResponse
 import ru.practicum.android.diploma.search.data.responses.VacancySearchResponse
 
 interface HhApiService {
