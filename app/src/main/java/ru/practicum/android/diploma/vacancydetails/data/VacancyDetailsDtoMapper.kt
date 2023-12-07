@@ -31,6 +31,7 @@ object VacancyDetailsDtoMapper {
             keySkills = dto.keySkills?.map { skillDto ->
                 skillDto.name
             },
+            description = dto.description
         )
 
 }
