@@ -13,6 +13,7 @@ data class VacancyDetails(
     val contactName: String?,
     val contactEmail: String?,
     val phones: List<String>?,
+    val contactComment: String?,
     val logoUrl: String?,
     val logoUrl90: String?,
     val logoUrl240: String?,
