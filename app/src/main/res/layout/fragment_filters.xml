@@ -30,7 +30,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/screen_bg"
-            android:enabled="false"
+            android:clickable="true"
+            android:cursorVisible="false"
+            android:focusable="false"
             tools:text="Россия" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -40,7 +42,6 @@
         style="@style/filter_til_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:enabled="false"
         android:hint="@string/hint_industry">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -48,7 +49,10 @@
             style="@style/filter_edit_text_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/screen_bg" />
+            android:background="@color/screen_bg"
+            android:clickable="true"
+            android:cursorVisible="false"
+            android:focusable="false" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

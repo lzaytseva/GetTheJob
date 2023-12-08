@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
 import ru.practicum.android.diploma.filters.presentation.FiltersViewModel
@@ -24,6 +25,8 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
         setSalaryFieldHintColorBehaviour()
         setSalaryCheckBoxChangeListener()
         setSalaryTextWatcher()
+        setIndustryClickListener()
+        setPlaceClickListener()
     }
 
     override fun onResume() {
@@ -92,6 +95,22 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
                 !etPlace.text.isNullOrBlank() ||
                 !etSalary.text.isNullOrBlank() ||
                 checkBoxSalary.isChecked
+        }
+    }
+
+    private fun setIndustryClickListener() {
+        binding.etIndustry.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_filtersFragment_to_choiceIndustryFragment
+            )
+        }
+    }
+
+    private fun setPlaceClickListener() {
+        binding.etPlace.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_filtersFragment_to_choiceWorkplaceFragment2
+            )
         }
     }
 }
