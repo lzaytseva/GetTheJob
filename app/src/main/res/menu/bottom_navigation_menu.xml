@@ -12,7 +12,7 @@
         android:title="@string/favorite" />
 
     <item
-        android:id="@+id/teamFragment"
+        android:id="@+id/choiceIndustryFragment"
         android:icon="@drawable/ic_bottom_team"
         android:title="@string/team" />
 
