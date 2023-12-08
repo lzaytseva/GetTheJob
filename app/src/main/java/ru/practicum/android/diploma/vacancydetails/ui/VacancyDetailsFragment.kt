@@ -1,11 +1,15 @@
 package ru.practicum.android.diploma.vacancydetails.ui
 
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import dagger.hilt.android.AndroidEntryPoint
+import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.domain.models.VacancyDetails
 import ru.practicum.android.diploma.databinding.FragmentVacancyDetailsBinding
 import ru.practicum.android.diploma.util.BindingFragment
@@ -33,10 +37,13 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
     }
 
     private fun showContent(vacancyDetails: VacancyDetails) {
-        binding.loading.visibility = View.GONE
-        binding.error.visibility = View.GONE
-        binding.content.visibility = View.VISIBLE
-        binding.positionName.text = vacancyDetails.name
+        with(binding) {
+            loading.visibility = View.GONE
+            error.visibility = View.GONE
+            content.visibility = View.VISIBLE
+            bindDataToViews(vacancyDetails)
+        }
+
     }
 
     private fun showLoading() {
@@ -49,6 +56,73 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
         binding.loading.visibility = View.GONE
         binding.content.visibility = View.GONE
         binding.error.visibility = View.VISIBLE
+    }
+
+    private fun bindDataToViews(vacancyDetails: VacancyDetails) {
+        with(binding) {
+            positionName.text = vacancyDetails.name
+            salary.text = getSalaryDescription(vacancyDetails)
+            loadLogo(vacancyDetails.logoUrl90)
+            companyName.text = vacancyDetails.employerName
+            companyLocation.text = getCompanyLocation(vacancyDetails)
+            experience.text = vacancyDetails.experience
+            schedulesInfo.text = vacancyDetails.schedule ?: ""
+            description.setText(Html.fromHtml(vacancyDetails.description, Html.FROM_HTML_MODE_COMPACT))
+            keySkills.text = getKeySkills(keySkills = vacancyDetails.keySkills)
+            showContactInfo(vacancyDetails)
+        }
+    }
+
+    private fun getSalaryDescription(vacancyDetails: VacancyDetails): String {
+        return when {
+            vacancyDetails.salaryFrom != null && vacancyDetails.salaryTo != null ->
+                getString(R.string.vacancy_salary_from_to, vacancyDetails.salaryFrom, vacancyDetails.salaryTo)
+
+            vacancyDetails.salaryFrom != null && vacancyDetails.salaryTo == null ->
+                getString(R.string.vacancy_salary_from, vacancyDetails.salaryFrom)
+
+            vacancyDetails.salaryFrom == null && vacancyDetails.salaryTo != null ->
+                getString(R.string.vacancy_salary_to, vacancyDetails.salaryTo)
+
+            else -> getString(R.string.vacancy_salary_not_specified)
+        }
+    }
+
+    private fun loadLogo(logoUrl: String?) {
+        Glide.with(binding.content)
+            .load(logoUrl)
+            .transform(
+                RoundedCorners(
+                    resources.getDimensionPixelSize(
+                        R.dimen.vacancy_screen_logo_rounded_corners
+                    )
+                )
+            )
+            .placeholder(R.drawable.ic_vacancy_placeholder)
+            .into(binding.companyLogo)
+    }
+
+    private fun getCompanyLocation(vacancyDetails: VacancyDetails): String {
+        return if (vacancyDetails.address.isNullOrBlank()) {
+            vacancyDetails.area
+        } else {
+            vacancyDetails.address
+        }
+    }
+
+    private fun getKeySkills(keySkills: List<String>?): String {
+        val keySkillsText = StringBuilder("")
+        keySkills?.map { skill -> keySkillsText.append(skill) }
+        return keySkillsText.toString()
+    }
+
+    private fun showContactInfo(vacancyDetails: VacancyDetails) {
+        binding.contactPersonName.text = vacancyDetails.contactName ?: ""
+        binding.contactPersonEmail.text = vacancyDetails.contactEmail ?: ""
+        val contactPhones = StringBuilder("")
+        vacancyDetails.phones?.map { phone -> contactPhones.append(phone).append(", ") }
+        binding.contactPersonPhone.text = contactPhones
+        binding.contactPersonComment.text = vacancyDetails.contactComment ?: ""
     }
 
 }

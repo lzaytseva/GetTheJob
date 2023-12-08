@@ -20,5 +20,6 @@ data class VacancyDetailsDto(
     val address: AddressDto?,
     val employer: EmployerDto?,
     val employment: VacancyElementDto?,
-    val keySkills: List<SkillDto>?
+    val keySkills: List<SkillDto>?,
+    val description: String
 )

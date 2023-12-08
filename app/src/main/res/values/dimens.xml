@@ -14,6 +14,8 @@
 
     <!--  Горизонтальные отступы на экране Вакансия  -->
     <dimen name="vacancy_screen_horizontal_margin">16dp</dimen>
+    <dimen name="vacancy_screen_logo_rounded_corners">12dp</dimen>
+
 
     <!--  Размер индикатора загрузки  -->
     <dimen name="progressbar_size">48dp</dimen>
