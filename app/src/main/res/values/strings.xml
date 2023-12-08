@@ -18,6 +18,9 @@
     <string name="error_server">Ошибка сервера</string>
     <string name="error_empty_list">Список пуст</string>
 
+    <!-- Toolbar -->
+    <string name="search_screen">Экран поиска</string>
+
     <!--  Bottom nav view titles  -->
     <string name="main">Главная</string>
     <string name="favorite">Избранное</string>
@@ -77,5 +80,6 @@ CI по модели Trunk Based Development\n
     <string name="discard_changes">Сбросить</string>
     <string name="header_filter_settings">Настройки фильтрации</string>
     <string name="arrow_back_content_desc">Кнопка назад</string>
+    <string name="share">Поделиться</string>
 
 </resources>
