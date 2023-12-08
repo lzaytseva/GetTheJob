@@ -15,6 +15,8 @@ import ru.practicum.android.diploma.databinding.FragmentVacancyDetailsBinding
 import ru.practicum.android.diploma.util.BindingFragment
 import ru.practicum.android.diploma.vacancydetails.presentation.VacancyDetailsScreenState
 import ru.practicum.android.diploma.vacancydetails.presentation.VacancyDetailsViewModel
+import java.text.NumberFormat
+import java.util.Locale
 
 @AndroidEntryPoint
 class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() {
@@ -78,26 +80,32 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
             vacancyDetails.salaryFrom != null && vacancyDetails.salaryTo != null ->
                 getString(
                     R.string.vacancy_salary_from_to,
-                    vacancyDetails.salaryFrom,
-                    vacancyDetails.salaryTo,
+                    formatSalary(vacancyDetails.salaryFrom),
+                    formatSalary(vacancyDetails.salaryTo),
                     vacancyDetails.salaryCurrency
                 )
 
             vacancyDetails.salaryFrom != null && vacancyDetails.salaryTo == null ->
                 getString(
                     R.string.vacancy_salary_from,
-                    vacancyDetails.salaryFrom,
+                    formatSalary(vacancyDetails.salaryFrom),
                     vacancyDetails.salaryCurrency
                 )
 
             vacancyDetails.salaryFrom == null && vacancyDetails.salaryTo != null ->
                 getString(
-                    R.string.vacancy_salary_to, vacancyDetails.salaryTo,
+                    R.string.vacancy_salary_to,
+                    formatSalary(vacancyDetails.salaryTo),
                     vacancyDetails.salaryCurrency
                 )
 
             else -> getString(R.string.vacancy_salary_not_specified)
         }
+    }
+
+    private fun formatSalary(amount: Int): String {
+        val format: NumberFormat = NumberFormat.getInstance(Locale.getDefault())
+        return format.format(amount).replace(",", " ")
     }
 
     private fun loadLogo(logoUrl: String?) {
