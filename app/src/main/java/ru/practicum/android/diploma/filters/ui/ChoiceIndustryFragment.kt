@@ -36,7 +36,7 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
                 binding.tilSearchIndustry.endIconDrawable =
                     ContextCompat.getDrawable(requireContext(), R.drawable.ic_search)
                 binding.tilSearchIndustry.setEndIconOnClickListener {
-                    //Поиск
+                    // Поиск
                 }
             }
         }
