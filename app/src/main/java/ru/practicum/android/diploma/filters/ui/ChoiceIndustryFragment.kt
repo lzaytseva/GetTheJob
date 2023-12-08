@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import com.google.android.material.textfield.TextInputLayout
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentChoiceIndustryBinding
 import ru.practicum.android.diploma.filters.presentation.ChoiceIndustryViewModel
@@ -29,15 +30,11 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
             if (!text.isNullOrBlank()) {
                 binding.tilSearchIndustry.endIconDrawable =
                     ContextCompat.getDrawable(requireContext(), R.drawable.ic_clear)
-                binding.tilSearchIndustry.setEndIconOnClickListener {
-                    binding.etSearchIndustry.text?.clear()
-                }
+                binding.tilSearchIndustry.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
             } else {
                 binding.tilSearchIndustry.endIconDrawable =
                     ContextCompat.getDrawable(requireContext(), R.drawable.ic_search)
-                binding.tilSearchIndustry.setEndIconOnClickListener {
-                    //Поиск
-                }
+                binding.tilSearchIndustry.endIconMode = TextInputLayout.END_ICON_CUSTOM
             }
         }
     }
