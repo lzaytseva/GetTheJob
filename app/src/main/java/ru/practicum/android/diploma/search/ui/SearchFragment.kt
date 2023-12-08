@@ -109,7 +109,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
 
     private fun configureToolbar() {
         (requireActivity() as? RootActivity)?.run {
-            toolbar.title = ContextCompat.getString(this@run, R.string.search_screen)
+            toolbar.title = ContextCompat.getString(this, R.string.search_screen)
             val item = toolbar.menu.findItem(R.id.filters)
             item.isVisible = true
             item.setOnMenuItemClickListener {
