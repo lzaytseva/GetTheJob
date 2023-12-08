@@ -103,8 +103,11 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
     }
 
     private fun getCompanyLocation(vacancyDetails: VacancyDetails): String {
-        return if (vacancyDetails.address.isNullOrBlank()) vacancyDetails.area
-        else vacancyDetails.address
+        return if (vacancyDetails.address.isNullOrBlank()) {
+            vacancyDetails.area
+        } else {
+            vacancyDetails.address
+        }
     }
 
     private fun getKeySkills(keySkills: List<String>?): String {
