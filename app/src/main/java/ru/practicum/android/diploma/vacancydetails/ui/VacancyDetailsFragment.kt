@@ -76,13 +76,25 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
     private fun getSalaryDescription(vacancyDetails: VacancyDetails): String {
         return when {
             vacancyDetails.salaryFrom != null && vacancyDetails.salaryTo != null ->
-                getString(R.string.vacancy_salary_from_to, vacancyDetails.salaryFrom, vacancyDetails.salaryTo)
+                getString(
+                    R.string.vacancy_salary_from_to,
+                    vacancyDetails.salaryFrom,
+                    vacancyDetails.salaryTo,
+                    vacancyDetails.salaryCurrency
+                )
 
             vacancyDetails.salaryFrom != null && vacancyDetails.salaryTo == null ->
-                getString(R.string.vacancy_salary_from, vacancyDetails.salaryFrom)
+                getString(
+                    R.string.vacancy_salary_from,
+                    vacancyDetails.salaryFrom,
+                    vacancyDetails.salaryCurrency
+                )
 
             vacancyDetails.salaryFrom == null && vacancyDetails.salaryTo != null ->
-                getString(R.string.vacancy_salary_to, vacancyDetails.salaryTo)
+                getString(
+                    R.string.vacancy_salary_to, vacancyDetails.salaryTo,
+                    vacancyDetails.salaryCurrency
+                )
 
             else -> getString(R.string.vacancy_salary_not_specified)
         }
