@@ -25,7 +25,7 @@ object VacancyDetailsDtoMapper {
             logoUrl = dto.logoUrls?.original,
             logoUrl90 = dto.logoUrls?.art90,
             logoUrl240 = dto.logoUrls?.art240,
-            address = dto.address?.city + dto.address?.street + dto.address?.building,
+            address = "${dto.address?.city}, ${dto.address?.street}, ${dto.address?.building}",
             employerUrl = dto.employer?.alternateUrl,
             employerName = dto.employer?.name,
             employment = dto.employment?.name,
