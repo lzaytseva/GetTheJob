@@ -172,7 +172,7 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
             if (!vacancyDetails.phones?.get(0).isNullOrBlank()) {
                 contactPersonPhoneTitle.visibility = View.VISIBLE
                 contactPersonPhone.visibility = View.VISIBLE
-                contactPersonPhone.text = vacancyDetails.phones?.get(0) ?: ""
+                contactPersonPhone.text = vacancyDetails.phones?.get(0)
             } else {
                 contactPersonPhoneTitle.visibility = View.GONE
                 contactPersonPhone.visibility = View.GONE

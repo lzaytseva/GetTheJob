@@ -19,7 +19,7 @@ object VacancyDetailsDtoMapper {
             contactName = dto.contacts?.name,
             contactEmail = dto.contacts?.email,
             phones = dto.contacts?.phones?.map { phone ->
-                phone.country + phone.city + phone.number
+                "+${phone.country}${phone.city}${phone.number}"
             },
             contactComment = dto.contacts?.phones?.get(0)?.comment,
             logoUrl = dto.employer?.logoUrlsDto?.original,
