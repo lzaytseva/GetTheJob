@@ -33,10 +33,9 @@
 
     <!--  Экран настроек фильтрации  -->
     <dimen name="horizontal_padding">16dp</dimen>
-    <dimen name="header_padding">16dp</dimen>
+    <dimen name="header_margin">16dp</dimen>
     <dimen name="arrow_back_padding">20dp</dimen>
     <dimen name="check_box_size">24dp</dimen>
     <dimen name="elements_top_margin">24dp</dimen>
-    <dimen name="header_margin_bottom">16dp</dimen>
 
 </resources>

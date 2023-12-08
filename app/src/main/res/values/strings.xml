@@ -81,5 +81,7 @@ CI по модели Trunk Based Development\n
     <string name="discard_changes">Сбросить</string>
     <string name="header_filter_settings">Настройки фильтрации</string>
     <string name="arrow_back_content_desc">Кнопка назад</string>
+    <string name="header_industry">Выбор отрасли</string>
+    <string name="hint_enter_industry">Введите отрасль</string>
 
 </resources>
