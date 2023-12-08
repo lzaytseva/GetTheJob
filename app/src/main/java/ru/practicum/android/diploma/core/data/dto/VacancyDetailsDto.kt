@@ -17,7 +17,6 @@ data class VacancyDetailsDto(
     val experience: VacancyElementDto?,
     val schedule: VacancyElementDto,
     val contacts: ContactsDto?,
-    val logoUrls: LogoUrlsDto?,
     val address: AddressDto?,
     val employer: EmployerDto?,
     val employment: VacancyElementDto?,

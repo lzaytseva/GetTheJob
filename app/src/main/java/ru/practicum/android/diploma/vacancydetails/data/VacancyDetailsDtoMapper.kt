@@ -22,9 +22,9 @@ object VacancyDetailsDtoMapper {
                 phone.country + phone.city + phone.number
             },
             contactComment = dto.contacts?.phones?.get(0)?.comment,
-            logoUrl = dto.logoUrls?.original,
-            logoUrl90 = dto.logoUrls?.art90,
-            logoUrl240 = dto.logoUrls?.art240,
+            logoUrl = dto.employer?.logoUrlsDto?.original,
+            logoUrl90 = dto.employer?.logoUrlsDto?.art90,
+            logoUrl240 = dto.employer?.logoUrlsDto?.art240,
             address = "${dto.address?.city}, ${dto.address?.street}, ${dto.address?.building}",
             employerUrl = dto.employer?.alternateUrl,
             employerName = dto.employer?.name,

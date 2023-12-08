@@ -64,7 +64,7 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
         with(binding) {
             positionName.text = vacancyDetails.name
             salary.text = getSalaryDescription(vacancyDetails)
-            loadLogo(vacancyDetails.logoUrl90)
+            loadLogo(vacancyDetails.logoUrl240)
             companyName.text = vacancyDetails.employerName
             companyLocation.text = getCompanyLocation(vacancyDetails)
             experience.text = vacancyDetails.experience
@@ -144,12 +144,49 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
     }
 
     private fun showContactInfo(vacancyDetails: VacancyDetails) {
-        binding.contactPersonName.text = vacancyDetails.contactName ?: ""
-        binding.contactPersonEmail.text = vacancyDetails.contactEmail ?: ""
-        val contactPhones = StringBuilder("")
-        vacancyDetails.phones?.map { phone -> contactPhones.append(phone).append(", ") }
-        binding.contactPersonPhone.text = contactPhones
-        binding.contactPersonComment.text = vacancyDetails.contactComment ?: ""
+        with(binding) {
+            if (vacancyDetails.contactEmail.isNullOrBlank() && vacancyDetails.phones?.get(0).isNullOrBlank()) {
+                contacts.visibility = View.GONE
+                contactPerson.visibility = View.GONE
+                contactPersonName.visibility = View.GONE
+                contactPersonEmailTitle.visibility = View.GONE
+                contactPersonEmail.visibility = View.GONE
+                contactPersonPhoneTitle.visibility = View.GONE
+                contactPersonPhone.visibility = View.GONE
+                contactPersonCommentTitle.visibility = View.GONE
+                contactPersonComment.visibility = View.GONE
+            } else {
+                contacts.visibility = View.VISIBLE
+                contactPerson.visibility = View.VISIBLE
+                contactPersonName.visibility = View.VISIBLE
+                contactPersonName.text = vacancyDetails.contactName
+            }
+            if (!vacancyDetails.contactEmail.isNullOrEmpty()) {
+                contactPersonEmailTitle.visibility = View.VISIBLE
+                contactPersonEmail.visibility = View.VISIBLE
+                contactPersonEmail.text = vacancyDetails.contactEmail
+            } else {
+                contactPersonEmailTitle.visibility = View.GONE
+                contactPersonEmail.visibility = View.GONE
+            }
+            if (!vacancyDetails.phones?.get(0).isNullOrBlank()) {
+                contactPersonPhoneTitle.visibility = View.VISIBLE
+                contactPersonPhone.visibility = View.VISIBLE
+                contactPersonPhone.text = vacancyDetails.phones?.get(0) ?: ""
+            } else {
+                contactPersonPhoneTitle.visibility = View.GONE
+                contactPersonPhone.visibility = View.GONE
+            }
+            if (!vacancyDetails.contactComment.isNullOrBlank()) {
+                contactPersonCommentTitle.visibility = View.VISIBLE
+                contactPersonComment.visibility = View.VISIBLE
+                contactPersonComment.text = vacancyDetails.contactComment
+            } else {
+                contactPersonCommentTitle.visibility = View.GONE
+                contactPersonComment.visibility = View.GONE
+            }
+        }
+
     }
 
 }
