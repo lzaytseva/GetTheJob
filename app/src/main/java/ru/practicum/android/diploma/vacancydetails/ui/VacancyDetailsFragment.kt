@@ -70,7 +70,14 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
             experience.text = vacancyDetails.experience
             schedulesInfo.text = vacancyDetails.schedule ?: ""
             description.setText(Html.fromHtml(vacancyDetails.description, Html.FROM_HTML_MODE_COMPACT))
-            keySkills.text = getKeySkills(keySkills = vacancyDetails.keySkills)
+            if (vacancyDetails.keySkills.isNullOrEmpty()) {
+                keySkillsTitle.visibility = View.GONE
+                keySkills.visibility = View.GONE
+            } else {
+                keySkillsTitle.visibility = View.VISIBLE
+                keySkills.visibility = View.VISIBLE
+                keySkills.text = getKeySkills(keySkills = vacancyDetails.keySkills)
+            }
             showContactInfo(vacancyDetails)
         }
     }
@@ -132,7 +139,7 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
 
     private fun getKeySkills(keySkills: List<String>?): String {
         val keySkillsText = StringBuilder("")
-        keySkills?.map { skill -> keySkillsText.append(skill) }
+        keySkills?.map { skill -> keySkillsText.append("-").append(skill).append(System.lineSeparator()) }
         return keySkillsText.toString()
     }
 
