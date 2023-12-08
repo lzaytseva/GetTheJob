@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.vacancydetails.presentation
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -21,7 +20,7 @@ class VacancyDetailsViewModel @Inject constructor(
     private val _vacancyDetailsScreenState = MutableLiveData<VacancyDetailsScreenState>()
     val vacancyDetailsScreenState: LiveData<VacancyDetailsScreenState> = _vacancyDetailsScreenState
 
-    private val vacancyDetailsId = "89998378" //savedStateHandle.get<String>("vacancyDetailsId")
+    private val vacancyDetailsId = savedStateHandle.get<String>("vacancyDetailsId")
 
     init {
         if (!vacancyDetailsId.isNullOrBlank()) {
@@ -35,16 +34,11 @@ class VacancyDetailsViewModel @Inject constructor(
             vacancyDetailsRepository.getVacancyDetailsById(id).collect() { response ->
                 if (response is Resource.Success) {
                     _vacancyDetailsScreenState.postValue(response.data?.let { VacancyDetailsScreenState.Content(it) })
-                    Log.d(
-                        "VacancyDetailsViewModel",
-                        "salary= ${(response.data)?.salaryFrom}"
-                    )
                 } else {
                     _vacancyDetailsScreenState.postValue(VacancyDetailsScreenState.Error)
                 }
             }
         }
-
     }
 
 }
