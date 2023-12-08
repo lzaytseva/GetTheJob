@@ -30,6 +30,10 @@
     <string name="vacancy_description">Описание вакансии</string>
     <string name="vacancy_experience_title">Требуемый опыт</string>
     <string name="vacancy_experience">От %1$s года до %2$s лет</string>
+    <string name="vacancy_salary_from_to">от %1$d до %2$d</string>
+    <string name="vacancy_salary_from">от %1$d</string>
+    <string name="vacancy_salary_to">до %1$d</string>
+    <string name="vacancy_salary_not_specified">зарплата не указана</string>
 
     <string name="mock_description">Обязанности\n
 Разрабатывать новую функциональность приложения\n
@@ -81,5 +85,7 @@ CI по модели Trunk Based Development\n
     <string name="header_filter_settings">Настройки фильтрации</string>
     <string name="arrow_back_content_desc">Кнопка назад</string>
     <string name="share">Поделиться</string>
+    <string name="header_industry">Выбор отрасли</string>
+    <string name="hint_enter_industry">Введите отрасль</string>
 
 </resources>

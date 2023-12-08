@@ -21,6 +21,7 @@ object VacancyDetailsDtoMapper {
             phones = dto.contactsDto?.phoneDtos?.map { phoneDto ->
                 phoneDto.country + phoneDto.city + phoneDto.number
             },
+            contactComment = dto.contactsDto?.phoneDtos?.get(0)?.comment,
             logoUrl = dto.logoUrlsDto?.original,
             logoUrl90 = dto.logoUrlsDto?.art90,
             logoUrl240 = dto.logoUrlsDto?.art240,
@@ -28,9 +29,10 @@ object VacancyDetailsDtoMapper {
             employerUrl = dto.employer?.alternateUrl,
             employerName = dto.employer?.name,
             employment = dto.employment?.name,
-            keySkills = dto.keySkills.map { skillDto ->
+            keySkills = dto.keySkills?.map { skillDto ->
                 skillDto.name
             },
+            description = dto.description
         )
 
 }

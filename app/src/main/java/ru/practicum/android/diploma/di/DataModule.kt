@@ -8,6 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import ru.practicum.android.diploma.core.data.navigation.ExternalNavigatorImpl
 import ru.practicum.android.diploma.core.data.network.HhApiService
 import ru.practicum.android.diploma.core.data.network.NetworkClient
@@ -36,6 +37,7 @@ class DataModule {
     fun provideHhService(): HhApiService {
         return Retrofit.Builder()
             .baseUrl(HH_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(HhApiService::class.java)
     }

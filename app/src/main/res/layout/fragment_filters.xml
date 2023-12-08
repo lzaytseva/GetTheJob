@@ -12,8 +12,7 @@
         style="@style/medium_text_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/horizontal_padding"
-        android:layout_marginBottom="@dimen/header_margin_bottom"
+        android:layout_margin="@dimen/header_margin"
         android:drawablePadding="@dimen/arrow_back_padding"
         android:text="@string/header_filter_settings"
         app:drawableStartCompat="@drawable/ic_arrow_back" />
