@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".core.ui.RootActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:title="Get the job"
+        app:titleTextAppearance="@style/medium_text_style"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/root_fragment_container_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/root_fragment_container_view"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -14,7 +25,7 @@
         app:defaultNavHost="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation_view_line_above"
         app:navGraph="@navigation/root_navigation_graph" />
 

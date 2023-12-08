@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.domain.models.ErrorType
+import ru.practicum.android.diploma.core.ui.RootActivity
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.search.domain.model.VacancyInList
 import ru.practicum.android.diploma.search.presentation.SearchScreenState
@@ -37,6 +40,17 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
         super.onViewCreated(view, savedInstanceState)
         configureSearchField()
         setObserver()
+        configureToolbar()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setFiltersVisibility(true)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        setFiltersVisibility(false)
     }
 
     private fun setObserver() {
@@ -85,5 +99,23 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
     private fun onContent(content: ArrayList<VacancyInList>) {
         val adapter = binding.resultsListRecyclerView.adapter as? VacanciesAdapter
         adapter?.setContent(content)
+    }
+
+    private fun setFiltersVisibility(isVisible: Boolean) {
+        (requireActivity() as? RootActivity)?.run {
+            toolbar.menu.findItem(R.id.filters)?.isVisible = isVisible
+        }
+    }
+
+    private fun configureToolbar() {
+        (requireActivity() as? RootActivity)?.run {
+            toolbar.title = ContextCompat.getString(this, R.string.search_screen)
+            val item = toolbar.menu.findItem(R.id.filters)
+            item.isVisible = true
+            item.setOnMenuItemClickListener {
+                findNavController().navigate(R.id.action_searchFragment_to_filtersFragment)
+                true
+            }
+        }
     }
 }
