@@ -7,8 +7,8 @@ import dagger.hilt.components.SingletonComponent
 import ru.practicum.android.diploma.core.data.network.NetworkClient
 import ru.practicum.android.diploma.core.data.room.AppDatabase
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
-import ru.practicum.android.diploma.favorites.data.SaveVacancyRepositoryImpl
-import ru.practicum.android.diploma.favorites.domain.api.SaveVacancyRepository
+import ru.practicum.android.diploma.vacancydetails.data.SaveVacancyRepositoryImpl
+import ru.practicum.android.diploma.vacancydetails.domain.api.SaveVacancyRepository
 import ru.practicum.android.diploma.filters.data.repository.IndustriesRepositoryImpl
 import ru.practicum.android.diploma.filters.domain.model.Industry
 import ru.practicum.android.diploma.util.Resource
