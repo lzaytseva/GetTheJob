@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.filters.ui.fragment
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -62,19 +63,30 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
 
     private fun setFilterFieldsEndIcon() {
         with(binding) {
-            tilIndustry.endIconDrawable = if (etIndustry.text.isNullOrEmpty()) {
-                ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_forward)
-            } else {
-                null
-            }
-            tilPlace.endIconDrawable = if (etPlace.text.isNullOrEmpty()) {
-                ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_forward)
-            } else {
-                null
-            }
+            tilIndustry.endIconDrawable = getEndIconDrawable(
+                iconResId = getEndIconId(isTextFieldEmpty = etIndustry.text.isNullOrBlank())
+            )
+            tilPlace.endIconDrawable = getEndIconDrawable(
+                iconResId = getEndIconId(isTextFieldEmpty = etPlace.text.isNullOrBlank())
+            )
         }
     }
 
+    private fun getEndIconId(isTextFieldEmpty: Boolean): Int? {
+        return if (isTextFieldEmpty) {
+            R.drawable.ic_arrow_forward
+        } else {
+            null
+        }
+    }
+
+    private fun getEndIconDrawable(iconResId: Int?): Drawable? {
+        return if (iconResId == null) {
+            null
+        } else {
+            ContextCompat.getDrawable(requireContext(), iconResId)
+        }
+    }
     private fun setFiltersFieldsHintColorBehaviour() {
         with(binding) {
             tilIndustry.setHintColor(
