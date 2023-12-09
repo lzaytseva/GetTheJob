@@ -2,6 +2,8 @@ package ru.practicum.android.diploma.core.data.network
 
 import android.content.Context
 import android.util.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import ru.practicum.android.diploma.filters.data.dto.IndustriesRequest
 import ru.practicum.android.diploma.core.data.dto.requests.VacancyDetailsSearchRequest
@@ -22,12 +24,14 @@ class RetrofitNetworkClient(
             return Response().apply { resultCode = RC_NO_INTERNET }
         }
 
-        return when (request) {
-            is VacancyDetailsSearchRequest -> getVacancyDetailsById(request.id)
-            is IndustriesRequest -> getIndustries()
+        return withContext(Dispatchers.IO) {
+            when (request) {
+                is VacancyDetailsSearchRequest -> getVacancyDetailsById(request.id)
+                is IndustriesRequest -> getIndustries()
 
-            else -> Response().apply { resultCode = RC_NOK_SERVER_ERROR }
+                else -> Response().apply { resultCode = RC_NOK_SERVER_ERROR }
 
+            }
         }
     }
 
