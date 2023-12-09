@@ -62,7 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/horizontal_padding"
-        android:layout_marginTop="@dimen/elements_top_margin"
+        android:layout_marginTop="@dimen/elements_margin_24dp"
         android:hint="@string/hint_expected_salary"
         android:theme="@style/salary_til_style">
 
@@ -80,7 +80,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/elements_top_margin"
+        android:layout_marginTop="@dimen/elements_margin_24dp"
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/horizontal_padding">
 
@@ -96,7 +96,7 @@
             android:layout_width="@dimen/check_box_size"
             android:layout_height="@dimen/check_box_size"
             android:layout_gravity="end"
-            android:button="@drawable/check_box_drawable"
+            android:button="@drawable/salary_check_box"
             android:checked="false" />
 
     </FrameLayout>
