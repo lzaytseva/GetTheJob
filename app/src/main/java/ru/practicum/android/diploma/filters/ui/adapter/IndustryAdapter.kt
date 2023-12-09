@@ -22,27 +22,28 @@ class IndustryAdapter : ListAdapter<Industry, IndustryAdapter.IndustryViewHolder
 
     override fun onBindViewHolder(holder: IndustryViewHolder, position: Int) {
         val industry = getItem(position)
-        holder.bind(industry)
+        val newList = currentList.toMutableList()
 
         val onClickListener = OnClickListener {
             if (industry.selected) {
-                currentList[position].selected = false
+                newList[position] = industry.copy(selected = false)
+                lastSelected = null
             } else {
                 if (lastSelected != null) {
-                    val lastSelectedIndex = currentList.indexOf(lastSelected)
+                    val lastSelectedIndex = newList.indexOf(lastSelected)
                     if (lastSelectedIndex != -1) {
-                        currentList[lastSelectedIndex].selected = false
+                        newList[lastSelectedIndex] = newList[lastSelectedIndex].copy(selected = false)
                     }
-                    notifyItemChanged(lastSelectedIndex)
                 }
-                currentList[position].selected = true
+                newList[position] = industry.copy(selected = true)
                 lastSelected = industry
             }
-            notifyItemChanged(position)
+            submitList(newList)
         }
 
         holder.binding.checkBoxIndustry.setOnClickListener(onClickListener)
         holder.itemView.setOnClickListener(onClickListener)
+        holder.bind(industry)
     }
 
     class IndustryViewHolder(val binding: ItemIndustryBinding) :
