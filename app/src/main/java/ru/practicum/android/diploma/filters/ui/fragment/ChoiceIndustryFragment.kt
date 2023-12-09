@@ -55,15 +55,15 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
     }
 
     private fun showError(message: String) {
-
+        TODO("Not implemented yet")
     }
 
     private fun showEmpty() {
-
+        TODO("Not implemented yet")
     }
 
     private fun showLoading() {
-
+        TODO("Not implemented yet")
     }
 
     private fun setIndustrySearchTextWatcher() {
