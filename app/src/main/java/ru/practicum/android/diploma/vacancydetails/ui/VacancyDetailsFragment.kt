@@ -182,6 +182,9 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
                 contactPersonPhoneTitle.visibility = View.VISIBLE
                 contactPersonPhone.visibility = View.VISIBLE
                 contactPersonPhone.text = vacancyDetails.phones?.get(0)
+                contactPersonPhone.setOnClickListener {
+                    viewModel.makePhoneCall()
+                }
             } else {
                 contactPersonPhoneTitle.visibility = View.GONE
                 contactPersonPhone.visibility = View.GONE

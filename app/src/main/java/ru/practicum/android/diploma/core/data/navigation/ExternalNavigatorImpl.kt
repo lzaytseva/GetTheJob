@@ -44,5 +44,12 @@ class ExternalNavigatorImpl(
         startActivity(appContext, shareLinkIntent, null)
     }
 
-
+    override fun makePhoneCall(number: String) {
+        val phoneCallIntent = Intent().apply {
+            action = Intent.ACTION_DIAL
+            data = Uri.parse("tel:$number")
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            Intent.createChooser(this, null)
+        }
+        startActivity(appContext, phoneCallIntent, null)    }
 }

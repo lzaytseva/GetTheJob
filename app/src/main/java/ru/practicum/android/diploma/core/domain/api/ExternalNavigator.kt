@@ -9,4 +9,6 @@ interface ExternalNavigator {
     fun sendEmail(emailData: EmailData)
 
     fun share(link: String)
+
+    fun makePhoneCall(number: String)
 }

@@ -51,4 +51,14 @@ class VacancyDetailsViewModel @Inject constructor(
         }
     }
 
+    fun makePhoneCall() {
+        if (vacancyDetailsScreenState.value is VacancyDetailsScreenState.Content) {
+            (vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content).vacancyDetails.phones?.let {
+                externalNavigator.makePhoneCall(
+                    it[0]
+                )
+            }
+        }
+    }
+
 }
