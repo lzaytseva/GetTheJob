@@ -8,6 +8,7 @@ object VacancyDetailsDtoMapper {
     fun map(dto: VacancyDetailsDto): VacancyDetails =
         VacancyDetails(
             id = dto.id,
+            url = dto.url,
             name = dto.name,
             area = dto.area.name,
             salaryCurrency = dto.salary?.currency,
@@ -25,7 +26,9 @@ object VacancyDetailsDtoMapper {
             logoUrl = dto.employer?.logoUrlsDto?.original,
             logoUrl90 = dto.employer?.logoUrlsDto?.art90,
             logoUrl240 = dto.employer?.logoUrlsDto?.art240,
-            address = "${dto.address?.city}, ${dto.address?.street}, ${dto.address?.building}",
+            address = dto.address?.let { addressDto ->
+                "${addressDto.city}, ${addressDto.street}, ${addressDto.building}"
+            },
             employerUrl = dto.employer?.alternateUrl,
             employerName = dto.employer?.name,
             employment = dto.employment?.name,

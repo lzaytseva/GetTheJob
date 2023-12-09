@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.domain.models.VacancyDetails
+import ru.practicum.android.diploma.core.ui.RootActivity
 import ru.practicum.android.diploma.databinding.FragmentVacancyDetailsBinding
 import ru.practicum.android.diploma.util.BindingFragment
 import ru.practicum.android.diploma.vacancydetails.presentation.VacancyDetailsScreenState
@@ -28,6 +30,12 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        configureToolbar()
+
+        binding.companySection.setOnClickListener {
+            viewModel.openLink()
+        }
 
         viewModel.vacancyDetailsScreenState.observe(viewLifecycleOwner) { screenState ->
             when (screenState) {
@@ -165,6 +173,7 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
                 contactPersonEmailTitle.visibility = View.VISIBLE
                 contactPersonEmail.visibility = View.VISIBLE
                 contactPersonEmail.text = vacancyDetails.contactEmail
+                contactPersonEmail.setOnClickListener { viewModel.sendEmail() }
             } else {
                 contactPersonEmailTitle.visibility = View.GONE
                 contactPersonEmail.visibility = View.GONE
@@ -173,6 +182,9 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
                 contactPersonPhoneTitle.visibility = View.VISIBLE
                 contactPersonPhone.visibility = View.VISIBLE
                 contactPersonPhone.text = vacancyDetails.phones?.get(0)
+                contactPersonPhone.setOnClickListener {
+                    viewModel.makePhoneCall()
+                }
             } else {
                 contactPersonPhoneTitle.visibility = View.GONE
                 contactPersonPhone.visibility = View.GONE
@@ -187,6 +199,23 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
             }
         }
 
+    }
+
+    private fun configureToolbar() {
+        val toolbar = (requireActivity() as RootActivity).toolbar
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+        toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+        toolbar.setTitle(getString(R.string.vacancy))
+        toolbar.menu.findItem(R.id.favorite).isVisible = true
+        toolbar.menu.findItem(R.id.share).isVisible = true
+        toolbar.menu.findItem(R.id.filters).isVisible = false
+
+        toolbar.menu.findItem(R.id.share).setOnMenuItemClickListener {
+            viewModel.shareVacancy()
+            true
+        }
     }
 
 }
