@@ -43,10 +43,6 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
-
     private fun showContent(vacancyDetails: VacancyDetails) {
         with(binding) {
             loading.visibility = View.GONE
@@ -174,6 +170,7 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
                 contactPersonEmailTitle.visibility = View.VISIBLE
                 contactPersonEmail.visibility = View.VISIBLE
                 contactPersonEmail.text = vacancyDetails.contactEmail
+                contactPersonEmail.setOnClickListener { viewModel.sendEmail() }
             } else {
                 contactPersonEmailTitle.visibility = View.GONE
                 contactPersonEmail.visibility = View.GONE

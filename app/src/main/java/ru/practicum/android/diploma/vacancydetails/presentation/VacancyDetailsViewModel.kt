@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.core.domain.api.ExternalNavigator
+import ru.practicum.android.diploma.core.domain.models.EmailData
 import ru.practicum.android.diploma.util.Resource
 import ru.practicum.android.diploma.vacancydetails.domain.api.VacancyDetailsRepository
 import javax.inject.Inject
@@ -22,7 +23,7 @@ class VacancyDetailsViewModel @Inject constructor(
     private val _vacancyDetailsScreenState = MutableLiveData<VacancyDetailsScreenState>()
     val vacancyDetailsScreenState: LiveData<VacancyDetailsScreenState> = _vacancyDetailsScreenState
 
-    private val vacancyDetailsId = "89998378" //savedStateHandle.get<String>("vacancyDetailsId")
+    private val vacancyDetailsId = "89534799" //savedStateHandle.get<String>("vacancyDetailsId")
 
     init {
         if (!vacancyDetailsId.isNullOrBlank()) {
@@ -58,6 +59,20 @@ class VacancyDetailsViewModel @Inject constructor(
                     it[0]
                 )
             }
+        }
+    }
+
+    fun sendEmail() {
+        if (vacancyDetailsScreenState.value is VacancyDetailsScreenState.Content) {
+            externalNavigator.sendEmail(
+                EmailData(
+                    emailAddress = (vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content).vacancyDetails.contactEmail
+                        ?: "",
+                    subject = (vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content).vacancyDetails.name,
+                    text = ""
+                )
+
+            )
         }
     }
 
