@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.filters.ui.fragment
 
+import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +10,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.textfield.TextInputLayout
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
 import ru.practicum.android.diploma.filters.presentation.FiltersViewModel
@@ -87,13 +87,18 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
             ContextCompat.getDrawable(requireContext(), iconResId)
         }
     }
+
     private fun setFiltersFieldsHintColorBehaviour() {
         with(binding) {
-            tilIndustry.setHintColor(
-                hintColorStateListId = getHintColorStateListId(isTextFieldEmpty = etIndustry.text.isNullOrBlank())
+            tilIndustry.defaultHintTextColor = getHintColorStateList(
+                hintColorStateListId = getHintColorStateListId(
+                    isTextFieldEmpty = etIndustry.text.isNullOrBlank()
+                )
             )
-            tilPlace.setHintColor(
-                hintColorStateListId = getHintColorStateListId(isTextFieldEmpty = etPlace.text.isNullOrBlank())
+            tilPlace.defaultHintTextColor = getHintColorStateList(
+                hintColorStateListId = getHintColorStateListId(
+                    isTextFieldEmpty = etPlace.text.isNullOrBlank()
+                )
             )
         }
     }
@@ -106,8 +111,8 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
         }
     }
 
-    private fun TextInputLayout.setHintColor(hintColorStateListId: Int) {
-        defaultHintTextColor = ContextCompat.getColorStateList(requireContext(), hintColorStateListId)
+    private fun getHintColorStateList(hintColorStateListId: Int): ColorStateList {
+        return ContextCompat.getColorStateList(requireContext(), hintColorStateListId)!!
     }
 
     private fun setBtnsVisibility() {
