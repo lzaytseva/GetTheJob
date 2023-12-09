@@ -20,7 +20,7 @@ class VacancyDetailsViewModel @Inject constructor(
     private val _vacancyDetailsScreenState = MutableLiveData<VacancyDetailsScreenState>()
     val vacancyDetailsScreenState: LiveData<VacancyDetailsScreenState> = _vacancyDetailsScreenState
 
-    private val vacancyDetailsId = savedStateHandle.get<String>("vacancyDetailsId")
+    private val vacancyDetailsId = "89998378" //savedStateHandle.get<String>("vacancyDetailsId")
 
     init {
         if (!vacancyDetailsId.isNullOrBlank()) {
