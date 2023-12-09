@@ -3,5 +3,5 @@ package ru.practicum.android.diploma.filters.domain.model
 data class Industry(
     val id: String,
     val name: String,
-    var selected: Boolean = false
+    val selected: Boolean = false
 )
