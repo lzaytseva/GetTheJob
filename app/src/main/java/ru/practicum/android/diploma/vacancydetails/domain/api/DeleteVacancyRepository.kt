@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.favorites.domain.api
+package ru.practicum.android.diploma.vacancydetails.domain.api
 
 interface DeleteVacancyRepository {
 
