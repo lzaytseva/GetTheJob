@@ -1,25 +1,27 @@
 package ru.practicum.android.diploma.filters.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentChoiceIndustryBinding
 import ru.practicum.android.diploma.filters.domain.model.Industry
 import ru.practicum.android.diploma.filters.domain.model.IndustryScreenState
 import ru.practicum.android.diploma.filters.presentation.ChoiceIndustryViewModel
+import ru.practicum.android.diploma.filters.ui.adapter.IndustryAdapter
 import ru.practicum.android.diploma.util.BindingFragment
 
 @AndroidEntryPoint
 class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() {
 
     private val viewModel: ChoiceIndustryViewModel by viewModels()
+    private val adapter = IndustryAdapter()
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentChoiceIndustryBinding =
         FragmentChoiceIndustryBinding.inflate(inflater, container, false)
@@ -30,6 +32,7 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
         observeViewModel()
 
         setIndustrySearchTextWatcher()
+        initRecyclerView()
     }
 
     private fun observeViewModel() {
@@ -48,7 +51,7 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
     }
 
     private fun showContent(industries: List<Industry>) {
-        Log.d("Industries", industries.joinToString("\n"))
+        adapter.submitList(industries)
     }
 
     private fun showError(message: String) {
@@ -79,5 +82,15 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
                 }
             }
         }
+    }
+
+    private fun initRecyclerView() {
+        binding.rvIndustries.layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+        binding.rvIndustries.adapter = adapter
+        binding.rvIndustries.itemAnimator = null
     }
 }
