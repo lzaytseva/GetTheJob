@@ -174,7 +174,6 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
 
     private fun configureToolbar() {
         val toolbar = (requireActivity() as RootActivity).toolbar
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }

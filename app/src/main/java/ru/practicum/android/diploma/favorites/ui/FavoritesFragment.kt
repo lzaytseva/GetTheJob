@@ -27,6 +27,7 @@ class FavoritesFragment : BindingFragment<FragmentFavoritesBinding>() {
     private fun configureToolbar() {
         (requireActivity() as? RootActivity)?.run {
             toolbar.title = ContextCompat.getString(this, R.string.favorite)
+            toolbar.navigationIcon = null
         }
     }
 }
