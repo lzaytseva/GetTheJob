@@ -16,7 +16,6 @@
     <dimen name="vacancy_screen_horizontal_margin">16dp</dimen>
     <dimen name="vacancy_screen_logo_rounded_corners">12dp</dimen>
 
-
     <!--  Размер индикатора загрузки  -->
     <dimen name="progressbar_size">48dp</dimen>
 
@@ -37,5 +36,10 @@
     <dimen name="arrow_back_padding">20dp</dimen>
     <dimen name="check_box_size">24dp</dimen>
     <dimen name="elements_top_margin">24dp</dimen>
+
+    <!--  Экран избранных вакансий  -->
+    <dimen name="favorites_margin_16">16dp</dimen>
+    <dimen name="favorites_margin_160">160dp</dimen>
+    <dimen name="favorites_margin_32">32dp</dimen>
 
 </resources>
