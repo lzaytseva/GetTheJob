@@ -16,7 +16,10 @@ interface VacancyDao {
     @Delete
     suspend fun deleteVacancy(entity: VacancyEntity)
 
-    @Query("SELECT vacancyId, name, salaryCurrency, salaryFrom, salaryTo, employerName, logoUrl FROM favorites_table ORDER BY id DESC")
+    @Query(
+        "SELECT vacancyId, name, salaryCurrency, salaryFrom, salaryTo, employerName, logoUrl " +
+            "FROM favorites_table ORDER BY id DESC"
+    )
     suspend fun getVacancyList(): List<VacancyShort>
 
     @Query("SELECT * FROM favorites_table WHERE vacancyId = :vacancyId LIMIT 1")
