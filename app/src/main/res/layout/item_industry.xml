@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp">
+    android:layout_marginBottom="@dimen/rv_industry_elements_margin">
 
     <TextView
         android:id="@+id/tv_industry_name"
@@ -12,8 +12,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
-        android:lines="2"
         android:gravity="center_vertical"
+        android:lines="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/check_box_industry"
         app:layout_constraintStart_toStartOf="parent"

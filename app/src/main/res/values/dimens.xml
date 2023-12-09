@@ -35,7 +35,10 @@
     <dimen name="header_margin">16dp</dimen>
     <dimen name="arrow_back_padding">20dp</dimen>
     <dimen name="check_box_size">24dp</dimen>
-    <dimen name="elements_top_margin">24dp</dimen>
+    <dimen name="elements_margin_24dp">24dp</dimen>
+    <dimen name="elements_margin_16dp">16dp</dimen>
+    <dimen name="rv_industry_elements_margin">8dp</dimen>
+    <dimen name="root_layout_padding">16dp</dimen>
 
     <!--  Экран избранных вакансий  -->
     <dimen name="favorites_margin_16">16dp</dimen>
