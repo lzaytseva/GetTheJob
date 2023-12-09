@@ -96,7 +96,7 @@
             android:layout_width="@dimen/check_box_size"
             android:layout_height="@dimen/check_box_size"
             android:layout_gravity="end"
-            android:button="@drawable/check_box_drawable"
+            android:button="@drawable/salary_check_box"
             android:checked="false" />
 
     </FrameLayout>
