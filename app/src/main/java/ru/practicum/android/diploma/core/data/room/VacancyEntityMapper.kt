@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.core.data
+package ru.practicum.android.diploma.core.data.room
 
 import ru.practicum.android.diploma.core.data.room.entity.VacancyEntity
 import ru.practicum.android.diploma.core.domain.models.VacancyDetails
