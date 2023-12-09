@@ -62,6 +62,8 @@ class RetrofitNetworkClient(
         }
     }
 
+
+    // Надо переделать в enum, как предлагал Женя
     companion object {
         const val RC_NO_INTERNET = -1
         const val RC_OK = 200
