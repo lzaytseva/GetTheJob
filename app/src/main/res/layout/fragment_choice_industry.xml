@@ -6,16 +6,9 @@
     android:layout_height="match_parent"
     android:background="@color/screen_bg"
     android:orientation="vertical"
-    android:padding="@dimen/root_layout_padding"
-    tools:context=".filters.ui.ChoiceIndustryFragment">
-
-    <TextView
-        style="@style/medium_text_style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawablePadding="@dimen/arrow_back_padding"
-        android:text="@string/header_industry"
-        app:drawableStartCompat="@drawable/ic_arrow_back" />
+    android:paddingHorizontal="@dimen/root_layout_padding"
+    android:paddingTop="@dimen/root_layout_padding"
+    tools:context=".filters.ui.fragment.ChoiceIndustryFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_search_industry"
@@ -33,7 +26,6 @@
             style="@style/salary_edit_text_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/elements_margin_16dp"
             android:background="@drawable/edit_text_bg"
             android:hint="@string/hint_enter_industry"
             android:inputType="textShortMessage"
@@ -50,4 +42,17 @@
         tools:itemCount="5"
         tools:listitem="@layout/item_industry" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/btn_style"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_select"
+        android:layout_marginTop="@dimen/elements_margin_16dp"
+        android:layout_marginBottom="@dimen/elements_margin_24dp" />
 </LinearLayout>
