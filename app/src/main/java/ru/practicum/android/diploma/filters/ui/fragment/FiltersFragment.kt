@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputLayout
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
 import ru.practicum.android.diploma.filters.presentation.FiltersViewModel
@@ -33,6 +34,7 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
 
     override fun onResume() {
         super.onResume()
+        setFiltersFieldsHintColorBehaviour()
         setFilterFieldsEndIcon()
         setBtnsVisibility()
     }
@@ -75,6 +77,29 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
                 null
             }
         }
+    }
+
+    private fun setFiltersFieldsHintColorBehaviour() {
+        with(binding) {
+            tilIndustry.setHintColor(
+                hintColorStateListId = getHintColorStateListId(isTextFieldEmpty = etIndustry.text.isNullOrBlank())
+            )
+            tilPlace.setHintColor(
+                hintColorStateListId = getHintColorStateListId(isTextFieldEmpty = etPlace.text.isNullOrBlank())
+            )
+        }
+    }
+
+    private fun getHintColorStateListId(isTextFieldEmpty: Boolean): Int {
+        return if (isTextFieldEmpty) {
+            R.color.filter_hint_color
+        } else {
+            R.color.filter_hint_color_populated
+        }
+    }
+
+    private fun TextInputLayout.setHintColor(hintColorStateListId: Int) {
+        defaultHintTextColor = ContextCompat.getColorStateList(requireContext(), hintColorStateListId)
     }
 
     private fun setBtnsVisibility() {
