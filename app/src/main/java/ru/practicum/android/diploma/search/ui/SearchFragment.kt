@@ -110,6 +110,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
     private fun configureToolbar() {
         (requireActivity() as? RootActivity)?.run {
             toolbar.title = ContextCompat.getString(this, R.string.search_screen)
+            toolbar.navigationIcon = null
             val item = toolbar.menu.findItem(R.id.filters)
             item.isVisible = true
             item.setOnMenuItemClickListener {

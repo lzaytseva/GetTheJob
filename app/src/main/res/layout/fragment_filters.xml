@@ -6,16 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/screen_bg"
     android:orientation="vertical"
-    tools:context=".filters.ui.FiltersFragment">
-
-    <TextView
-        style="@style/medium_text_style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/header_margin"
-        android:drawablePadding="@dimen/arrow_back_padding"
-        android:text="@string/header_filter_settings"
-        app:drawableStartCompat="@drawable/ic_arrow_back" />
+    tools:context=".filters.ui.fragment.FiltersFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_place"
