@@ -43,7 +43,6 @@
         <item name="android:background">@drawable/btn_bg</item>
     </style>
 
-
     <!--  Стиль текста для edit text'ов поиска и ожидаемой зп  -->
     <style name="et_text_style">
         <item name="android:textSize">@dimen/regular_text_size</item>
