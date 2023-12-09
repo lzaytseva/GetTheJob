@@ -20,7 +20,7 @@ object ToolbarUtils {
 
     }
 
-    private fun Toolbar.hideMenu() {
+    fun Toolbar.hideMenu() {
         menu.findItem(R.id.favorite).isVisible = false
         menu.findItem(R.id.share).isVisible = false
         menu.findItem(R.id.filters).isVisible = false
