@@ -12,7 +12,11 @@ import ru.practicum.android.diploma.favorites.domain.api.FavoritesVacancyListRep
 import ru.practicum.android.diploma.filters.data.repository.IndustriesRepositoryImpl
 import ru.practicum.android.diploma.filters.domain.model.Industry
 import ru.practicum.android.diploma.util.Resource
+import ru.practicum.android.diploma.vacancydetails.data.DeleteVacancyRepositoryImpl
+import ru.practicum.android.diploma.vacancydetails.data.SaveVacancyRepositoryImpl
 import ru.practicum.android.diploma.vacancydetails.data.VacancyDetailsRepositoryImpl
+import ru.practicum.android.diploma.vacancydetails.domain.api.DeleteVacancyRepository
+import ru.practicum.android.diploma.vacancydetails.domain.api.SaveVacancyRepository
 import ru.practicum.android.diploma.vacancydetails.domain.api.VacancyDetailsRepository
 import javax.inject.Singleton
 
@@ -28,6 +32,12 @@ class RepositoryModule {
 
     @Provides
     @Singleton
+    fun provideDeleteVacancyRepository(addDatabase: AppDatabase): DeleteVacancyRepository {
+        return DeleteVacancyRepositoryImpl(addDatabase)
+    }
+
+    @Provides
+    @Singleton
     fun provideIndustriesRepository(networkClient: NetworkClient): GetDataRepo<Resource<List<Industry>>> {
         return IndustriesRepositoryImpl(networkClient)
     }
@@ -36,5 +46,11 @@ class RepositoryModule {
     @Singleton
     fun provideFavoritesVacancyListRepository(appDatabase: AppDatabase): FavoritesVacancyListRepository {
         return FavoritesVacancyListRepositoryImpl(appDatabase)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSaveVacancyRepository(database: AppDatabase): SaveVacancyRepository {
+        return SaveVacancyRepositoryImpl(database)
     }
 }
