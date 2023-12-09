@@ -84,7 +84,7 @@
     </style>
 
     <style name="filter_til_style">
-        <item name="android:textColorHint">@color/basic_text_color</item>
+        <item name="android:textColorHint">@color/gray</item>
         <item name="boxStrokeWidth">0dp</item>
         <item name="endIconDrawable">@drawable/ic_arrow_forward</item>
         <item name="endIconMode">custom</item>
