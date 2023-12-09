@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_vacancyDetailsFragment_to_similarVacanciesFragment"
             app:destination="@id/similarVacanciesFragment" />
+        <argument
+            android:name="vacancyId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"

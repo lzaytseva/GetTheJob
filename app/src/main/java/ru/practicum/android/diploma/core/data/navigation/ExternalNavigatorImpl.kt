@@ -33,5 +33,25 @@ class ExternalNavigatorImpl(
         startActivity(appContext, sendEmailIntent, null)
     }
 
+    override fun share(link: String) {
+        val shareLinkIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            type = appContext.getString(R.string.text_plain)
+            putExtra(Intent.EXTRA_TEXT, link)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            Intent.createChooser(this, null)
+        }
+        startActivity(appContext, shareLinkIntent, null)
+    }
 
+    override fun makePhoneCall(number: String) {
+        val phoneCallIntent = Intent().apply {
+            action = Intent.ACTION_DIAL
+            data = Uri.parse(appContext.getString(R.string.tel, number))
+        }
+        val chooser = Intent.createChooser(phoneCallIntent, null).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        startActivity(appContext, chooser, null)
+    }
 }

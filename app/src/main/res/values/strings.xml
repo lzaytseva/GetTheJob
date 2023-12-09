@@ -59,6 +59,8 @@ CI по модели Trunk Based Development\n
     <string name="phone">Телефон</string>
     <string name="comment">Комментарий</string>
     <string name="vacancy_similar_vacancies">Похожие вакансии</string>
+    <string name="text_plain">text/plain</string>
+    <string name="tel">tel:%1$s</string>
 
     <!--  Эл. адреса разработчиков  -->
     <string name="dev1_email">lvzaytseva1@gmail.com</string>
@@ -69,6 +71,7 @@ CI по модели Trunk Based Development\n
     <string name="no_applications_found">На Вашем устройстве нет подходящего приложения</string>
     <string name="something_went_wrong">Что-то пошло не так…</string>
     <string name="uri_mailto">mailto:</string>
+
 
     <!-- Экран поиска -->
     <string name="et_search_hint">Введите запрос</string>
