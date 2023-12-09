@@ -28,7 +28,9 @@ class IndustriesRepositoryImpl @Inject constructor(
                 emit(Resource.Success(
                     IndustryMapper.mapDtoToEntityList(
                         (response as IndustriesResponse).industries
-                    )
+                    ).sortedBy { industry ->
+                        industry.name
+                    }
                 ))
             }
 
