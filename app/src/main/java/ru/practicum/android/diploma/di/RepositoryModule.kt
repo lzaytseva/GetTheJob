@@ -7,6 +7,8 @@ import dagger.hilt.components.SingletonComponent
 import ru.practicum.android.diploma.core.data.network.NetworkClient
 import ru.practicum.android.diploma.core.data.room.AppDatabase
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
+import ru.practicum.android.diploma.favorites.data.FavoritesVacancyListRepositoryImpl
+import ru.practicum.android.diploma.favorites.domain.api.FavoritesVacancyListRepository
 import ru.practicum.android.diploma.filters.data.repository.IndustriesRepositoryImpl
 import ru.practicum.android.diploma.filters.domain.model.Industry
 import ru.practicum.android.diploma.util.Resource
@@ -38,6 +40,12 @@ class RepositoryModule {
     @Singleton
     fun provideIndustriesRepository(networkClient: NetworkClient): GetDataRepo<Resource<List<Industry>>> {
         return IndustriesRepositoryImpl(networkClient)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFavoritesVacancyListRepository(appDatabase: AppDatabase): FavoritesVacancyListRepository {
+        return FavoritesVacancyListRepositoryImpl(appDatabase)
     }
 
     @Provides
