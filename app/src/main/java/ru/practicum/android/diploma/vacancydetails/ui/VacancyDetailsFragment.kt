@@ -2,7 +2,6 @@ package ru.practicum.android.diploma.vacancydetails.ui
 
 import android.os.Bundle
 import android.text.Html
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +32,10 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
         super.onViewCreated(view, savedInstanceState)
 
         configureToolbar()
+
+        binding.companySection.setOnClickListener {
+            viewModel.openLink()
+        }
 
         viewModel.vacancyDetailsScreenState.observe(viewLifecycleOwner) { screenState ->
             when (screenState) {

@@ -23,7 +23,7 @@ class VacancyDetailsViewModel @Inject constructor(
     private val _vacancyDetailsScreenState = MutableLiveData<VacancyDetailsScreenState>()
     val vacancyDetailsScreenState: LiveData<VacancyDetailsScreenState> = _vacancyDetailsScreenState
 
-    private val vacancyDetailsId = "89534799" //savedStateHandle.get<String>("vacancyDetailsId")
+    private val vacancyDetailsId = "89534799" //savedStateHandle.get<String>("vacancyId")
 
     init {
         if (!vacancyDetailsId.isNullOrBlank()) {
@@ -73,6 +73,16 @@ class VacancyDetailsViewModel @Inject constructor(
                 )
 
             )
+        }
+    }
+
+    fun openLink() {
+        if (vacancyDetailsScreenState.value is VacancyDetailsScreenState.Content) {
+            (vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content).vacancyDetails.employerUrl?.let { url ->
+                externalNavigator.openUrlLink(
+                    url
+                )
+            }
         }
     }
 
