@@ -33,5 +33,16 @@ class ExternalNavigatorImpl(
         startActivity(appContext, sendEmailIntent, null)
     }
 
+    override fun share(link: String) {
+        val shareLinkIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, link)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            Intent.createChooser(this, null)
+        }
+        startActivity(appContext, shareLinkIntent, null)
+    }
+
 
 }

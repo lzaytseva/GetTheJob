@@ -8,6 +8,7 @@ object VacancyDetailsDtoMapper {
     fun map(dto: VacancyDetailsDto): VacancyDetails =
         VacancyDetails(
             id = dto.id,
+            url = dto.url,
             name = dto.name,
             area = dto.area.name,
             salaryCurrency = dto.salary?.currency,

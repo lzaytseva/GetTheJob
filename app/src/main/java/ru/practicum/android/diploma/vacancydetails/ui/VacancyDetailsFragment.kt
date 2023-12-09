@@ -209,6 +209,10 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
         toolbar.menu.findItem(R.id.share).isVisible = true
         toolbar.menu.findItem(R.id.filters).isVisible = false
 
+        toolbar.menu.findItem(R.id.share).setOnMenuItemClickListener {
+            viewModel.shareVacancy()
+            true
+        }
     }
 
 }

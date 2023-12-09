@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import ru.practicum.android.diploma.core.domain.api.ExternalNavigator
 import ru.practicum.android.diploma.util.Resource
 import ru.practicum.android.diploma.vacancydetails.domain.api.VacancyDetailsRepository
 import javax.inject.Inject
@@ -14,7 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class VacancyDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val vacancyDetailsRepository: VacancyDetailsRepository
+    private val vacancyDetailsRepository: VacancyDetailsRepository,
+    private val externalNavigator: ExternalNavigator
 ) : ViewModel() {
 
     private val _vacancyDetailsScreenState = MutableLiveData<VacancyDetailsScreenState>()
@@ -38,6 +40,14 @@ class VacancyDetailsViewModel @Inject constructor(
                     _vacancyDetailsScreenState.postValue(VacancyDetailsScreenState.Error)
                 }
             }
+        }
+    }
+
+    fun shareVacancy() {
+        if (vacancyDetailsScreenState.value is VacancyDetailsScreenState.Content) {
+            externalNavigator.share(
+                (vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content).vacancyDetails.url
+            )
         }
     }
 
