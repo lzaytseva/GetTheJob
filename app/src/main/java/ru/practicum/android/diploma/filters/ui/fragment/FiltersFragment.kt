@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.filters.ui
+package ru.practicum.android.diploma.filters.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

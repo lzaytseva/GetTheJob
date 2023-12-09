@@ -1,17 +1,22 @@
-package ru.practicum.android.diploma.filters.ui
+package ru.practicum.android.diploma.filters.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentChoiceIndustryBinding
+import ru.practicum.android.diploma.filters.domain.model.Industry
+import ru.practicum.android.diploma.filters.domain.model.IndustryScreenState
 import ru.practicum.android.diploma.filters.presentation.ChoiceIndustryViewModel
 import ru.practicum.android.diploma.util.BindingFragment
 
+@AndroidEntryPoint
 class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() {
 
     private val viewModel: ChoiceIndustryViewModel by viewModels()
@@ -21,7 +26,41 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        observeViewModel()
+
         setIndustrySearchTextWatcher()
+    }
+
+    private fun observeViewModel() {
+        viewModel.state.observe(viewLifecycleOwner) {
+            renderState(it)
+        }
+    }
+
+    private fun renderState(state: IndustryScreenState) {
+        when (state) {
+            is IndustryScreenState.Content -> showContent(state.industries)
+            is IndustryScreenState.Error -> showError(state.message)
+            is IndustryScreenState.Empty -> showEmpty()
+            is IndustryScreenState.Loading -> showLoading()
+        }
+    }
+
+    private fun showContent(industries: List<Industry>) {
+        Log.d("Industries", industries.joinToString("\n"))
+    }
+
+    private fun showError(message: String) {
+
+    }
+
+    private fun showEmpty() {
+
+    }
+
+    private fun showLoading() {
+
     }
 
     private fun setIndustrySearchTextWatcher() {
