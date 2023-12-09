@@ -25,7 +25,7 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
     }
 
     private fun setIndustrySearchTextWatcher() {
-        binding.etSearchIndustry.doOnTextChanged { text, start, before, count ->
+        binding.etSearchIndustry.doOnTextChanged { text, _, _, _ ->
             if (!text.isNullOrBlank()) {
                 binding.tilSearchIndustry.endIconDrawable =
                     ContextCompat.getDrawable(requireContext(), R.drawable.ic_clear)
