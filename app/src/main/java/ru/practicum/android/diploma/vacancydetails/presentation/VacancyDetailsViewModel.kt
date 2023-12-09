@@ -46,14 +46,14 @@ class VacancyDetailsViewModel @Inject constructor(
 
     fun shareVacancy() {
         if (vacancyDetailsScreenState.value is VacancyDetailsScreenState.Content) {
-            val screenState = (vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content)
+            val screenState = vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content
             externalNavigator.share(screenState.vacancyDetails.url)
         }
     }
 
     fun makePhoneCall() {
         if (vacancyDetailsScreenState.value is VacancyDetailsScreenState.Content) {
-            val screenState = (vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content)
+            val screenState = vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content
             screenState.vacancyDetails.phones?.let {
                 externalNavigator.makePhoneCall(
                     it[0]
@@ -64,7 +64,7 @@ class VacancyDetailsViewModel @Inject constructor(
 
     fun sendEmail() {
         if (vacancyDetailsScreenState.value is VacancyDetailsScreenState.Content) {
-            val screenState = (vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content)
+            val screenState = vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content
             externalNavigator.sendEmail(
                 EmailData(
                     emailAddress = screenState.vacancyDetails.contactEmail
@@ -78,11 +78,9 @@ class VacancyDetailsViewModel @Inject constructor(
 
     fun openLink() {
         if (vacancyDetailsScreenState.value is VacancyDetailsScreenState.Content) {
-            val screenState = (vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content)
+            val screenState = vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content
             screenState.vacancyDetails.employerUrl?.let { url ->
-                externalNavigator.openUrlLink(
-                    url
-                )
+                externalNavigator.openUrlLink(url)
             }
         }
     }
