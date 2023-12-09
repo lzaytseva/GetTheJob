@@ -95,5 +95,7 @@ CI по модели Trunk Based Development\n
     <string name="header_country">Выбор страны</string>
     <string name="header_workplace">Выбор места работы</string>
     <string name="header_region">Выбор региона</string>
+    <string name="hint_country">Страна</string>
+    <string name="hint_region">Регион</string>
 
 </resources>
