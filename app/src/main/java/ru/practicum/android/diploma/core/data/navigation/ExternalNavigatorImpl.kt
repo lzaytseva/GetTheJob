@@ -48,9 +48,10 @@ class ExternalNavigatorImpl(
         val phoneCallIntent = Intent().apply {
             action = Intent.ACTION_DIAL
             data = Uri.parse(appContext.getString(R.string.tel, number))
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            Intent.createChooser(this, null)
         }
-        startActivity(appContext, phoneCallIntent, null)
+        val chooser = Intent.createChooser(phoneCallIntent, null).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        startActivity(appContext, chooser, null)
     }
 }
