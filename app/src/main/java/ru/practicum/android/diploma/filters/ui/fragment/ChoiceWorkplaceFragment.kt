@@ -28,7 +28,7 @@ class ChoiceWorkplaceFragment : BindingFragment<FragmentChoiceWorkplaceBinding>(
         ToolbarUtils.configureToolbar(
             activity = requireActivity(),
             navController = findNavController(),
-            title = getString(R.string.header_industry)
+            title = getString(R.string.header_workplace)
         )
     }
 }
