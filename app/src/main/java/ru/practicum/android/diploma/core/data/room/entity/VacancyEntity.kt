@@ -8,6 +8,7 @@ data class VacancyEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val vacancyId: String,
+    val url: String,
     val name: String,
     val area: String,
     val salaryCurrency: String?,

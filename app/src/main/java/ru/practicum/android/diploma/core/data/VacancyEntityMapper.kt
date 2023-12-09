@@ -7,6 +7,7 @@ import java.util.stream.Collectors
 object VacancyEntityMapper {
     fun map(entity: VacancyEntity): VacancyDetails = VacancyDetails(
         id = entity.vacancyId,
+        url = entity.url,
         name = entity.name,
         area = entity.area,
         salaryCurrency = entity.salaryCurrency,
@@ -33,6 +34,7 @@ object VacancyEntityMapper {
     fun map(vacancy: VacancyDetails): VacancyEntity = VacancyEntity(
         id = -1,
         vacancyId = vacancy.id,
+        url = vacancy.url,
         name = vacancy.name,
         area = vacancy.area,
         salaryCurrency = vacancy.salaryCurrency,
