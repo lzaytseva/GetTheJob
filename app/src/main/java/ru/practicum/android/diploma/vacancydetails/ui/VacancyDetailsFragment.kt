@@ -15,10 +15,9 @@ import ru.practicum.android.diploma.core.domain.models.VacancyDetails
 import ru.practicum.android.diploma.core.ui.RootActivity
 import ru.practicum.android.diploma.databinding.FragmentVacancyDetailsBinding
 import ru.practicum.android.diploma.util.BindingFragment
+import ru.practicum.android.diploma.util.getSalaryDescription
 import ru.practicum.android.diploma.vacancydetails.presentation.VacancyDetailsScreenState
 import ru.practicum.android.diploma.vacancydetails.presentation.VacancyDetailsViewModel
-import java.text.NumberFormat
-import java.util.Locale
 
 @AndroidEntryPoint
 class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() {
@@ -71,7 +70,12 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
     private fun bindDataToViews(vacancyDetails: VacancyDetails) {
         with(binding) {
             positionName.text = vacancyDetails.name
-            salary.text = getSalaryDescription(vacancyDetails)
+            salary.text = getSalaryDescription(
+                requireContext(),
+                vacancyDetails.salaryFrom,
+                vacancyDetails.salaryTo,
+                vacancyDetails.salaryCurrency
+            )
             loadLogo(vacancyDetails.logoUrl240)
             companyName.text = vacancyDetails.employerName
             companyLocation.text = getCompanyLocation(vacancyDetails)
@@ -88,39 +92,6 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
             }
             showContactInfo(vacancyDetails)
         }
-    }
-
-    private fun getSalaryDescription(vacancyDetails: VacancyDetails): String {
-        return when {
-            vacancyDetails.salaryFrom != null && vacancyDetails.salaryTo != null ->
-                getString(
-                    R.string.vacancy_salary_from_to,
-                    formatSalary(vacancyDetails.salaryFrom),
-                    formatSalary(vacancyDetails.salaryTo),
-                    vacancyDetails.salaryCurrency
-                )
-
-            vacancyDetails.salaryFrom != null && vacancyDetails.salaryTo == null ->
-                getString(
-                    R.string.vacancy_salary_from,
-                    formatSalary(vacancyDetails.salaryFrom),
-                    vacancyDetails.salaryCurrency
-                )
-
-            vacancyDetails.salaryFrom == null && vacancyDetails.salaryTo != null ->
-                getString(
-                    R.string.vacancy_salary_to,
-                    formatSalary(vacancyDetails.salaryTo),
-                    vacancyDetails.salaryCurrency
-                )
-
-            else -> getString(R.string.vacancy_salary_not_specified)
-        }
-    }
-
-    private fun formatSalary(amount: Int): String {
-        val format: NumberFormat = NumberFormat.getInstance(Locale.getDefault())
-        return format.format(amount).replace(",", " ")
     }
 
     private fun loadLogo(logoUrl: String?) {
