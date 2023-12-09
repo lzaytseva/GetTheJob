@@ -4,18 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
+import ru.practicum.android.diploma.core.ui.RootActivity
 import ru.practicum.android.diploma.databinding.FragmentChoiceIndustryBinding
 import ru.practicum.android.diploma.filters.domain.model.Industry
 import ru.practicum.android.diploma.filters.domain.model.IndustryScreenState
 import ru.practicum.android.diploma.filters.presentation.ChoiceIndustryViewModel
 import ru.practicum.android.diploma.filters.ui.adapter.IndustryAdapter
 import ru.practicum.android.diploma.util.BindingFragment
+import ru.practicum.android.diploma.util.ToolbarUtils
 
 @AndroidEntryPoint
 class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() {
@@ -33,6 +37,7 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
 
         setIndustrySearchTextWatcher()
         initRecyclerView()
+        configureToolbar()
     }
 
     private fun observeViewModel() {
@@ -92,5 +97,13 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
         )
         binding.rvIndustries.adapter = adapter
         binding.rvIndustries.itemAnimator = null
+    }
+
+    private fun configureToolbar() {
+        ToolbarUtils.configureToolbar(
+            activity = requireActivity(),
+            navController = findNavController(),
+            title = getString(R.string.header_industry)
+        )
     }
 }

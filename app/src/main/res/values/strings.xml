@@ -92,5 +92,8 @@ CI по модели Trunk Based Development\n
     <string name="header_industry">Выбор отрасли</string>
     <string name="hint_enter_industry">Введите отрасль</string>
     <string name="btn_select">Выбрать</string>
+    <string name="header_country">Выбор страны</string>
+    <string name="header_workplace">Выбор места работы</string>
+    <string name="header_region">Выбор региона</string>
 
 </resources>

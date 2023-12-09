@@ -9,9 +9,11 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.practicum.android.diploma.R
+import ru.practicum.android.diploma.core.ui.RootActivity
 import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
 import ru.practicum.android.diploma.filters.presentation.FiltersViewModel
 import ru.practicum.android.diploma.util.BindingFragment
+import ru.practicum.android.diploma.util.ToolbarUtils
 
 class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
 
@@ -27,6 +29,7 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
         setSalaryTextWatcher()
         setIndustryClickListener()
         setPlaceClickListener()
+        configureToolbar()
     }
 
     override fun onResume() {
@@ -112,5 +115,13 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
                 R.id.action_filtersFragment_to_choiceWorkplaceFragment2
             )
         }
+    }
+
+    private fun configureToolbar() {
+        ToolbarUtils.configureToolbar(
+            activity = requireActivity(),
+            navController = findNavController(),
+            title = getString(R.string.header_industry)
+        )
     }
 }
