@@ -19,7 +19,7 @@
             style="@style/filter_edit_text_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/elements_margin_24dp"
+            android:layout_marginTop="@dimen/elements_margin_16dp"
             android:background="@color/screen_bg"
             android:clickable="true"
             android:cursorVisible="false"
