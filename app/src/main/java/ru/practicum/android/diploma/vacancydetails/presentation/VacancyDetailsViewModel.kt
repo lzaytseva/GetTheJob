@@ -46,15 +46,15 @@ class VacancyDetailsViewModel @Inject constructor(
 
     fun shareVacancy() {
         if (vacancyDetailsScreenState.value is VacancyDetailsScreenState.Content) {
-            externalNavigator.share(
-                (vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content).vacancyDetails.url
-            )
+            val screenState = (vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content)
+            externalNavigator.share(screenState.vacancyDetails.url)
         }
     }
 
     fun makePhoneCall() {
         if (vacancyDetailsScreenState.value is VacancyDetailsScreenState.Content) {
-            (vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content).vacancyDetails.phones?.let {
+            val screenState = (vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content)
+            screenState.vacancyDetails.phones?.let {
                 externalNavigator.makePhoneCall(
                     it[0]
                 )
@@ -64,21 +64,22 @@ class VacancyDetailsViewModel @Inject constructor(
 
     fun sendEmail() {
         if (vacancyDetailsScreenState.value is VacancyDetailsScreenState.Content) {
+            val screenState = (vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content)
             externalNavigator.sendEmail(
                 EmailData(
-                    emailAddress = (vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content).vacancyDetails.contactEmail
+                    emailAddress = screenState.vacancyDetails.contactEmail
                         ?: "",
-                    subject = (vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content).vacancyDetails.name,
+                    subject = screenState.vacancyDetails.name,
                     text = ""
                 )
-
             )
         }
     }
 
     fun openLink() {
         if (vacancyDetailsScreenState.value is VacancyDetailsScreenState.Content) {
-            (vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content).vacancyDetails.employerUrl?.let { url ->
+            val screenState = (vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content)
+            screenState.vacancyDetails.employerUrl?.let { url ->
                 externalNavigator.openUrlLink(
                     url
                 )
