@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.core.data
 
 import ru.practicum.android.diploma.core.data.room.entity.VacancyEntity
 import ru.practicum.android.diploma.core.domain.models.VacancyDetails
+import java.util.stream.Collectors
 
 object VacancyEntityMapper {
     fun map(entity: VacancyEntity): VacancyDetails = VacancyDetails(
@@ -16,7 +17,7 @@ object VacancyEntityMapper {
         schedule = entity.schedule,
         contactName = entity.contactName,
         contactEmail = entity.contactEmail,
-        phones = entity.phones,
+        phones = entity.phones?.split(";"),
         contactComment = entity.contactComment,
         logoUrl = entity.logoUrl,
         logoUrl90 = entity.logoUrl90,
@@ -25,7 +26,7 @@ object VacancyEntityMapper {
         employerUrl = entity.employerUrl,
         employerName = entity.employerName,
         employment = entity.employment,
-        keySkills = entity.keySkills,
+        keySkills = entity.keySkills?.split(";"),
         description = entity.description
     )
 
@@ -42,7 +43,7 @@ object VacancyEntityMapper {
         schedule = vacancy.schedule,
         contactName = vacancy.contactName,
         contactEmail = vacancy.contactEmail,
-        phones = vacancy.phones,
+        phones = vacancy.phones?.stream()?.collect(Collectors.joining(";")),
         contactComment = vacancy.contactComment,
         logoUrl = vacancy.logoUrl,
         logoUrl90 = vacancy.logoUrl90,
@@ -51,7 +52,7 @@ object VacancyEntityMapper {
         employerUrl = vacancy.employerUrl,
         employerName = vacancy.employerName,
         employment = vacancy.employment,
-        keySkills = vacancy.keySkills,
+        keySkills = vacancy.keySkills?.stream()?.collect(Collectors.joining(";")),
         description = vacancy.description
     )
 }

@@ -18,7 +18,7 @@ data class VacancyEntity(
     val schedule: String?,
     val contactName: String?,
     val contactEmail: String?,
-    val phones: List<String>?,
+    val phones: String?,
     val contactComment: String?,
     val logoUrl: String?,
     val logoUrl90: String?,
@@ -27,6 +27,6 @@ data class VacancyEntity(
     val employerUrl: String?,
     val employerName: String?,
     val employment: String?,
-    val keySkills: List<String>?,
+    val keySkills: String?,
     val description: String
 )
