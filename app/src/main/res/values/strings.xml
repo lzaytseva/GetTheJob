@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">GetTheJob</string>
     <!--   Команда -->
     <string name="team">Команда</string>
@@ -63,7 +63,7 @@ CI по модели Trunk Based Development\n
     <string name="tel">tel:%1$s</string>
 
     <!--  Эл. адреса разработчиков  -->
-    <string name="dev1_email">lvzaytseva1@gmail.com</string>
+    <string name="dev1_email" tools:ignore="Typos">lvzaytseva1@gmail.com</string>
     <string name="dev2_email">eu.pim@yandex.ru</string>
     <string name="dev3_email">kryushnikov.d@gmail.com</string>
     <string name="dev4_email">bespalov.m.9@ya.ru</string>
@@ -91,5 +91,6 @@ CI по модели Trunk Based Development\n
     <string name="share">Поделиться</string>
     <string name="header_industry">Выбор отрасли</string>
     <string name="hint_enter_industry">Введите отрасль</string>
+    <string name="btn_select">Выбрать</string>
 
 </resources>
