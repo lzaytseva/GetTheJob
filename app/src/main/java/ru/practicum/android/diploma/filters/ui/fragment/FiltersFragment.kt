@@ -29,14 +29,10 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
         setSalaryTextWatcher()
         setIndustryClickListener()
         setPlaceClickListener()
-        configureToolbar()
-    }
-
-    override fun onResume() {
-        super.onResume()
         setFiltersFieldsHintColorBehaviour()
         setFilterFieldsEndIcon()
         setBtnsVisibility()
+        configureToolbar()
     }
 
     private fun setSalaryFieldHintColorBehaviour() {
