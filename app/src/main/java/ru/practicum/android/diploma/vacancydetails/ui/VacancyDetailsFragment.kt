@@ -92,7 +92,7 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
                 keySkills.text = getKeySkills(keySkills = vacancyDetails.keySkills)
             }
             showContactInfo(vacancyDetails)
-            heartHandle(vacancyDetails.isFavorite)
+            heartHandle(vacancyDetails.isFavoriteWrapper.isFavorite)
         }
     }
 

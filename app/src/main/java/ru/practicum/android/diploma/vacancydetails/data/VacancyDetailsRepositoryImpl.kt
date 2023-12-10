@@ -32,7 +32,7 @@ class VacancyDetailsRepositoryImpl @Inject constructor(
                 emit(
                     Resource.Success(
                         VacancyDetailsDtoMapper.map((response as VacancyDetailsSearchResponse).dto).apply {
-                            isFavorite = true
+                            isFavoriteWrapper.isFavorite = true
                         }
                     )
                 )

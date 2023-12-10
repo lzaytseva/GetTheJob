@@ -92,10 +92,15 @@ class VacancyDetailsViewModel @Inject constructor(
 
     fun clickInFavorites() {
         if (vacancyDetailsScreenState.value is VacancyDetailsScreenState.Content) {
-            if ((vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content).vacancyDetails.isFavorite) {
+            if (
+                (vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content)
+                    .vacancyDetails
+                    .isFavoriteWrapper
+                    .isFavorite
+            ) {
                 _vacancyDetailsScreenState.postValue(
                     (_vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content).apply {
-                        vacancyDetails.isFavorite = false
+                        vacancyDetails.isFavoriteWrapper.isFavorite = false
                     }
                 )
                 viewModelScope.launch(Dispatchers.IO) {
@@ -104,7 +109,7 @@ class VacancyDetailsViewModel @Inject constructor(
             } else {
                 _vacancyDetailsScreenState.postValue(
                     (_vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content).apply {
-                        vacancyDetails.isFavorite = true
+                        vacancyDetails.isFavoriteWrapper.isFavorite = true
                     }
                 )
                 viewModelScope.launch(Dispatchers.IO) {
