@@ -53,7 +53,6 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
             content.visibility = View.VISIBLE
             bindDataToViews(vacancyDetails)
         }
-
     }
 
     private fun showLoading() {

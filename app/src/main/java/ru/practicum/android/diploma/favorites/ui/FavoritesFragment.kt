@@ -8,6 +8,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.ui.RootActivity
 import ru.practicum.android.diploma.databinding.FragmentFavoritesBinding
@@ -31,12 +33,18 @@ class FavoritesFragment : BindingFragment<FragmentFavoritesBinding>() {
             render(state)
         }
         vacanciesAdapter = VacanciesAdapter { vacancyId ->
-            val bundle = bundleOf("vacancyId" to vacancyId)
             findNavController().navigate(
                 R.id.action_favoritesFragment_to_vacancyDetailsFragment,
-                bundle
+                bundleOf("vacancyId" to vacancyId)
             )
         }
+        binding.rvVacancies.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+        binding.rvVacancies.adapter = vacanciesAdapter
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        vacanciesAdapter = null
     }
 
     private fun configureToolbar() {
