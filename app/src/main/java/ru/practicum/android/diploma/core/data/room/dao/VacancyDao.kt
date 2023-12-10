@@ -22,5 +22,5 @@ interface VacancyDao {
     suspend fun getVacancyList(): List<VacancyShort>
 
     @Query("SELECT * FROM favorites_table WHERE vacancyId = :vacancyId LIMIT 1")
-    suspend fun getVacancyById(vacancyId: String): VacancyEntity
+    suspend fun getVacancyById(vacancyId: String): VacancyEntity?
 }

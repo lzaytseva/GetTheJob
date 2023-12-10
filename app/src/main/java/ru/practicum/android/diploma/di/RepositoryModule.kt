@@ -26,8 +26,11 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideVacancyDetailsRepository(networkClient: NetworkClient): VacancyDetailsRepository {
-        return VacancyDetailsRepositoryImpl(networkClient)
+    fun provideVacancyDetailsRepository(
+        networkClient: NetworkClient,
+        appDatabase: AppDatabase
+    ): VacancyDetailsRepository {
+        return VacancyDetailsRepositoryImpl(networkClient, appDatabase)
     }
 
     @Provides
