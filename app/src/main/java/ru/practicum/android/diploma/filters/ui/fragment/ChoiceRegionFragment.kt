@@ -28,7 +28,7 @@ class ChoiceRegionFragment : BindingFragment<FragmentChoiceRegionBinding>() {
         ToolbarUtils.configureToolbar(
             activity = requireActivity(),
             navController = findNavController(),
-            title = getString(R.string.header_industry)
+            title = getString(R.string.header_region)
         )
     }
 }
