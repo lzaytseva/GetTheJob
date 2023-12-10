@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_navigation_graph"
-    app:startDestination="@id/similarVacanciesFragment">
+    app:startDestination="@id/searchFragment">
 
     <fragment
         android:id="@+id/searchFragment"
@@ -56,7 +56,11 @@
         android:id="@+id/similarVacanciesFragment"
         android:name="ru.practicum.android.diploma.vacancydetails.ui.SimilarVacanciesFragment"
         android:label="fragment_similar_vacancies"
-        tools:layout="@layout/fragment_similar_vacancies" />
+        tools:layout="@layout/fragment_similar_vacancies" >
+        <argument
+            android:name="vacancyId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/choiceWorkplaceFragment"
         android:name="ru.practicum.android.diploma.filters.ui.ChoiceWorkplaceFragment"
