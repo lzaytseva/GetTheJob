@@ -34,7 +34,6 @@ object VacancyEntityMapper {
     }
 
     fun map(vacancy: VacancyDetails): VacancyEntity = VacancyEntity(
-        id = null,
         vacancyId = vacancy.id,
         url = vacancy.url,
         name = vacancy.name,
@@ -57,6 +56,7 @@ object VacancyEntityMapper {
         employerName = vacancy.employerName,
         employment = vacancy.employment,
         keySkills = vacancy.keySkills?.stream()?.collect(Collectors.joining(";")),
-        description = vacancy.description
+        description = vacancy.description,
+        time = System.currentTimeMillis()
     )
 }
