@@ -10,6 +10,8 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.core.domain.api.ExternalNavigator
 import ru.practicum.android.diploma.core.domain.models.EmailData
 import ru.practicum.android.diploma.util.Resource
+import ru.practicum.android.diploma.vacancydetails.domain.api.DeleteVacancyRepository
+import ru.practicum.android.diploma.vacancydetails.domain.api.SaveVacancyRepository
 import ru.practicum.android.diploma.vacancydetails.domain.api.VacancyDetailsRepository
 import javax.inject.Inject
 
@@ -17,7 +19,9 @@ import javax.inject.Inject
 class VacancyDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val vacancyDetailsRepository: VacancyDetailsRepository,
-    private val externalNavigator: ExternalNavigator
+    private val externalNavigator: ExternalNavigator,
+    private val saveVacancyRepository: SaveVacancyRepository,
+    private val deleteVacancyRepository: DeleteVacancyRepository,
 ) : ViewModel() {
 
     private val _vacancyDetailsScreenState = MutableLiveData<VacancyDetailsScreenState>()
@@ -83,6 +87,10 @@ class VacancyDetailsViewModel @Inject constructor(
                 externalNavigator.openUrlLink(url)
             }
         }
+    }
+
+    fun clickInFavorites() {
+
     }
 
 }
