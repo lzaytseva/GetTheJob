@@ -30,8 +30,8 @@ class RetrofitNetworkClient(
                 is VacancyDetailsSearchRequest -> getVacancyDetailsById(request.id)
                 is IndustriesRequest -> getIndustries()
                 is VacanciesSearchRequest -> {
-                  // getVacanciesList(request.toQueryMap())
-                  Response().apply { resultCode = RC_NOK_SERVER_ERROR }
+                    // getVacanciesList(request.toQueryMap())
+                    Response().apply { resultCode = RC_NOK_SERVER_ERROR }
                 }
                 else -> Response().apply { resultCode = RC_NOK_SERVER_ERROR }
             }
@@ -52,7 +52,6 @@ class RetrofitNetworkClient(
             Response().apply { resultCode = RC_NOK }
         }
     }
-
 //    private suspend fun getVacanciesList(queryMap: Map<String, String>) = withContext(Dispatchers.IO) {
 //        try {
 //            Resource.Success(hhService.getVacancies(queryMap))
@@ -60,7 +59,6 @@ class RetrofitNetworkClient(
 //            Resource.Error("$RC_NOK_SERVER_ERROR")
 //        }
 //    }
-
     private suspend fun getIndustries(): Response {
         return try {
             val response = hhService.getIndustries()
