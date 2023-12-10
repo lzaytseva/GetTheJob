@@ -92,7 +92,6 @@ class VacancyDetailsViewModel @Inject constructor(
     }
 
     fun clickInFavorites() {
-        Log.d("MyTag", "clickInFavorites in viewModel")
         if ((vacancyDetailsScreenState.value is VacancyDetailsScreenState.Content)) {
             if ((vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content).vacancyDetails.isFavorite) {
                 _vacancyDetailsScreenState.postValue(
