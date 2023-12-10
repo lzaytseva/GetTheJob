@@ -30,7 +30,7 @@ object VacancyEntityMapper {
         keySkills = entity.keySkills?.split(";"),
         description = entity.description,
     ).apply {
-        isFavorite = false
+        isFavoriteWrapper.isFavorite = true
     }
 
     fun map(vacancy: VacancyDetails): VacancyEntity = VacancyEntity(
