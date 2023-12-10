@@ -9,17 +9,18 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.core.domain.api.ExternalNavigator
+import ru.practicum.android.diploma.core.domain.api.GetDataByIdRepo
 import ru.practicum.android.diploma.core.domain.models.EmailData
+import ru.practicum.android.diploma.core.domain.models.VacancyDetails
 import ru.practicum.android.diploma.util.Resource
 import ru.practicum.android.diploma.vacancydetails.domain.api.DeleteVacancyRepository
 import ru.practicum.android.diploma.vacancydetails.domain.api.SaveVacancyRepository
-import ru.practicum.android.diploma.vacancydetails.domain.api.VacancyDetailsRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class VacancyDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val vacancyDetailsRepository: VacancyDetailsRepository,
+    private val getByIdVacancyDetailsRepoImpl: GetDataByIdRepo<Resource<VacancyDetails>>,
     private val externalNavigator: ExternalNavigator,
     private val saveVacancyRepository: SaveVacancyRepository,
     private val deleteVacancyRepository: DeleteVacancyRepository,
@@ -28,7 +29,7 @@ class VacancyDetailsViewModel @Inject constructor(
     private val _vacancyDetailsScreenState = MutableLiveData<VacancyDetailsScreenState>()
     val vacancyDetailsScreenState: LiveData<VacancyDetailsScreenState> = _vacancyDetailsScreenState
 
-    private val vacancyId = savedStateHandle.get<String>("vacancyId")
+    private val vacancyId =  "89534799" // savedStateHandle.get<String>("vacancyId")
 
     init {
         if (!vacancyId.isNullOrBlank()) {
@@ -39,7 +40,7 @@ class VacancyDetailsViewModel @Inject constructor(
     private fun getVacancyDetailsById(id: String) {
         _vacancyDetailsScreenState.value = VacancyDetailsScreenState.Loading
         viewModelScope.launch {
-            vacancyDetailsRepository.getVacancyDetailsById(id).collect() { response ->
+            getByIdVacancyDetailsRepoImpl.getById(id).collect() { response ->
                 if (response is Resource.Success) {
                     _vacancyDetailsScreenState.postValue(response.data?.let { VacancyDetailsScreenState.Content(it) })
                 } else {
