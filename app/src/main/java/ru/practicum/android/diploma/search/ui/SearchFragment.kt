@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
@@ -25,7 +27,7 @@ import ru.practicum.android.diploma.util.BindingFragment
 class SearchFragment : BindingFragment<FragmentSearchBinding>() {
 
     private val viewModel: SearchViewModel by viewModels()
-    private var searchFieldState: Boolean = false
+    private var searchIsNotEmpty: Boolean = false
         private set(value) {
             if (field != value) {
                 field = value
@@ -41,6 +43,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
         configureSearchField()
         setObserver()
         configureToolbar()
+        setupAdapter()
     }
 
     override fun onResume() {
@@ -51,11 +54,13 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
     override fun onPause() {
         super.onPause()
         setFiltersVisibility(false)
+        viewModel.saveQueryState(binding.searchEditText.text.toString())
     }
 
     private fun setObserver() {
         viewModel.screenState.observe(viewLifecycleOwner) { screenState ->
             hideContent()
+            binding.searchEditText.setText(screenState.state)
             when (screenState) {
                 is SearchScreenState.Loading -> binding.progressBar.isVisible = true
                 is SearchScreenState.Error -> onError(screenState.error)
@@ -67,9 +72,16 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
     private fun configureSearchField() {
         binding.searchEditText.doOnTextChanged { text, _, _, _ ->
             text?.toString()?.run {
-                searchFieldState = this.isNotBlank()
+                searchIsNotEmpty = this.isNotBlank()
+                binding.searchFieldImageView.isEnabled = searchIsNotEmpty
                 viewModel::search
             }
+        }
+        val inputMethodManager = ContextCompat.getSystemService(requireContext(), InputMethodManager::class.java)
+
+        binding.searchFieldImageView.setOnClickListener {
+            binding.searchEditText.setText("")
+            inputMethodManager?.hideSoftInputFromWindow(binding.searchEditText.windowToken, 0)
         }
     }
 
@@ -96,9 +108,21 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
         }
     }
 
-    private fun onContent(content: ArrayList<VacancyInList>) {
+    private fun onContent(content: List<VacancyInList>) {
         val adapter = binding.resultsListRecyclerView.adapter as? VacanciesAdapter
         adapter?.setContent(content)
+        binding.resultsListRecyclerView.isVisible = true
+        binding.resultMessageTextView.setText("") // get plurals for correct message
+
+    }
+
+    private fun setupAdapter() {
+        val onVacancyClick: (String) -> Unit = { vacancyId ->
+            val searchToDetails: NavDirections =
+                SearchFragmentDirections.actionSearchFragmentToVacancyDetailsFragment(vacancyId)
+            findNavController().navigate(searchToDetails)
+        }
+        binding.resultsListRecyclerView.adapter = VacanciesAdapter(onVacancyClick)
     }
 
     private fun setFiltersVisibility(isVisible: Boolean) {
@@ -109,7 +133,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
 
     private fun configureToolbar() {
         (requireActivity() as? RootActivity)?.run {
-            toolbar.title = ContextCompat.getString(this, R.string.search_screen)
+            toolbar.title = getString(R.string.search_screen)
             val item = toolbar.menu.findItem(R.id.filters)
             item.isVisible = true
             item.setOnMenuItemClickListener {
