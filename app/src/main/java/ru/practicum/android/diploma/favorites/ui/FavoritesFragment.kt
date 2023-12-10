@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,10 +34,9 @@ class FavoritesFragment : BindingFragment<FragmentFavoritesBinding>() {
             render(state)
         }
         vacanciesAdapter = VacanciesAdapter { vacancyId ->
-            findNavController().navigate(
-                R.id.action_favoritesFragment_to_vacancyDetailsFragment,
-                bundleOf("vacancyId" to vacancyId)
-            )
+            val action =
+                FavoritesFragmentDirections.actionFavoritesFragmentToVacancyDetailsFragment(vacancyId)
+            findNavController().navigate(action)
         }
         binding.rvVacancies.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         binding.rvVacancies.adapter = vacanciesAdapter
