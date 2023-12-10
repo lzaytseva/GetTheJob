@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.core.data.room
 
 import ru.practicum.android.diploma.core.data.room.entity.VacancyShort
-import ru.practicum.android.diploma.search.domain.model.VacancyInList
+import ru.practicum.android.diploma.core.domain.models.VacancyInList
 
 object VacancyShortMapper {
 

@@ -9,7 +9,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.VacancyCardBinding
-import ru.practicum.android.diploma.search.domain.model.VacancyInList
+import ru.practicum.android.diploma.core.domain.models.VacancyInList
 
 class VacanciesAdapter(
     private val onClick: (String) -> Unit

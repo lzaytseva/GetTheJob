@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.search.domain.model
+package ru.practicum.android.diploma.core.domain.models
 
 data class VacancyInList(
     val id: String,
