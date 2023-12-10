@@ -30,9 +30,12 @@ class FavoritesViewModel @Inject constructor(
                 } else {
                     _screenState.postValue(FavoritesState.Content(list))
                 }
-            } catch (e: Exception) {
+            } catch (e: RuntimeException) {
                 _screenState.postValue(FavoritesState.DbError)
                 Log.e("Tag", e.stackTraceToString())
+            } catch (t: Throwable) {
+                _screenState.postValue(FavoritesState.DbError)
+                Log.e("Tag", t.stackTraceToString())
             }
         }
     }
