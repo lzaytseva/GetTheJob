@@ -1,11 +1,13 @@
 package ru.practicum.android.diploma.vacancydetails.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.core.domain.api.ExternalNavigator
 import ru.practicum.android.diploma.core.domain.models.EmailData
@@ -90,7 +92,30 @@ class VacancyDetailsViewModel @Inject constructor(
     }
 
     fun clickInFavorites() {
-
+        Log.d("MyTag", "clickInFavorites in viewModel")
+        if ((vacancyDetailsScreenState.value is VacancyDetailsScreenState.Content)) {
+            if ((vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content).vacancyDetails.isFavorite) {
+                _vacancyDetailsScreenState.postValue(
+                    (_vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content).apply {
+                        vacancyDetails.isFavorite = false
+                    }
+                )
+                viewModelScope.launch(Dispatchers.IO) {
+                    deleteVacancyRepository.deleteVacancy(vacancyId!!)
+                }
+            } else {
+                _vacancyDetailsScreenState.postValue(
+                    (_vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content).apply {
+                        vacancyDetails.isFavorite = true
+                    }
+                )
+                viewModelScope.launch(Dispatchers.IO) {
+                    saveVacancyRepository.saveVacancy(
+                        (_vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content).vacancyDetails
+                    )
+                }
+            }
+        }
     }
 
 }
