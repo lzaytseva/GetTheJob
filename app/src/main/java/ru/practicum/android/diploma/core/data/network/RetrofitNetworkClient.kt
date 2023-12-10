@@ -30,7 +30,7 @@ class RetrofitNetworkClient(
                 is VacancyDetailsSearchRequest -> getVacancyDetailsById(request.id)
                 is IndustriesRequest -> getIndustries()
                 is VacanciesSearchRequest -> {
-//                  getVacanciesList(request.toQueryMap())
+//                    getVacanciesList(request.toQueryMap())
                   Response().apply { resultCode = RC_NOK_SERVER_ERROR }
                 }
                 else -> Response().apply { resultCode = RC_NOK_SERVER_ERROR }
