@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.vacancydetails.presentation
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -92,7 +91,7 @@ class VacancyDetailsViewModel @Inject constructor(
     }
 
     fun clickInFavorites() {
-        if ((vacancyDetailsScreenState.value is VacancyDetailsScreenState.Content)) {
+        if (vacancyDetailsScreenState.value is VacancyDetailsScreenState.Content) {
             if ((vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content).vacancyDetails.isFavorite) {
                 _vacancyDetailsScreenState.postValue(
                     (_vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content).apply {

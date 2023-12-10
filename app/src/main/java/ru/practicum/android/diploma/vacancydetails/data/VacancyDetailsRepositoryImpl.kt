@@ -33,7 +33,8 @@ class VacancyDetailsRepositoryImpl @Inject constructor(
                     Resource.Success(
                         VacancyDetailsDtoMapper.map((response as VacancyDetailsSearchResponse).dto).apply {
                             isFavorite = true
-                        })
+                        }
+                    )
                 )
             }
         } else {

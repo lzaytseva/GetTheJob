@@ -24,5 +24,6 @@ data class VacancyDetails(
     val employment: String?,
     val keySkills: List<String>?,
     val description: String,
-    var isFavorite: Boolean = false,
-)
+) {
+    var isFavorite: Boolean = false
+}
