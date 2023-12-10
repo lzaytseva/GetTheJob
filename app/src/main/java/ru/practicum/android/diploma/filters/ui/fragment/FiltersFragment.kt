@@ -1,7 +1,5 @@
 package ru.practicum.android.diploma.filters.ui.fragment
 
-import android.content.res.ColorStateList
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
 import ru.practicum.android.diploma.filters.presentation.FiltersViewModel
+import ru.practicum.android.diploma.filters.ui.util.TextInputLayoutUtils
 import ru.practicum.android.diploma.util.BindingFragment
 import ru.practicum.android.diploma.util.ToolbarUtils
 
@@ -63,10 +62,12 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
 
     private fun setFilterFieldsEndIcon() {
         with(binding) {
-            tilIndustry.endIconDrawable = getEndIconDrawable(
+            tilIndustry.endIconDrawable = TextInputLayoutUtils.getEndIconDrawable(
+                context = requireContext(),
                 iconResId = getEndIconId(isTextFieldEmpty = etIndustry.text.isNullOrBlank())
             )
-            tilPlace.endIconDrawable = getEndIconDrawable(
+            tilPlace.endIconDrawable = TextInputLayoutUtils.getEndIconDrawable(
+                context = requireContext(),
                 iconResId = getEndIconId(isTextFieldEmpty = etPlace.text.isNullOrBlank())
             )
         }
@@ -80,40 +81,21 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
         }
     }
 
-    private fun getEndIconDrawable(iconResId: Int?): Drawable? {
-        return if (iconResId == null) {
-            null
-        } else {
-            ContextCompat.getDrawable(requireContext(), iconResId)
-        }
-    }
-
     private fun setFiltersFieldsHintColorBehaviour() {
         with(binding) {
-            tilIndustry.defaultHintTextColor = getHintColorStateList(
-                hintColorStateListId = getHintColorStateListId(
+            tilIndustry.defaultHintTextColor = TextInputLayoutUtils
+                .getHintColorStateList(
+                    context = requireContext(),
                     isTextFieldEmpty = etIndustry.text.isNullOrBlank()
                 )
-            )
-            tilPlace.defaultHintTextColor = getHintColorStateList(
-                hintColorStateListId = getHintColorStateListId(
+            tilPlace.defaultHintTextColor = TextInputLayoutUtils
+                .getHintColorStateList(
+                    context = requireContext(),
                     isTextFieldEmpty = etPlace.text.isNullOrBlank()
                 )
-            )
         }
     }
 
-    private fun getHintColorStateListId(isTextFieldEmpty: Boolean): Int {
-        return if (isTextFieldEmpty) {
-            R.color.filter_hint_color
-        } else {
-            R.color.filter_hint_color_populated
-        }
-    }
-
-    private fun getHintColorStateList(hintColorStateListId: Int): ColorStateList {
-        return ContextCompat.getColorStateList(requireContext(), hintColorStateListId)!!
-    }
 
     private fun setBtnsVisibility() {
         val visible = hasNonEmptyFields()
