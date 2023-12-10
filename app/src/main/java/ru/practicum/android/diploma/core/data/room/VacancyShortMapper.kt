@@ -8,8 +8,9 @@ object VacancyShortMapper {
     fun map(vacancyShort: VacancyShort): VacancyInList = VacancyInList(
         id = vacancyShort.vacancyId,
         name = vacancyShort.name,
-        // Здесь надо доделать оплату правильно
-        salary = vacancyShort.salaryFrom.toString(),
+        salaryCurrency = vacancyShort.salaryCurrency,
+        salaryFrom = vacancyShort.salaryFrom,
+        salaryTo = vacancyShort.salaryTo,
         employerName = vacancyShort.employerName ?: "",
         logo = vacancyShort.logoUrl
     )

@@ -71,7 +71,7 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
         with(binding) {
             positionName.text = vacancyDetails.name
             salary.text = getSalaryDescription(
-                requireContext(),
+                resources,
                 vacancyDetails.salaryFrom,
                 vacancyDetails.salaryTo,
                 vacancyDetails.salaryCurrency

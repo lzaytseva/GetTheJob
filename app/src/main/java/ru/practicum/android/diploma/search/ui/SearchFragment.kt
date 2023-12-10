@@ -15,9 +15,9 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.domain.models.ErrorType
+import ru.practicum.android.diploma.core.domain.models.VacancyInList
 import ru.practicum.android.diploma.core.ui.RootActivity
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
-import ru.practicum.android.diploma.core.domain.models.VacancyInList
 import ru.practicum.android.diploma.search.presentation.SearchScreenState
 import ru.practicum.android.diploma.search.presentation.SearchViewModel
 import ru.practicum.android.diploma.search.ui.adapter.VacanciesAdapter
@@ -122,7 +122,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
                 SearchFragmentDirections.actionSearchFragmentToVacancyDetailsFragment(vacancyId)
             findNavController().navigate(searchToDetails)
         }
-        binding.resultsListRecyclerView.adapter = VacanciesAdapter(onVacancyClick)
+        binding.resultsListRecyclerView.adapter = VacanciesAdapter(resources, onVacancyClick)
     }
 
     private fun setFiltersVisibility(isVisible: Boolean) {
