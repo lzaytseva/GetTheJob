@@ -29,7 +29,18 @@ class VacancyDetailsRepositoryImpl @Inject constructor(
             emit(Resource.Success(vacancyDetailsDb))
             val response = networkClient.doRequest(VacancyDetailsSearchRequest(vacancyId))
             if (response.resultCode == RC_OK) {
-                emit(Resource.Success(VacancyDetailsDtoMapper.map((response as VacancyDetailsSearchResponse).dto)))
+                appDatabase.vacancyDao.updateVacancy(
+                    VacancyEntityMapper.map(
+                        VacancyDetailsDtoMapper.map((response as VacancyDetailsSearchResponse).dto)
+                    )
+                )
+                emit(
+                    Resource.Success(
+                        VacancyDetailsDtoMapper.map(response.dto).apply {
+                            isFavoriteWrapper.isFavorite = true
+                        }
+                    )
+                )
             }
         } else {
             val response = networkClient.doRequest(VacancyDetailsSearchRequest(vacancyId))

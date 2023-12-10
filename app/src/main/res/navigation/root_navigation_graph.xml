@@ -67,7 +67,7 @@
         android:id="@+id/similarVacanciesFragment"
         android:name="ru.practicum.android.diploma.vacancydetails.ui.SimilarVacanciesFragment"
         android:label="fragment_similar_vacancies"
-        tools:layout="@layout/fragment_similar_vacancies" >
+        tools:layout="@layout/fragment_similar_vacancies">
         <argument
             android:name="vacancyId"
             app:argType="string" />
