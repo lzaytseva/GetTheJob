@@ -53,7 +53,6 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
             content.visibility = View.VISIBLE
             bindDataToViews(vacancyDetails)
         }
-
     }
 
     private fun showLoading() {
@@ -199,5 +198,15 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
         } else {
             toolbar.menu.findItem(R.id.favorite).setIcon(R.drawable.ic_favorite)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        toolbar.navigationIcon = null
     }
 }
