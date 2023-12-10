@@ -26,8 +26,11 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideVacancyDetailsRepository(networkClient: NetworkClient): VacancyDetailsRepository {
-        return VacancyDetailsRepositoryImpl(networkClient)
+    fun provideVacancyDetailsRepository(
+        networkClient: NetworkClient,
+        appDatabase: AppDatabase
+    ): VacancyDetailsRepository {
+        return VacancyDetailsRepositoryImpl(networkClient, appDatabase)
     }
 
     @Provides
@@ -40,12 +43,6 @@ class RepositoryModule {
     @Singleton
     fun provideIndustriesRepository(networkClient: NetworkClient): GetDataRepo<Resource<List<Industry>>> {
         return IndustriesRepositoryImpl(networkClient)
-    }
-
-    @Provides
-    @Singleton
-    fun provideVacancyDetailsRepository(appDatabase: AppDatabase): VacancyDetailsRepository {
-        return VacancyDetailsRepositoryImpl(appDatabase)
     }
 
     @Provides
