@@ -52,6 +52,7 @@ class RetrofitNetworkClient(
             Response().apply { resultCode = RC_NOK }
         }
     }
+    
 //    private suspend fun getVacanciesList(queryMap: Map<String, String>) = withContext(Dispatchers.IO) {
 //        try {
 //            Resource.Success(hhService.getVacancies(queryMap))
@@ -59,6 +60,7 @@ class RetrofitNetworkClient(
 //            Resource.Error("$RC_NOK_SERVER_ERROR")
 //        }
 //    }
+
     private suspend fun getIndustries(): Response {
         return try {
             val response = hhService.getIndustries()
@@ -76,6 +78,7 @@ class RetrofitNetworkClient(
     }
     
     // Надо переделать в enum, как предлагал Женя
+    
     companion object {
         const val RC_NO_INTERNET = -1
         const val RC_OK = 200
