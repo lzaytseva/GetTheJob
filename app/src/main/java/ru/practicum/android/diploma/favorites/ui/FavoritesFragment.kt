@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.ui.RootActivity
 import ru.practicum.android.diploma.databinding.FragmentFavoritesBinding
@@ -18,6 +19,7 @@ import ru.practicum.android.diploma.favorites.presentation.FavoritesViewModel
 import ru.practicum.android.diploma.search.ui.adapter.VacanciesAdapter
 import ru.practicum.android.diploma.util.BindingFragment
 
+@AndroidEntryPoint
 class FavoritesFragment : BindingFragment<FragmentFavoritesBinding>() {
 
     private val viewModel: FavoritesViewModel by viewModels()
@@ -40,6 +42,7 @@ class FavoritesFragment : BindingFragment<FragmentFavoritesBinding>() {
         }
         binding.rvVacancies.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         binding.rvVacancies.adapter = vacanciesAdapter
+        viewModel.getVacancies()
     }
 
     override fun onDestroyView() {
@@ -56,13 +59,14 @@ class FavoritesFragment : BindingFragment<FragmentFavoritesBinding>() {
 
     private fun render(state: FavoritesState) {
         when (state) {
-            is FavoritesState.Content -> renderContent()
+            is FavoritesState.Content -> renderContent(state)
             FavoritesState.DbError -> renderDbError()
             FavoritesState.Empty -> renderEmpty()
         }
     }
 
-    private fun renderContent() {
+    private fun renderContent(state: FavoritesState) {
+        vacanciesAdapter?.setContent((state as FavoritesState.Content).vacancies)
         binding.groupEmpty.visibility = View.GONE
         binding.groupError.visibility = View.GONE
         binding.rvVacancies.visibility = View.VISIBLE
