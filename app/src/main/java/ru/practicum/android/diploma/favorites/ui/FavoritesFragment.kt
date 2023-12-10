@@ -33,7 +33,7 @@ class FavoritesFragment : BindingFragment<FragmentFavoritesBinding>() {
         viewModel.screenState.observe(viewLifecycleOwner) { state ->
             render(state)
         }
-        vacanciesAdapter = VacanciesAdapter { vacancyId ->
+        vacanciesAdapter = VacanciesAdapter(resources) { vacancyId ->
             val action =
                 FavoritesFragmentDirections.actionFavoritesFragmentToVacancyDetailsFragment(vacancyId)
             findNavController().navigate(action)
