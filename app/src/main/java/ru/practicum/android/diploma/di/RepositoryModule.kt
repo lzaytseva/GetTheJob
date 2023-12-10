@@ -5,6 +5,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ru.practicum.android.diploma.core.data.network.NetworkClient
+import ru.practicum.android.diploma.core.domain.api.SearchRepo
+import ru.practicum.android.diploma.search.data.repository.SearchVacanciesRepository
+import ru.practicum.android.diploma.search.domain.model.VacancyInList
 import ru.practicum.android.diploma.core.data.room.AppDatabase
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
 import ru.practicum.android.diploma.favorites.data.FavoritesVacancyListRepositoryImpl
@@ -55,5 +58,11 @@ class RepositoryModule {
     @Singleton
     fun provideSaveVacancyRepository(database: AppDatabase): SaveVacancyRepository {
         return SaveVacancyRepositoryImpl(database)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSearchRepository(): SearchRepo<VacancyInList> {
+        return SearchVacanciesRepository()
     }
 }

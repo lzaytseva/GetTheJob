@@ -5,6 +5,7 @@ import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
+import ru.practicum.android.diploma.core.data.dto.requests.VacanciesSearchRequest
 import ru.practicum.android.diploma.filters.data.dto.IndustriesRequest
 import ru.practicum.android.diploma.core.data.dto.requests.VacancyDetailsSearchRequest
 import ru.practicum.android.diploma.filters.data.dto.IndustriesResponse
@@ -28,9 +29,11 @@ class RetrofitNetworkClient(
             when (request) {
                 is VacancyDetailsSearchRequest -> getVacancyDetailsById(request.id)
                 is IndustriesRequest -> getIndustries()
-
+                is VacanciesSearchRequest -> {
+                    // getVacanciesList(request.toQueryMap())
+                    Response().apply { resultCode = RC_NOK_SERVER_ERROR }
+                }
                 else -> Response().apply { resultCode = RC_NOK_SERVER_ERROR }
-
             }
         }
     }
@@ -49,6 +52,13 @@ class RetrofitNetworkClient(
             Response().apply { resultCode = RC_NOK }
         }
     }
+//    private suspend fun getVacanciesList(queryMap: Map<String, String>) = withContext(Dispatchers.IO) {
+//        try {
+//            Resource.Success(hhService.getVacancies(queryMap))
+//        } catch (_: Exception) {
+//            Resource.Error("$RC_NOK_SERVER_ERROR")
+//        }
+//    }
 
     private suspend fun getIndustries(): Response {
         return try {
@@ -65,8 +75,6 @@ class RetrofitNetworkClient(
             Response().apply { resultCode = RC_NOK }
         }
     }
-
-
     // Надо переделать в enum, как предлагал Женя
     companion object {
         const val RC_NO_INTERNET = -1

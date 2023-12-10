@@ -15,7 +15,7 @@ class VacanciesAdapter(
     private val onClick: (String) -> Unit
 ) : RecyclerView.Adapter<VacanciesAdapter.VacancyViewHolder>() {
 
-    private val vacanciesList: ArrayList<VacancyInList> = ArrayList()
+    private val vacanciesList: MutableList<VacancyInList> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VacancyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -31,7 +31,7 @@ class VacanciesAdapter(
         holder.bind(vacanciesList[position])
     }
 
-    fun setContent(newList: ArrayList<VacancyInList>) {
+    fun setContent(newList: List<VacancyInList>) {
         val diffCallback = VacanciesDiffCallback(vacanciesList, newList)
         val diffVacancies = DiffUtil.calculateDiff(diffCallback)
         vacanciesList.clear()
