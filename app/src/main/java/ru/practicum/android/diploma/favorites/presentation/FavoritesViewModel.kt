@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.favorites.domain.api.FavoritesVacancyListRepository
 import ru.practicum.android.diploma.search.domain.model.VacancyInList
+import java.sql.SQLException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,12 +31,9 @@ class FavoritesViewModel @Inject constructor(
                 } else {
                     _screenState.postValue(FavoritesState.Content(list))
                 }
-            } catch (e: RuntimeException) {
+            } catch (e: SQLException) {
                 _screenState.postValue(FavoritesState.DbError)
                 Log.e("Tag", e.stackTraceToString())
-            } catch (t: Throwable) {
-                _screenState.postValue(FavoritesState.DbError)
-                Log.e("Tag", t.stackTraceToString())
             }
         }
     }
