@@ -1,25 +1,25 @@
 package ru.practicum.android.diploma.core.data.dto
 
+import com.google.gson.annotations.SerializedName
 import ru.practicum.android.diploma.core.data.dto.innerdto.AddressDto
 import ru.practicum.android.diploma.core.data.dto.innerdto.ContactsDto
 import ru.practicum.android.diploma.core.data.dto.innerdto.EmployerDto
-import ru.practicum.android.diploma.core.data.dto.innerdto.LogoUrlsDto
 import ru.practicum.android.diploma.core.data.dto.innerdto.SalaryDto
 import ru.practicum.android.diploma.core.data.dto.innerdto.SkillDto
 import ru.practicum.android.diploma.core.data.dto.innerdto.VacancyElementDto
 
 data class VacancyDetailsDto(
     val id: String,
+    @SerializedName("alternate_url") val url: String,
     val name: String,
     val area: VacancyElementDto,
-    val salaryDto: SalaryDto?,
+    val salary: SalaryDto?,
     val experience: VacancyElementDto?,
     val schedule: VacancyElementDto,
-    val contactsDto: ContactsDto?,
-    val logoUrlsDto: LogoUrlsDto?,
+    val contacts: ContactsDto?,
     val address: AddressDto?,
     val employer: EmployerDto?,
     val employment: VacancyElementDto?,
-    val keySkills: List<SkillDto>?,
+    @SerializedName("key_skills") val keySkills: List<SkillDto>?,
     val description: String
 )

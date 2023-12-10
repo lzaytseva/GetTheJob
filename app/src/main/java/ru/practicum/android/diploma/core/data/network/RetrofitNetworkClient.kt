@@ -2,9 +2,13 @@ package ru.practicum.android.diploma.core.data.network
 
 import android.content.Context
 import android.util.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import ru.practicum.android.diploma.core.data.dto.requests.VacanciesSearchRequest
+import ru.practicum.android.diploma.filters.data.dto.IndustriesRequest
 import ru.practicum.android.diploma.core.data.dto.requests.VacancyDetailsSearchRequest
+import ru.practicum.android.diploma.filters.data.dto.IndustriesResponse
 import ru.practicum.android.diploma.core.data.dto.responses.Response
 import ru.practicum.android.diploma.core.data.dto.responses.VacancyDetailsSearchResponse
 import ru.practicum.android.diploma.util.ConnectionChecker
@@ -21,14 +25,16 @@ class RetrofitNetworkClient(
             return Response().apply { resultCode = RC_NO_INTERNET }
         }
 
-        return when (request) {
-            is VacancyDetailsSearchRequest -> getVacancyDetailsById(request.id)
-            is VacanciesSearchRequest -> {
-//                getVacanciesList(request.toQueryMap())
-                Response().apply { resultCode = RC_NOK_SERVER_ERROR }
+        return withContext(Dispatchers.IO) {
+            when (request) {
+                is VacancyDetailsSearchRequest -> getVacancyDetailsById(request.id)
+                is IndustriesRequest -> getIndustries()
+                is VacanciesSearchRequest -> {
+//                  getVacanciesList(request.toQueryMap())
+                  Response().apply { resultCode = RC_NOK_SERVER_ERROR }
+                }
+                else -> Response().apply { resultCode = RC_NOK_SERVER_ERROR }
             }
-            else -> Response().apply { resultCode = RC_NOK_SERVER_ERROR }
-
         }
     }
 
@@ -55,6 +61,23 @@ class RetrofitNetworkClient(
 //        }
 //    }
 
+    private suspend fun getIndustries(): Response {
+        return try {
+            val response = hhService.getIndustries()
+            if (response.body() != null) {
+                IndustriesResponse(response.body()!!).apply {
+                    resultCode = RC_OK
+                }
+            } else {
+                Response().apply { resultCode = RC_NOK }
+            }
+        } catch (e: HttpException) {
+            Log.e(TAG, e.toString())
+            Response().apply { resultCode = RC_NOK }
+        }
+    }
+    
+    // Надо переделать в enum, как предлагал Женя
     companion object {
         const val RC_NO_INTERNET = -1
         const val RC_OK = 200

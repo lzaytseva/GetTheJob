@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/filtersFragment"
-        android:name="ru.practicum.android.diploma.filters.ui.FiltersFragment"
+        android:name="ru.practicum.android.diploma.filters.ui.fragment.FiltersFragment"
         android:label="fragment_filters"
         tools:layout="@layout/fragment_filters">
         <action
@@ -45,6 +45,9 @@
         <action
             android:id="@+id/action_vacancyDetailsFragment_to_similarVacanciesFragment"
             app:destination="@id/similarVacanciesFragment" />
+        <argument
+            android:name="vacancyId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
@@ -64,10 +67,14 @@
         android:id="@+id/similarVacanciesFragment"
         android:name="ru.practicum.android.diploma.vacancydetails.ui.SimilarVacanciesFragment"
         android:label="fragment_similar_vacancies"
-        tools:layout="@layout/fragment_similar_vacancies" />
+        tools:layout="@layout/fragment_similar_vacancies" >
+        <argument
+            android:name="vacancyId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/choiceWorkplaceFragment"
-        android:name="ru.practicum.android.diploma.filters.ui.ChoiceWorkplaceFragment"
+        android:name="ru.practicum.android.diploma.filters.ui.fragment.ChoiceWorkplaceFragment"
         android:label="fragment_choice_workplace"
         tools:layout="@layout/fragment_choice_workplace">
         <action
@@ -79,17 +86,17 @@
     </fragment>
     <fragment
         android:id="@+id/choiceCountryFragment"
-        android:name="ru.practicum.android.diploma.filters.ui.ChoiceCountryFragment"
+        android:name="ru.practicum.android.diploma.filters.ui.fragment.ChoiceCountryFragment"
         android:label="fragment_choice_country"
         tools:layout="@layout/fragment_choice_country" />
     <fragment
         android:id="@+id/choiceRegionFragment"
-        android:name="ru.practicum.android.diploma.filters.ui.ChoiceRegionFragment"
+        android:name="ru.practicum.android.diploma.filters.ui.fragment.ChoiceRegionFragment"
         android:label="fragment_choice_region"
         tools:layout="@layout/fragment_choice_region" />
     <fragment
         android:id="@+id/choiceIndustryFragment"
-        android:name="ru.practicum.android.diploma.filters.ui.ChoiceIndustryFragment"
+        android:name="ru.practicum.android.diploma.filters.ui.fragment.ChoiceIndustryFragment"
         android:label="fragment_choice_industry"
         tools:layout="@layout/fragment_choice_industry" />
 </navigation>

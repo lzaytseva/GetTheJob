@@ -8,24 +8,27 @@ object VacancyDetailsDtoMapper {
     fun map(dto: VacancyDetailsDto): VacancyDetails =
         VacancyDetails(
             id = dto.id,
+            url = dto.url,
             name = dto.name,
             area = dto.area.name,
-            salaryCurrency = dto.salaryDto?.currency,
-            salaryFrom = dto.salaryDto?.from,
-            salaryTo = dto.salaryDto?.to,
-            salaryGross = dto.salaryDto?.gross,
+            salaryCurrency = dto.salary?.currency,
+            salaryFrom = dto.salary?.from,
+            salaryTo = dto.salary?.to,
+            salaryGross = dto.salary?.gross,
             experience = dto.experience?.name,
             schedule = dto.schedule.name,
-            contactName = dto.contactsDto?.name,
-            contactEmail = dto.contactsDto?.email,
-            phones = dto.contactsDto?.phoneDtos?.map { phoneDto ->
-                phoneDto.country + phoneDto.city + phoneDto.number
+            contactName = dto.contacts?.name,
+            contactEmail = dto.contacts?.email,
+            phones = dto.contacts?.phones?.map { phone ->
+                "+${phone.country}${phone.city}${phone.number}"
             },
-            contactComment = dto.contactsDto?.phoneDtos?.get(0)?.comment,
-            logoUrl = dto.logoUrlsDto?.original,
-            logoUrl90 = dto.logoUrlsDto?.art90,
-            logoUrl240 = dto.logoUrlsDto?.art240,
-            address = dto.address?.city + dto.address?.street + dto.address?.building,
+            contactComment = dto.contacts?.phones?.get(0)?.comment,
+            logoUrl = dto.employer?.logoUrlsDto?.original,
+            logoUrl90 = dto.employer?.logoUrlsDto?.art90,
+            logoUrl240 = dto.employer?.logoUrlsDto?.art240,
+            address = dto.address?.let { addressDto ->
+                "${addressDto.city}, ${addressDto.street}, ${addressDto.building}"
+            },
             employerUrl = dto.employer?.alternateUrl,
             employerName = dto.employer?.name,
             employment = dto.employment?.name,

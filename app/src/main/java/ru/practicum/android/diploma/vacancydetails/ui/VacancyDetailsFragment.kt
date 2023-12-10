@@ -6,13 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.domain.models.VacancyDetails
+import ru.practicum.android.diploma.core.ui.RootActivity
 import ru.practicum.android.diploma.databinding.FragmentVacancyDetailsBinding
 import ru.practicum.android.diploma.util.BindingFragment
+import ru.practicum.android.diploma.util.getSalaryDescription
 import ru.practicum.android.diploma.vacancydetails.presentation.VacancyDetailsScreenState
 import ru.practicum.android.diploma.vacancydetails.presentation.VacancyDetailsViewModel
 
@@ -26,6 +29,12 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        configureToolbar()
+
+        binding.companySection.setOnClickListener {
+            viewModel.openLink()
+        }
 
         viewModel.vacancyDetailsScreenState.observe(viewLifecycleOwner) { screenState ->
             when (screenState) {
@@ -61,30 +70,27 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
     private fun bindDataToViews(vacancyDetails: VacancyDetails) {
         with(binding) {
             positionName.text = vacancyDetails.name
-            salary.text = getSalaryDescription(vacancyDetails)
-            loadLogo(vacancyDetails.logoUrl90)
+            salary.text = getSalaryDescription(
+                requireContext(),
+                vacancyDetails.salaryFrom,
+                vacancyDetails.salaryTo,
+                vacancyDetails.salaryCurrency
+            )
+            loadLogo(vacancyDetails.logoUrl240)
             companyName.text = vacancyDetails.employerName
             companyLocation.text = getCompanyLocation(vacancyDetails)
             experience.text = vacancyDetails.experience
             schedulesInfo.text = vacancyDetails.schedule ?: ""
             description.setText(Html.fromHtml(vacancyDetails.description, Html.FROM_HTML_MODE_COMPACT))
-            keySkills.text = getKeySkills(keySkills = vacancyDetails.keySkills)
+            if (vacancyDetails.keySkills.isNullOrEmpty()) {
+                keySkillsTitle.visibility = View.GONE
+                keySkills.visibility = View.GONE
+            } else {
+                keySkillsTitle.visibility = View.VISIBLE
+                keySkills.visibility = View.VISIBLE
+                keySkills.text = getKeySkills(keySkills = vacancyDetails.keySkills)
+            }
             showContactInfo(vacancyDetails)
-        }
-    }
-
-    private fun getSalaryDescription(vacancyDetails: VacancyDetails): String {
-        return when {
-            vacancyDetails.salaryFrom != null && vacancyDetails.salaryTo != null ->
-                getString(R.string.vacancy_salary_from_to, vacancyDetails.salaryFrom, vacancyDetails.salaryTo)
-
-            vacancyDetails.salaryFrom != null && vacancyDetails.salaryTo == null ->
-                getString(R.string.vacancy_salary_from, vacancyDetails.salaryFrom)
-
-            vacancyDetails.salaryFrom == null && vacancyDetails.salaryTo != null ->
-                getString(R.string.vacancy_salary_to, vacancyDetails.salaryTo)
-
-            else -> getString(R.string.vacancy_salary_not_specified)
         }
     }
 
@@ -112,17 +118,74 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
 
     private fun getKeySkills(keySkills: List<String>?): String {
         val keySkillsText = StringBuilder("")
-        keySkills?.map { skill -> keySkillsText.append(skill) }
+        keySkills?.map { skill -> keySkillsText.append("-").append(skill).append(System.lineSeparator()) }
         return keySkillsText.toString()
     }
 
     private fun showContactInfo(vacancyDetails: VacancyDetails) {
-        binding.contactPersonName.text = vacancyDetails.contactName ?: ""
-        binding.contactPersonEmail.text = vacancyDetails.contactEmail ?: ""
-        val contactPhones = StringBuilder("")
-        vacancyDetails.phones?.map { phone -> contactPhones.append(phone).append(", ") }
-        binding.contactPersonPhone.text = contactPhones
-        binding.contactPersonComment.text = vacancyDetails.contactComment ?: ""
+        with(binding) {
+            if (vacancyDetails.contactEmail.isNullOrBlank() && vacancyDetails.phones?.get(0).isNullOrBlank()) {
+                contacts.visibility = View.GONE
+                contactPerson.visibility = View.GONE
+                contactPersonName.visibility = View.GONE
+                contactPersonEmailTitle.visibility = View.GONE
+                contactPersonEmail.visibility = View.GONE
+                contactPersonPhoneTitle.visibility = View.GONE
+                contactPersonPhone.visibility = View.GONE
+                contactPersonCommentTitle.visibility = View.GONE
+                contactPersonComment.visibility = View.GONE
+            } else {
+                contacts.visibility = View.VISIBLE
+                contactPerson.visibility = View.VISIBLE
+                contactPersonName.visibility = View.VISIBLE
+                contactPersonName.text = vacancyDetails.contactName
+            }
+            if (!vacancyDetails.contactEmail.isNullOrEmpty()) {
+                contactPersonEmailTitle.visibility = View.VISIBLE
+                contactPersonEmail.visibility = View.VISIBLE
+                contactPersonEmail.text = vacancyDetails.contactEmail
+                contactPersonEmail.setOnClickListener { viewModel.sendEmail() }
+            } else {
+                contactPersonEmailTitle.visibility = View.GONE
+                contactPersonEmail.visibility = View.GONE
+            }
+            if (!vacancyDetails.phones?.get(0).isNullOrBlank()) {
+                contactPersonPhoneTitle.visibility = View.VISIBLE
+                contactPersonPhone.visibility = View.VISIBLE
+                contactPersonPhone.text = vacancyDetails.phones?.get(0)
+                contactPersonPhone.setOnClickListener {
+                    viewModel.makePhoneCall()
+                }
+            } else {
+                contactPersonPhoneTitle.visibility = View.GONE
+                contactPersonPhone.visibility = View.GONE
+            }
+            if (!vacancyDetails.contactComment.isNullOrBlank()) {
+                contactPersonCommentTitle.visibility = View.VISIBLE
+                contactPersonComment.visibility = View.VISIBLE
+                contactPersonComment.text = vacancyDetails.contactComment
+            } else {
+                contactPersonCommentTitle.visibility = View.GONE
+                contactPersonComment.visibility = View.GONE
+            }
+        }
+
+    }
+
+    private fun configureToolbar() {
+        val toolbar = (requireActivity() as RootActivity).toolbar
+        toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+        toolbar.setTitle(getString(R.string.vacancy))
+        toolbar.menu.findItem(R.id.favorite).isVisible = true
+        toolbar.menu.findItem(R.id.share).isVisible = true
+        toolbar.menu.findItem(R.id.filters).isVisible = false
+
+        toolbar.menu.findItem(R.id.share).setOnMenuItemClickListener {
+            viewModel.shareVacancy()
+            true
+        }
     }
 
 }

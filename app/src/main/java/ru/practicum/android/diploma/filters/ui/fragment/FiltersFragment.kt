@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.filters.ui
+package ru.practicum.android.diploma.filters.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,10 +7,13 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputLayout
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
 import ru.practicum.android.diploma.filters.presentation.FiltersViewModel
 import ru.practicum.android.diploma.util.BindingFragment
+import ru.practicum.android.diploma.util.ToolbarUtils
 
 class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
 
@@ -24,10 +27,14 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
         setSalaryFieldHintColorBehaviour()
         setSalaryCheckBoxChangeListener()
         setSalaryTextWatcher()
+        setIndustryClickListener()
+        setPlaceClickListener()
+        configureToolbar()
     }
 
     override fun onResume() {
         super.onResume()
+        setFiltersFieldsHintColorBehaviour()
         setFilterFieldsEndIcon()
         setBtnsVisibility()
     }
@@ -72,6 +79,29 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
         }
     }
 
+    private fun setFiltersFieldsHintColorBehaviour() {
+        with(binding) {
+            tilIndustry.setHintColor(
+                hintColorStateListId = getHintColorStateListId(isTextFieldEmpty = etIndustry.text.isNullOrBlank())
+            )
+            tilPlace.setHintColor(
+                hintColorStateListId = getHintColorStateListId(isTextFieldEmpty = etPlace.text.isNullOrBlank())
+            )
+        }
+    }
+
+    private fun getHintColorStateListId(isTextFieldEmpty: Boolean): Int {
+        return if (isTextFieldEmpty) {
+            R.color.filter_hint_color
+        } else {
+            R.color.filter_hint_color_populated
+        }
+    }
+
+    private fun TextInputLayout.setHintColor(hintColorStateListId: Int) {
+        defaultHintTextColor = ContextCompat.getColorStateList(requireContext(), hintColorStateListId)
+    }
+
     private fun setBtnsVisibility() {
         val visible = hasNonEmptyFields()
         binding.btnApplyChanges.visibility = if (visible) {
@@ -93,5 +123,29 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
                 !etSalary.text.isNullOrBlank() ||
                 checkBoxSalary.isChecked
         }
+    }
+
+    private fun setIndustryClickListener() {
+        binding.etIndustry.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_filtersFragment_to_choiceIndustryFragment
+            )
+        }
+    }
+
+    private fun setPlaceClickListener() {
+        binding.etPlace.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_filtersFragment_to_choiceWorkplaceFragment2
+            )
+        }
+    }
+
+    private fun configureToolbar() {
+        ToolbarUtils.configureToolbar(
+            activity = requireActivity(),
+            navController = findNavController(),
+            title = getString(R.string.header_industry)
+        )
     }
 }
