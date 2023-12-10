@@ -33,7 +33,7 @@ object VacancyEntityMapper {
     )
 
     fun map(vacancy: VacancyDetails): VacancyEntity = VacancyEntity(
-        id = -1,
+        id = null,
         vacancyId = vacancy.id,
         url = vacancy.url,
         name = vacancy.name,
