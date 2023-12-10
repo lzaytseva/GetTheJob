@@ -28,7 +28,8 @@ object VacancyEntityMapper {
         employerName = entity.employerName,
         employment = entity.employment,
         keySkills = entity.keySkills?.split(";"),
-        description = entity.description
+        description = entity.description,
+        isFavorite = true,
     )
 
     fun map(vacancy: VacancyDetails): VacancyEntity = VacancyEntity(

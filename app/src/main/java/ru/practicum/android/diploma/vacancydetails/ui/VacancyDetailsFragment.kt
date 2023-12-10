@@ -23,6 +23,7 @@ import ru.practicum.android.diploma.vacancydetails.presentation.VacancyDetailsVi
 class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() {
 
     private val viewModel: VacancyDetailsViewModel by viewModels()
+    private val toolbar = (requireActivity() as RootActivity).toolbar
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentVacancyDetailsBinding =
         FragmentVacancyDetailsBinding.inflate(inflater, container, false)
@@ -91,6 +92,7 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
                 keySkills.text = getKeySkills(keySkills = vacancyDetails.keySkills)
             }
             showContactInfo(vacancyDetails)
+            heartHandle(vacancyDetails.isFavorite)
         }
     }
 
@@ -173,7 +175,6 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
     }
 
     private fun configureToolbar() {
-        val toolbar = (requireActivity() as RootActivity).toolbar
         toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
@@ -187,12 +188,28 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
             true
         }
 
-        toolbar.menu.findItem(R.id.favorite).setOnMenuItemClickListener {
-            viewModel.clickInFavorites()
-            true
+        if ((viewModel.vacancyDetailsScreenState.value is VacancyDetailsScreenState.Content)) {
+            toolbar.menu.findItem(R.id.favorite).setOnMenuItemClickListener {
+                if (
+                    (viewModel.vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content)
+                        .vacancyDetails
+                        .isFavorite
+                ) {
+                    toolbar.menu.findItem(R.id.favorite).setIcon(R.drawable.ic_favorite)
+                } else {
+                    toolbar.menu.findItem(R.id.favorite).setIcon(R.drawable.ic_favorite_active)
+                }
+                viewModel.clickInFavorites()
+                true
+            }
         }
     }
 
+    private fun heartHandle(isFavorite: Boolean) {
+        if (isFavorite) {
+            toolbar.menu.findItem(R.id.favorite).setIcon(R.drawable.ic_favorite_active)
+        } else {
+            toolbar.menu.findItem(R.id.favorite).setIcon(R.drawable.ic_favorite)
+        }
+    }
 }
-
-
