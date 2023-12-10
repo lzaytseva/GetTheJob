@@ -186,6 +186,11 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
             viewModel.shareVacancy()
             true
         }
+
+        toolbar.menu.findItem(R.id.favorite).setOnMenuItemClickListener {
+            viewModel.addInFavorites()
+            true
+        }
     }
 
 }
