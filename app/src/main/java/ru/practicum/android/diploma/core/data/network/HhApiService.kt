@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.core.data.network
 
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -15,7 +14,7 @@ interface HhApiService {
     @GET("/vacancies?access_token=$HH_ACCESS_TOKEN")
     fun getVacancies(
         @QueryMap params: Map<String, String>
-    ): Call<VacancySearchResponse>
+    ): VacancySearchResponse
 
     @Headers(
         "Authorization: Bearer $HH_ACCESS_TOKEN",

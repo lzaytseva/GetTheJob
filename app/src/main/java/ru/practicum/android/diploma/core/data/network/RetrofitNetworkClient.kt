@@ -3,6 +3,7 @@ package ru.practicum.android.diploma.core.data.network
 import android.content.Context
 import android.util.Log
 import retrofit2.HttpException
+import ru.practicum.android.diploma.core.data.dto.requests.VacanciesSearchRequest
 import ru.practicum.android.diploma.core.data.dto.requests.VacancyDetailsSearchRequest
 import ru.practicum.android.diploma.core.data.dto.responses.Response
 import ru.practicum.android.diploma.core.data.dto.responses.VacancyDetailsSearchResponse
@@ -22,7 +23,10 @@ class RetrofitNetworkClient(
 
         return when (request) {
             is VacancyDetailsSearchRequest -> getVacancyDetailsById(request.id)
-
+            is VacanciesSearchRequest -> {
+//                getVacanciesList(request.toQueryMap())
+                Response().apply { resultCode = RC_NOK_SERVER_ERROR }
+            }
             else -> Response().apply { resultCode = RC_NOK_SERVER_ERROR }
 
         }
@@ -42,6 +46,14 @@ class RetrofitNetworkClient(
             Response().apply { resultCode = RC_NOK }
         }
     }
+
+//    private suspend fun getVacanciesList(queryMap: Map<String, String>) = withContext(Dispatchers.IO) {
+//        try {
+//            Resource.Success(hhService.getVacancies(queryMap))
+//        } catch (_: Exception) {
+//            Resource.Error("$RC_NOK_SERVER_ERROR")
+//        }
+//    }
 
     companion object {
         const val RC_NO_INTERNET = -1
