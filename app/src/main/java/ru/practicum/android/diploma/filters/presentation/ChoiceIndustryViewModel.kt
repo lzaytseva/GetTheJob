@@ -31,7 +31,7 @@ class ChoiceIndustryViewModel @Inject constructor(
             repository.get().collect {
                 when (it) {
                     is Resource.Error -> {
-                        _state.postValue(IndustryScreenState.Error(it.message.orEmpty()))
+                        _state.postValue(IndustryScreenState.Error(it.errorType!!))
                     }
 
                     is Resource.Success -> {

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
+import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.databinding.FragmentChoiceIndustryBinding
 import ru.practicum.android.diploma.filters.domain.model.Industry
 import ru.practicum.android.diploma.filters.domain.model.IndustryScreenState
@@ -47,7 +48,7 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
     private fun renderState(state: IndustryScreenState) {
         when (state) {
             is IndustryScreenState.Content -> showContent(state.industries)
-            is IndustryScreenState.Error -> showError(state.message)
+            is IndustryScreenState.Error -> showError(state.error)
             is IndustryScreenState.Empty -> showEmpty()
             is IndustryScreenState.Loading -> showLoading()
         }
@@ -57,7 +58,7 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
         adapter.submitList(industries)
     }
 
-    private fun showError(message: String) {
+    private fun showError(error: ErrorType) {
         TODO("Not implemented yet")
     }
 
