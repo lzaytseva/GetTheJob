@@ -6,12 +6,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import ru.practicum.android.diploma.core.data.dto.requests.SimilarVacanciesSearchRequest
-import ru.practicum.android.diploma.filters.data.dto.IndustriesRequest
+import ru.practicum.android.diploma.core.data.dto.requests.VacanciesSearchRequest
 import ru.practicum.android.diploma.core.data.dto.requests.VacancyDetailsSearchRequest
-import ru.practicum.android.diploma.filters.data.dto.IndustriesResponse
 import ru.practicum.android.diploma.core.data.dto.responses.Response
 import ru.practicum.android.diploma.core.data.dto.responses.VacancyDetailsSearchResponse
 import ru.practicum.android.diploma.core.data.dto.responses.VacancySearchResponse
+import ru.practicum.android.diploma.filters.data.dto.IndustriesRequest
+import ru.practicum.android.diploma.filters.data.dto.IndustriesResponse
 import ru.practicum.android.diploma.util.ConnectionChecker
 
 private const val TAG = "RetrofitNetworkClient"
@@ -32,8 +33,11 @@ class RetrofitNetworkClient(
                 is IndustriesRequest -> getIndustries()
                 is SimilarVacanciesSearchRequest -> getSimilarVacanciesById(request.id)
 
+                is VacanciesSearchRequest -> {
+                    // getVacanciesList(request.toQueryMap())
+                    Response().apply { resultCode = RC_NOK_SERVER_ERROR }
+                }
                 else -> Response().apply { resultCode = RC_NOK_SERVER_ERROR }
-
             }
         }
     }
@@ -52,6 +56,13 @@ class RetrofitNetworkClient(
             Response().apply { resultCode = RC_NOK }
         }
     }
+//    private suspend fun getVacanciesList(queryMap: Map<String, String>) = withContext(Dispatchers.IO) {
+//        try {
+//            Resource.Success(hhService.getVacancies(queryMap))
+//        } catch (_: Exception) {
+//            Resource.Error("$RC_NOK_SERVER_ERROR")
+//        }
+//    }
 
     private suspend fun getIndustries(): Response {
         return try {

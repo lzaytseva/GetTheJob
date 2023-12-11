@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import ru.practicum.android.diploma.core.data.room.entity.VacancyEntity
 import ru.practicum.android.diploma.core.data.room.entity.VacancyShort
 
@@ -17,10 +18,13 @@ interface VacancyDao {
 
     @Query(
         "SELECT vacancyId, name, salaryCurrency, salaryFrom, salaryTo, employerName, logoUrl " +
-            "FROM favorites_table ORDER BY id DESC"
+            "FROM favorites_table ORDER BY time DESC"
     )
     suspend fun getVacancyList(): List<VacancyShort>
 
     @Query("SELECT * FROM favorites_table WHERE vacancyId = :vacancyId LIMIT 1")
-    suspend fun getVacancyById(vacancyId: String): VacancyEntity
+    suspend fun getVacancyById(vacancyId: String): VacancyEntity?
+
+    @Update
+    suspend fun updateVacancy(entity: VacancyEntity)
 }

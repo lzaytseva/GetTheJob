@@ -1,11 +1,11 @@
 package ru.practicum.android.diploma.search.ui.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import ru.practicum.android.diploma.search.domain.model.VacancyInList
+import ru.practicum.android.diploma.core.domain.models.VacancyInList
 
 class VacanciesDiffCallback(
-    private val oldList: ArrayList<VacancyInList>,
-    private val newList: ArrayList<VacancyInList>
+    private val oldList: List<VacancyInList>,
+    private val newList: List<VacancyInList>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int = oldList.size

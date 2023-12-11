@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.search.ui.adapter
 
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -8,14 +9,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import ru.practicum.android.diploma.R
+import ru.practicum.android.diploma.core.domain.models.VacancyInList
 import ru.practicum.android.diploma.databinding.VacancyCardBinding
-import ru.practicum.android.diploma.search.domain.model.VacancyInList
+import ru.practicum.android.diploma.util.getSalaryDescription
 
 class VacanciesAdapter(
+    private val resources: Resources,
     private val onClick: (String) -> Unit
 ) : RecyclerView.Adapter<VacanciesAdapter.VacancyViewHolder>() {
 
-    private val vacanciesList: ArrayList<VacancyInList> = ArrayList()
+    private val vacanciesList: MutableList<VacancyInList> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VacancyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -31,7 +34,7 @@ class VacanciesAdapter(
         holder.bind(vacanciesList[position])
     }
 
-    fun setContent(newList: ArrayList<VacancyInList>) {
+    fun setContent(newList: List<VacancyInList>) {
         val diffCallback = VacanciesDiffCallback(vacanciesList, newList)
         val diffVacancies = DiffUtil.calculateDiff(diffCallback)
         vacanciesList.clear()
@@ -46,7 +49,8 @@ class VacanciesAdapter(
                 setImage(vacancy.logo)
                 vacancyNameTextView.text = vacancy.name
                 employerNameTextView.text = vacancy.employerName
-                salaryInfoTextView.text = vacancy.salary
+                salaryInfoTextView.text =
+                    getSalaryDescription(resources, vacancy.salaryFrom, vacancy.salaryTo, vacancy.salaryCurrency)
             }
         }
 

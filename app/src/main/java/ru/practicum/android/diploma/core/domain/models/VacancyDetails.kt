@@ -23,5 +23,11 @@ data class VacancyDetails(
     val employerName: String?,
     val employment: String?,
     val keySkills: List<String>?,
-    val description: String
-)
+    val description: String,
+) {
+    val isFavoriteWrapper: BooleanWrapperSpeciallyForDetect = BooleanWrapperSpeciallyForDetect()
+}
+
+class BooleanWrapperSpeciallyForDetect {
+    var isFavorite: Boolean = false
+}
