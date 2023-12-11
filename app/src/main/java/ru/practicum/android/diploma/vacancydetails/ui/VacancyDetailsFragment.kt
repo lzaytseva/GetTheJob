@@ -162,7 +162,7 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
                 contactPersonEmailTitle.visibility = View.GONE
                 contactPersonEmail.visibility = View.GONE
             }
-            if (!vacancyDetails.phones?.get(0).isNullOrBlank()) {
+            if (!vacancyDetails.phones.isNullOrEmpty() && vacancyDetails.phones[0].isNotBlank()) {
                 contactPersonPhoneTitle.visibility = View.VISIBLE
                 contactPersonPhone.visibility = View.VISIBLE
                 contactPersonPhone.text = vacancyDetails.phones?.get(0)
