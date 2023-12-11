@@ -25,6 +25,7 @@ class SearchViewModel @Inject constructor(
     private var currentPage = 0
     private val vacancies = mutableListOf<VacancyInList>()
     private var isNextPageLoading = false
+    //В эту переменную сохраняется текст первого запроса
     private var lastSearchedText = ""
 
     private val _showLoadingNewPageError = SingleLiveEvent<ErrorType>()
