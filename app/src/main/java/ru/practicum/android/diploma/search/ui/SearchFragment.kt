@@ -10,6 +10,7 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +23,7 @@ import ru.practicum.android.diploma.search.presentation.SearchScreenState
 import ru.practicum.android.diploma.search.presentation.SearchViewModel
 import ru.practicum.android.diploma.search.ui.adapter.VacanciesAdapter
 import ru.practicum.android.diploma.util.BindingFragment
+import ru.practicum.android.diploma.util.debounce
 
 @AndroidEntryPoint
 class SearchFragment : BindingFragment<FragmentSearchBinding>() {
@@ -117,7 +119,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
     }
 
     private fun setupAdapter() {
-        val onVacancyClick: (String) -> Unit = { vacancyId ->
+        val onVacancyClick: (String) -> Unit = debounce(ON_CLICK_DELAY, lifecycleScope, false) { vacancyId ->
             val searchToDetails: NavDirections =
                 SearchFragmentDirections.actionSearchFragmentToVacancyDetailsFragment(vacancyId)
             findNavController().navigate(searchToDetails)
@@ -141,5 +143,9 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
                 true
             }
         }
+    }
+
+    companion object {
+        private const val ON_CLICK_DELAY = 200L
     }
 }

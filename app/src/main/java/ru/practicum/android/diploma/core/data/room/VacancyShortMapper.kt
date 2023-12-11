@@ -9,7 +9,10 @@ object VacancyShortMapper {
         id = vacancyShort.vacancyId,
         name = vacancyShort.name,
         // Здесь надо доделать оплату правильно
-        salary = vacancyShort.salaryFrom.toString(),
+        salaryFrom = vacancyShort.salaryFrom,
+        salaryTo = vacancyShort.salaryTo,
+        salaryCurrency = vacancyShort.salaryCurrency,
+        salaryGross = vacancyShort.salaryGross,
         employerName = vacancyShort.employerName ?: "",
         logo = vacancyShort.logoUrl
     )
