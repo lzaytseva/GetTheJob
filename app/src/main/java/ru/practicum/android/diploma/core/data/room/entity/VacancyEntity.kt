@@ -29,5 +29,4 @@ data class VacancyEntity(
     val employment: String?,
     val keySkills: String?,
     val description: String,
-    val time: Long,
 )

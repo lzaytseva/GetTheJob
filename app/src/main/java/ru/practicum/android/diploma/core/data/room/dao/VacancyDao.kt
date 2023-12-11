@@ -17,8 +17,7 @@ interface VacancyDao {
     suspend fun deleteVacancy(vacancyId: String)
 
     @Query(
-        "SELECT vacancyId, name, salaryCurrency, salaryFrom, salaryTo, employerName, logoUrl " +
-            "FROM favorites_table ORDER BY time DESC"
+        "SELECT vacancyId, name, salaryCurrency, salaryFrom, salaryTo, employerName, logoUrl FROM favorites_table"
     )
     suspend fun getVacancyList(): List<VacancyShort>
 
