@@ -27,7 +27,11 @@ object VacancyDetailsDtoMapper {
             logoUrl90 = dto.employer?.logoUrlsDto?.art90,
             logoUrl240 = dto.employer?.logoUrlsDto?.art240,
             address = dto.address?.let { addressDto ->
-                "${addressDto.city}, ${addressDto.street}, ${addressDto.building}"
+                val builder = StringBuilder("")
+                if (!addressDto.city.isNullOrBlank()) builder.append(addressDto.city)
+                if (!addressDto.street.isNullOrBlank()) builder.append(addressDto.street)
+                if (!addressDto.building.isNullOrBlank()) builder.append(addressDto.building)
+                if (builder.toString().isNullOrBlank()) null else builder.toString()
             },
             employerUrl = dto.employer?.alternateUrl,
             employerName = dto.employer?.name,
