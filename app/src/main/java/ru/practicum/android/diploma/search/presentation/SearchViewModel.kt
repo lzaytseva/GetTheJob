@@ -13,6 +13,7 @@ import ru.practicum.android.diploma.search.domain.model.VacancyInList
 import ru.practicum.android.diploma.search.presentation.SearchScreenState.Content
 import ru.practicum.android.diploma.search.presentation.SearchScreenState.Error
 import ru.practicum.android.diploma.search.presentation.SearchScreenState.Loading
+import ru.practicum.android.diploma.util.SingleLiveEvent
 import ru.practicum.android.diploma.util.debounce
 import javax.inject.Inject
 
@@ -25,6 +26,10 @@ class SearchViewModel @Inject constructor(
     private val vacancies = mutableListOf<VacancyInList>()
     private var isNextPageLoading = false
     private var lastSearchedText = ""
+
+    private val _showLoadingNewPageError = SingleLiveEvent<ErrorType>()
+    val showLoadingNewPageError: LiveData<ErrorType>
+        get() = _showLoadingNewPageError
 
     private val _screenState: MutableLiveData<SearchScreenState> = MutableLiveData()
     val screenState: LiveData<SearchScreenState> get() = _screenState
@@ -90,7 +95,15 @@ class SearchViewModel @Inject constructor(
             pages = searchResult.pages
         }
         when {
-            error != null -> _screenState.postValue(Error(error))
+            error != null -> {
+                //Если прилетел результат первого поиска
+                if (currentPage == 0) {
+                    _screenState.postValue(Error(error))
+                } else {
+                    //Ошибка загрузка следующей страницы
+                    _showLoadingNewPageError.postValue(error)
+                }
+            }
 
             vacancies.isEmpty() -> _screenState.postValue(Error(ErrorType.NO_CONTENT))
 

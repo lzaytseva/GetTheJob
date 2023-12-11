@@ -25,6 +25,7 @@ import ru.practicum.android.diploma.search.presentation.SearchScreenState
 import ru.practicum.android.diploma.search.presentation.SearchViewModel
 import ru.practicum.android.diploma.search.ui.adapter.VacanciesAdapter
 import ru.practicum.android.diploma.util.BindingFragment
+import ru.practicum.android.diploma.util.FeedbackUtils
 import ru.practicum.android.diploma.util.debounce
 
 @AndroidEntryPoint
@@ -84,6 +85,18 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
                 is SearchScreenState.LoadingNextPage -> {
                     binding.progressBar.isVisible = true
                 }
+            }
+        }
+        viewModel.showLoadingNewPageError.observe(viewLifecycleOwner) {
+            binding.progressBar.isGone = true
+            when (it) {
+                ErrorType.NO_INTERNET -> FeedbackUtils.showSnackbar(
+                    requireView(),
+                    getString(R.string.error_check_connection))
+                else -> FeedbackUtils.showSnackbar(
+                    requireView(),
+                    getString(R.string.error_something_went_wrong)
+                )
             }
         }
     }

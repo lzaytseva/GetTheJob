@@ -17,6 +17,7 @@
     <string name="error_getting_list">Не удалось получить список</string>
     <string name="error_server">Ошибка сервера</string>
     <string name="error_empty_list">Список пуст</string>
+    <string name="error_something_went_wrong">Произошла ошибка</string>
 
     <!-- Toolbar -->
     <string name="search_screen">Экран поиска</string>
@@ -77,6 +78,7 @@ CI по модели Trunk Based Development\n
     <string name="et_search_hint">Введите запрос</string>
     <string name="tv_no_vacancies">Таких вакансий нет</string>
     <string name="search">Поиск</string>
+    <string name="error_check_connection">Проверьте подключение к интернету</string>
 
     <!--  Экран настроек фильтрации  -->
     <string name="hint_place">Место работы</string>
@@ -97,5 +99,6 @@ CI по модели Trunk Based Development\n
     <string name="header_region">Выбор региона</string>
     <string name="hint_country">Страна</string>
     <string name="hint_region">Регион</string>
+
 
 </resources>
