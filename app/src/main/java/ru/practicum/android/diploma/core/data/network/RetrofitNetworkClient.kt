@@ -53,8 +53,11 @@ class RetrofitNetworkClient(
     private suspend fun getVacanciesList(queryMap: Map<String, String>): Response = withContext(Dispatchers.IO) {
         try {
             with(hhService.getVacancies(queryMap)) {
-                if (code() == RC_OK && body() != null) body()!!.apply { resultCode = RC_OK }
-                else Response().apply { resultCode = RC_NOK }
+                if (code() == RC_OK && body() != null) {
+                    body()!!.apply { resultCode = RC_OK }
+                } else {
+                    Response().apply { resultCode = RC_NOK }
+                }
             }
         } catch (_: Exception) {
             Response().apply { resultCode = RC_NOK }
