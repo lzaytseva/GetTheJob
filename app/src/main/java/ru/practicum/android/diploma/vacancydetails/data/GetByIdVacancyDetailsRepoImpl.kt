@@ -23,7 +23,6 @@ class GetByIdVacancyDetailsRepoImpl(
             VacancyEntityMapper.map(vacancyEntity)
         }
         if (vacancyFromDb != null) {
-            emit(Resource.Success(vacancyFromDb))
             val response = networkClient.doRequest(VacancyDetailsSearchRequest(id))
             if (response.resultCode == RetrofitNetworkClient.RC_OK) {
                 vacancyDao.updateVacancy(
@@ -38,6 +37,8 @@ class GetByIdVacancyDetailsRepoImpl(
                         }
                     )
                 )
+            } else {
+                emit(Resource.Success(vacancyFromDb))
             }
         } else {
             val response = networkClient.doRequest(VacancyDetailsSearchRequest(id))

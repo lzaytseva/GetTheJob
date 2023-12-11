@@ -57,6 +57,5 @@ object VacancyEntityMapper {
         employment = vacancy.employment,
         keySkills = vacancy.keySkills?.stream()?.collect(Collectors.joining(";")),
         description = vacancy.description,
-        time = System.currentTimeMillis()
     )
 }
