@@ -40,10 +40,10 @@ class FavoritesFragment : BindingFragment<FragmentFavoritesBinding>() {
         }
         binding.rvVacancies.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         binding.rvVacancies.adapter = vacanciesAdapter
-        viewModel.getVacancies()
     }
 
     override fun onDestroyView() {
+        binding.rvVacancies.adapter = null
         super.onDestroyView()
         vacanciesAdapter = null
     }
