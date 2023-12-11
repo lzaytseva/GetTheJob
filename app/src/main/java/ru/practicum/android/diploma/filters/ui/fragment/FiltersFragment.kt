@@ -8,10 +8,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.textfield.TextInputLayout
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
 import ru.practicum.android.diploma.filters.presentation.FiltersViewModel
+import ru.practicum.android.diploma.filters.ui.util.TextInputLayoutUtils
 import ru.practicum.android.diploma.util.BindingFragment
 import ru.practicum.android.diploma.util.ToolbarUtils
 
@@ -29,14 +29,10 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
         setSalaryTextWatcher()
         setIndustryClickListener()
         setPlaceClickListener()
-        configureToolbar()
-    }
-
-    override fun onResume() {
-        super.onResume()
         setFiltersFieldsHintColorBehaviour()
         setFilterFieldsEndIcon()
         setBtnsVisibility()
+        configureToolbar()
     }
 
     private fun setSalaryFieldHintColorBehaviour() {
@@ -66,41 +62,40 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
 
     private fun setFilterFieldsEndIcon() {
         with(binding) {
-            tilIndustry.endIconDrawable = if (etIndustry.text.isNullOrEmpty()) {
-                ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_forward)
-            } else {
-                null
-            }
-            tilPlace.endIconDrawable = if (etPlace.text.isNullOrEmpty()) {
-                ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_forward)
-            } else {
-                null
-            }
+            tilIndustry.endIconDrawable = TextInputLayoutUtils.getEndIconDrawable(
+                context = requireContext(),
+                iconResId = getEndIconId(isTextFieldEmpty = etIndustry.text.isNullOrBlank())
+            )
+            tilPlace.endIconDrawable = TextInputLayoutUtils.getEndIconDrawable(
+                context = requireContext(),
+                iconResId = getEndIconId(isTextFieldEmpty = etPlace.text.isNullOrBlank())
+            )
+        }
+    }
+
+    private fun getEndIconId(isTextFieldEmpty: Boolean): Int? {
+        return if (isTextFieldEmpty) {
+            R.drawable.ic_arrow_forward
+        } else {
+            null
         }
     }
 
     private fun setFiltersFieldsHintColorBehaviour() {
         with(binding) {
-            tilIndustry.setHintColor(
-                hintColorStateListId = getHintColorStateListId(isTextFieldEmpty = etIndustry.text.isNullOrBlank())
-            )
-            tilPlace.setHintColor(
-                hintColorStateListId = getHintColorStateListId(isTextFieldEmpty = etPlace.text.isNullOrBlank())
-            )
+            tilIndustry.defaultHintTextColor = TextInputLayoutUtils
+                .getHintColorStateList(
+                    context = requireContext(),
+                    isTextFieldEmpty = etIndustry.text.isNullOrBlank()
+                )
+            tilPlace.defaultHintTextColor = TextInputLayoutUtils
+                .getHintColorStateList(
+                    context = requireContext(),
+                    isTextFieldEmpty = etPlace.text.isNullOrBlank()
+                )
         }
     }
 
-    private fun getHintColorStateListId(isTextFieldEmpty: Boolean): Int {
-        return if (isTextFieldEmpty) {
-            R.color.filter_hint_color
-        } else {
-            R.color.filter_hint_color_populated
-        }
-    }
-
-    private fun TextInputLayout.setHintColor(hintColorStateListId: Int) {
-        defaultHintTextColor = ContextCompat.getColorStateList(requireContext(), hintColorStateListId)
-    }
 
     private fun setBtnsVisibility() {
         val visible = hasNonEmptyFields()
