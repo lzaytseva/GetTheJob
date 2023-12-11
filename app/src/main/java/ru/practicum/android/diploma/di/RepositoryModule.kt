@@ -5,22 +5,24 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ru.practicum.android.diploma.core.data.network.NetworkClient
-import ru.practicum.android.diploma.core.domain.api.SearchRepo
-import ru.practicum.android.diploma.search.data.repository.SearchVacanciesRepository
-import ru.practicum.android.diploma.search.domain.model.VacancyInList
 import ru.practicum.android.diploma.core.data.room.AppDatabase
+import ru.practicum.android.diploma.core.data.room.dao.VacancyDao
+import ru.practicum.android.diploma.core.domain.api.GetDataByIdRepo
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
+import ru.practicum.android.diploma.core.domain.api.SearchRepo
+import ru.practicum.android.diploma.core.domain.models.VacancyDetails
 import ru.practicum.android.diploma.favorites.data.FavoritesVacancyListRepositoryImpl
 import ru.practicum.android.diploma.favorites.domain.api.FavoritesVacancyListRepository
 import ru.practicum.android.diploma.filters.data.repository.IndustriesRepositoryImpl
 import ru.practicum.android.diploma.filters.domain.model.Industry
+import ru.practicum.android.diploma.search.data.repository.SearchVacanciesRepository
+import ru.practicum.android.diploma.search.domain.model.VacancyInList
 import ru.practicum.android.diploma.util.Resource
 import ru.practicum.android.diploma.vacancydetails.data.DeleteVacancyRepositoryImpl
+import ru.practicum.android.diploma.vacancydetails.data.GetByIdVacancyDetailsRepoImpl
 import ru.practicum.android.diploma.vacancydetails.data.SaveVacancyRepositoryImpl
-import ru.practicum.android.diploma.vacancydetails.data.VacancyDetailsRepositoryImpl
 import ru.practicum.android.diploma.vacancydetails.domain.api.DeleteVacancyRepository
 import ru.practicum.android.diploma.vacancydetails.domain.api.SaveVacancyRepository
-import ru.practicum.android.diploma.vacancydetails.domain.api.VacancyDetailsRepository
 import javax.inject.Singleton
 
 @Module
@@ -29,11 +31,11 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideVacancyDetailsRepository(
+    fun provideGetByIdVacancyDetailsRepoImpl(
         networkClient: NetworkClient,
-        appDatabase: AppDatabase
-    ): VacancyDetailsRepository {
-        return VacancyDetailsRepositoryImpl(networkClient, appDatabase)
+        vacancyDao: VacancyDao
+    ): GetDataByIdRepo<Resource<VacancyDetails>> {
+        return GetByIdVacancyDetailsRepoImpl(networkClient, vacancyDao)
     }
 
     @Provides
@@ -62,7 +64,13 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideSearchRepository(networkClient: NetworkClient): SearchRepo<VacancyInList> {
+    fun provideSearchRepository(networkClient: NetworkClient): SearchVacanciesRepository {
         return SearchVacanciesRepository(networkClient)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSearchRepo(searchVacanciesRepository: SearchVacanciesRepository): SearchRepo<VacancyInList> {
+        return searchVacanciesRepository
     }
 }

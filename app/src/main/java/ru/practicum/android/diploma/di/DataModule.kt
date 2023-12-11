@@ -14,6 +14,7 @@ import ru.practicum.android.diploma.core.data.network.HhApiService
 import ru.practicum.android.diploma.core.data.network.NetworkClient
 import ru.practicum.android.diploma.core.data.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.core.data.room.AppDatabase
+import ru.practicum.android.diploma.core.data.room.dao.VacancyDao
 import ru.practicum.android.diploma.core.domain.api.ExternalNavigator
 import javax.inject.Singleton
 
@@ -25,6 +26,11 @@ class DataModule {
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, "gtj_database.db").build()
+
+    @Provides
+    @Singleton
+    fun provideVacancyDao(appDatabase: AppDatabase): VacancyDao =
+        appDatabase.vacancyDao
 
     @Provides
     @Singleton

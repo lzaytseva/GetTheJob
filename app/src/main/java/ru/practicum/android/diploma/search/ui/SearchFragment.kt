@@ -125,7 +125,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
                 SearchFragmentDirections.actionSearchFragmentToVacancyDetailsFragment(vacancyId)
             findNavController().navigate(searchToDetails)
         }
-        binding.resultsListRecyclerView.adapter = VacanciesAdapter(onVacancyClick)
+        binding.resultsListRecyclerView.adapter = VacanciesAdapter(resources, onVacancyClick)
     }
 
     private fun setFiltersVisibility(isVisible: Boolean) {
