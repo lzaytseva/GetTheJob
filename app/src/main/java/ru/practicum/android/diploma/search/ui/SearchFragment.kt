@@ -74,14 +74,17 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
                     binding.progressBar.isVisible = true
                     binding.resultsListRecyclerView.isGone = true
                 }
+
                 is SearchScreenState.Error -> {
                     binding.resultsListRecyclerView.isGone = true
                     onError(screenState.error)
                 }
-                is SearchScreenState.Content ->  {
+
+                is SearchScreenState.Content -> {
                     binding.resultsListRecyclerView.isVisible = true
                     onContent(screenState.content)
                 }
+
                 is SearchScreenState.LoadingNextPage -> {
                     binding.progressBar.isVisible = true
                 }
@@ -92,7 +95,9 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
             when (it) {
                 ErrorType.NO_INTERNET -> FeedbackUtils.showSnackbar(
                     requireView(),
-                    getString(R.string.error_check_connection))
+                    getString(R.string.error_check_connection)
+                )
+
                 else -> FeedbackUtils.showSnackbar(
                     requireView(),
                     getString(R.string.error_something_went_wrong)
@@ -138,9 +143,11 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
             ErrorType.NO_INTERNET -> {
                 showError(R.drawable.ph_no_internet, R.string.error_no_internet)
             }
+
             ErrorType.SERVER_ERROR -> {
                 showError(R.drawable.ph_server_error_search, R.string.error_server)
             }
+
             ErrorType.NO_CONTENT -> {
                 showError(R.drawable.ph_nothing_found, R.string.error_getting_vacancies)
             }
@@ -192,11 +199,15 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
             object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
+
                     if (dy > 0) {
-                        val pos = (binding.resultsListRecyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-                        val itemsCount = binding.resultsListRecyclerView.adapter!!.itemCount
-                        if (pos >= itemsCount-1) {
-                            viewModel.loadNextPage()
+                        with(binding.resultsListRecyclerView) {
+                            val pos =
+                                (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                            val itemsCount = adapter!!.itemCount
+                            if (pos >= itemsCount - 1) {
+                                viewModel.loadNextPage()
+                            }
                         }
                     }
                 }

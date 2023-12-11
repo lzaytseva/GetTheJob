@@ -25,6 +25,7 @@ class SearchViewModel @Inject constructor(
     private var currentPage = 0
     private val vacancies = mutableListOf<VacancyInList>()
     private var isNextPageLoading = false
+
     //В эту переменную сохраняется текст первого запроса
     private var lastSearchedText = ""
 
@@ -97,11 +98,11 @@ class SearchViewModel @Inject constructor(
         }
         when {
             error != null -> {
-                //Если прилетел результат первого поиска
+                // Если прилетел результат первого поиска
                 if (currentPage == 0) {
                     _screenState.postValue(Error(error))
                 } else {
-                    //Ошибка загрузка следующей страницы
+                    // Ошибка загрузка следующей страницы
                     _showLoadingNewPageError.postValue(error)
                 }
             }
