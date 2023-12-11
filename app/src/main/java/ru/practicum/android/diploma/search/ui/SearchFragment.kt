@@ -119,6 +119,18 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
         binding.searchFieldImageView.setOnClickListener {
             binding.searchEditText.setText("")
             inputMethodManager?.hideSoftInputFromWindow(binding.searchEditText.windowToken, 0)
+            showSearchNotStarted()
+        }
+    }
+
+    private fun showSearchNotStarted() {
+        with(binding) {
+            searchImageView.isVisible = true
+            resultMessageTextView.isGone = true
+            onErrorTextView.isGone = true
+            progressBar.isGone = true
+            resultsListRecyclerView.isGone = true
+            searchImageView.setImageResource(R.drawable.ph_start_search)
         }
     }
 
