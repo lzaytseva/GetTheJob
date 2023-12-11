@@ -35,6 +35,7 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
         setFilterFieldsEndIcon()
         setBtnsVisibility()
         configureToolbar()
+        setBtnDiscardClickListener()
     }
 
     private fun setSalaryFieldHintColorBehaviour() {
@@ -154,5 +155,17 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
             navController = findNavController(),
             title = getString(R.string.header_filter_settings)
         )
+    }
+
+    private fun setBtnDiscardClickListener() {
+        with(binding) {
+            btnDiscardChanges.setOnClickListener {
+                etSalary.text?.clear()
+                etIndustry.text?.clear()
+                etPlace.text?.clear()
+                checkBoxSalary.isChecked = false
+                // И удалить настрйоки из sp
+            }
+        }
     }
 }
