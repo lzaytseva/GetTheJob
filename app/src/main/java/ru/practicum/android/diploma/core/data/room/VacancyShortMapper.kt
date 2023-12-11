@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.core.data.room
 
 import ru.practicum.android.diploma.core.data.room.entity.VacancyShort
-import ru.practicum.android.diploma.core.domain.models.VacancyInList
+import ru.practicum.android.diploma.search.domain.model.VacancyInList
 
 object VacancyShortMapper {
 
@@ -11,7 +11,8 @@ object VacancyShortMapper {
         salaryCurrency = vacancyShort.salaryCurrency,
         salaryFrom = vacancyShort.salaryFrom,
         salaryTo = vacancyShort.salaryTo,
+        salaryGross = vacancyShort.salaryGross,
         employerName = vacancyShort.employerName ?: "",
-        logo = vacancyShort.logoUrl
+        logo = vacancyShort.logoUrl ?: ""
     )
 }

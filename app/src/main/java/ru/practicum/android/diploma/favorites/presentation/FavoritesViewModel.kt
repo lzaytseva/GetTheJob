@@ -9,7 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.favorites.domain.api.FavoritesVacancyListRepository
-import ru.practicum.android.diploma.core.domain.models.VacancyInList
+import ru.practicum.android.diploma.search.domain.model.VacancyInList
 import java.sql.SQLException
 import javax.inject.Inject
 

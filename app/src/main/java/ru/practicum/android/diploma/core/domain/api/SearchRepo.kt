@@ -4,5 +4,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface SearchRepo<T> {
 
-    fun search(query: String): Flow<List<T>>
+    fun search(text: String): Flow<List<T>?>
 }

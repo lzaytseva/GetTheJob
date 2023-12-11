@@ -5,23 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.domain.models.ErrorType
-import ru.practicum.android.diploma.core.domain.models.VacancyInList
 import ru.practicum.android.diploma.core.ui.RootActivity
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
+import ru.practicum.android.diploma.search.domain.model.VacancyInList
 import ru.practicum.android.diploma.search.presentation.SearchScreenState
 import ru.practicum.android.diploma.search.presentation.SearchViewModel
 import ru.practicum.android.diploma.search.ui.adapter.VacanciesAdapter
 import ru.practicum.android.diploma.util.BindingFragment
+import ru.practicum.android.diploma.util.debounce
 
 @AndroidEntryPoint
 class SearchFragment : BindingFragment<FragmentSearchBinding>() {
@@ -74,7 +77,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
             text?.toString()?.run {
                 searchIsNotEmpty = this.isNotBlank()
                 binding.searchFieldImageView.isEnabled = searchIsNotEmpty
-                viewModel::search
+                if (searchIsNotEmpty) viewModel.search(this)
             }
         }
         val inputMethodManager = ContextCompat.getSystemService(requireContext(), InputMethodManager::class.java)
@@ -102,9 +105,9 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
 
     private fun onError(error: ErrorType) {
         when (error) {
-            ErrorType.NO_INTERNET -> {}
-            ErrorType.SERVER_ERROR -> {}
-            ErrorType.NO_CONTENT -> {}
+            ErrorType.NO_INTERNET -> { Toast.makeText(requireContext(), "NoInternet", Toast.LENGTH_SHORT).show() }
+            ErrorType.SERVER_ERROR -> { Toast.makeText(requireContext(), "ServerError", Toast.LENGTH_SHORT).show() }
+            ErrorType.NO_CONTENT -> { Toast.makeText(requireContext(), "NoContent", Toast.LENGTH_SHORT).show() }
         }
     }
 
@@ -112,12 +115,12 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
         val adapter = binding.resultsListRecyclerView.adapter as? VacanciesAdapter
         adapter?.setContent(content)
         binding.resultsListRecyclerView.isVisible = true
-        binding.resultMessageTextView.setText("") // get plurals for correct message
-
+        binding.resultMessageTextView.isVisible = true
+        binding.resultMessageTextView.text = getString(R.string.search) // get plurals for correct message
     }
 
     private fun setupAdapter() {
-        val onVacancyClick: (String) -> Unit = { vacancyId ->
+        val onVacancyClick: (String) -> Unit = debounce(ON_CLICK_DELAY, lifecycleScope, false) { vacancyId ->
             val searchToDetails: NavDirections =
                 SearchFragmentDirections.actionSearchFragmentToVacancyDetailsFragment(vacancyId)
             findNavController().navigate(searchToDetails)
@@ -141,5 +144,9 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
                 true
             }
         }
+    }
+
+    companion object {
+        private const val ON_CLICK_DELAY = 200L
     }
 }

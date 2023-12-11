@@ -16,7 +16,7 @@ import ru.practicum.android.diploma.favorites.domain.api.FavoritesVacancyListRep
 import ru.practicum.android.diploma.filters.data.repository.IndustriesRepositoryImpl
 import ru.practicum.android.diploma.filters.domain.model.Industry
 import ru.practicum.android.diploma.search.data.repository.SearchVacanciesRepository
-import ru.practicum.android.diploma.core.domain.models.VacancyInList
+import ru.practicum.android.diploma.search.domain.model.VacancyInList
 import ru.practicum.android.diploma.util.Resource
 import ru.practicum.android.diploma.vacancydetails.data.DeleteVacancyRepositoryImpl
 import ru.practicum.android.diploma.vacancydetails.data.GetByIdVacancyDetailsRepoImpl
@@ -64,7 +64,13 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideSearchRepository(): SearchRepo<VacancyInList> {
-        return SearchVacanciesRepository()
+    fun provideSearchRepository(networkClient: NetworkClient): SearchVacanciesRepository {
+        return SearchVacanciesRepository(networkClient)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSearchRepo(searchVacanciesRepository: SearchVacanciesRepository): SearchRepo<VacancyInList> {
+        return searchVacanciesRepository
     }
 }

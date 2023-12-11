@@ -6,11 +6,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import ru.practicum.android.diploma.core.data.dto.requests.VacanciesSearchRequest
-import ru.practicum.android.diploma.filters.data.dto.IndustriesRequest
 import ru.practicum.android.diploma.core.data.dto.requests.VacancyDetailsSearchRequest
-import ru.practicum.android.diploma.filters.data.dto.IndustriesResponse
 import ru.practicum.android.diploma.core.data.dto.responses.Response
 import ru.practicum.android.diploma.core.data.dto.responses.VacancyDetailsSearchResponse
+import ru.practicum.android.diploma.filters.data.dto.IndustriesRequest
+import ru.practicum.android.diploma.filters.data.dto.IndustriesResponse
+import ru.practicum.android.diploma.search.util.toQueryMap
 import ru.practicum.android.diploma.util.ConnectionChecker
 
 private const val TAG = "RetrofitNetworkClient"
@@ -29,10 +30,7 @@ class RetrofitNetworkClient(
             when (request) {
                 is VacancyDetailsSearchRequest -> getVacancyDetailsById(request.id)
                 is IndustriesRequest -> getIndustries()
-                is VacanciesSearchRequest -> {
-                    // getVacanciesList(request.toQueryMap())
-                    Response().apply { resultCode = RC_NOK_SERVER_ERROR }
-                }
+                is VacanciesSearchRequest -> getVacanciesList(request.toQueryMap())
                 else -> Response().apply { resultCode = RC_NOK_SERVER_ERROR }
             }
         }
@@ -52,13 +50,20 @@ class RetrofitNetworkClient(
             Response().apply { resultCode = RC_NOK }
         }
     }
-//    private suspend fun getVacanciesList(queryMap: Map<String, String>) = withContext(Dispatchers.IO) {
-//        try {
-//            Resource.Success(hhService.getVacancies(queryMap))
-//        } catch (_: Exception) {
-//            Resource.Error("$RC_NOK_SERVER_ERROR")
-//        }
-//    }
+
+    private suspend fun getVacanciesList(queryMap: Map<String, String>): Response = withContext(Dispatchers.IO) {
+        try {
+            with(hhService.getVacancies(queryMap)) {
+                if (code() == RC_OK && body() != null) {
+                    body()!!.apply { resultCode = RC_OK }
+                } else {
+                    Response().apply { resultCode = RC_NOK }
+                }
+            }
+        } catch (_: Exception) {
+            Response().apply { resultCode = RC_NOK }
+        }
+    }
 
     private suspend fun getIndustries(): Response {
         return try {

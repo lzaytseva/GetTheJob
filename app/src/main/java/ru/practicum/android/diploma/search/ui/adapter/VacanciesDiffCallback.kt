@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.search.ui.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import ru.practicum.android.diploma.core.domain.models.VacancyInList
+import ru.practicum.android.diploma.search.domain.model.VacancyInList
 
 class VacanciesDiffCallback(
     private val oldList: List<VacancyInList>,
