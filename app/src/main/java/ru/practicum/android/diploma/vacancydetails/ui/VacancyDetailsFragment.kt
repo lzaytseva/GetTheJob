@@ -46,6 +46,18 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        configureToolbar()
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        toolbarIconsOnPause()
+
+    }
+
     private fun showContent(vacancyDetails: VacancyDetails) {
         with(binding) {
             loading.visibility = View.GONE
@@ -200,13 +212,10 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+    private fun toolbarIconsOnPause() {
+        toolbar.navigationIcon = null
+        toolbar.menu.findItem(R.id.favorite).isVisible = false
+        toolbar.menu.findItem(R.id.share).isVisible = false
     }
 
-    override fun onPause() {
-        super.onPause()
-        toolbar.navigationIcon = null
-    }
 }
