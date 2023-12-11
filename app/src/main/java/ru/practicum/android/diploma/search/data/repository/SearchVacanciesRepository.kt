@@ -10,7 +10,7 @@ import ru.practicum.android.diploma.search.data.responses.VacancySearchResponse
 import ru.practicum.android.diploma.search.domain.model.VacancyInList
 import ru.practicum.android.diploma.search.util.toVacancyInList
 
-class SearchVacanciesRepository(private val networkClient: NetworkClient)  : SearchRepo<VacancyInList> {
+class SearchVacanciesRepository(private val networkClient: NetworkClient) : SearchRepo<VacancyInList> {
 
     override fun search(text: String): Flow<List<VacancyInList>?> = flow {
         // build VacanciesSearchRequest
