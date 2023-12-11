@@ -11,6 +11,7 @@ import ru.practicum.android.diploma.core.data.dto.responses.Response
 import ru.practicum.android.diploma.core.data.dto.responses.VacancyDetailsSearchResponse
 import ru.practicum.android.diploma.filters.data.dto.IndustriesRequest
 import ru.practicum.android.diploma.filters.data.dto.IndustriesResponse
+import ru.practicum.android.diploma.search.util.toQueryMap
 import ru.practicum.android.diploma.util.ConnectionChecker
 
 private const val TAG = "RetrofitNetworkClient"
