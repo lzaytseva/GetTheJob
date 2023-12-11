@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
@@ -27,6 +28,7 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
         setSalaryFieldHintColorBehaviour()
         setSalaryCheckBoxChangeListener()
         setSalaryTextWatcher()
+        setEditorActionListener()
         setIndustryClickListener()
         setPlaceClickListener()
         setFiltersFieldsHintColorBehaviour()
@@ -57,6 +59,16 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
     private fun setSalaryTextWatcher() {
         binding.etSalary.doOnTextChanged { text, start, before, count ->
             setBtnsVisibility()
+        }
+    }
+
+    private fun setEditorActionListener() {
+        binding.etSalary.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                binding.etSalary.clearFocus()
+                true
+            }
+            false
         }
     }
 
