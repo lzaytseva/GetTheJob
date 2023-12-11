@@ -4,25 +4,38 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 
+private const val SCALE_ANIM_DURATION = 250L
+private const val SCALE_ANIM_START_VALUE = 1f
+private const val SCALE_ANIM_END_VALUE = 1.1f
+
+
 fun scaleAnimation(view: View) {
     val animIncrease = ScaleAnimation(
-        1f, 1.1f,
-        1f, 1.1f,
-        Animation.RELATIVE_TO_SELF, 1f,
-        Animation.RELATIVE_TO_SELF, 1f
+        SCALE_ANIM_START_VALUE,
+        SCALE_ANIM_END_VALUE,
+        SCALE_ANIM_START_VALUE,
+        SCALE_ANIM_END_VALUE,
+        Animation.RELATIVE_TO_SELF,
+        SCALE_ANIM_START_VALUE,
+        Animation.RELATIVE_TO_SELF,
+        SCALE_ANIM_START_VALUE
     ).apply {
         fillAfter = true
-        duration = 250
+        duration = SCALE_ANIM_DURATION
     }
 
     val animDecrease = ScaleAnimation(
-        1.1f, 1f,
-        1.1f, 1f,
-        Animation.RELATIVE_TO_SELF, 1f,
-        Animation.RELATIVE_TO_SELF, 1f
+        SCALE_ANIM_END_VALUE,
+        SCALE_ANIM_START_VALUE,
+        SCALE_ANIM_END_VALUE,
+        SCALE_ANIM_START_VALUE,
+        Animation.RELATIVE_TO_SELF,
+        SCALE_ANIM_START_VALUE,
+        Animation.RELATIVE_TO_SELF,
+        SCALE_ANIM_START_VALUE
     ).apply {
         fillAfter = true
-        duration = 250
+        duration = SCALE_ANIM_DURATION
     }
 
     view.startAnimation(animIncrease)
