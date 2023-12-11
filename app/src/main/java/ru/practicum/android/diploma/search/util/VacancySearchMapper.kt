@@ -22,8 +22,8 @@ fun VacancySearchDto.toVacancyInList(): VacancyInList =
         employerName = employerDto.name,
         logo = employerDto.logoUrlsDto?.art90
     )
-    
-fun VacancySearchRequest.toQueryMap(): Map<String, String> = buildMap {
+
+fun VacanciesSearchRequest.toQueryMap(): Map<String, String> = buildMap {
     put(TEXT, text)
     salary?.also { put(SALARY, it) }
     regionId?.also { put(AREA, it) }
