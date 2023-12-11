@@ -22,7 +22,7 @@ object VacancyDetailsDtoMapper {
             phones = dto.contacts?.phones?.map { phone ->
                 "+${phone.country}${phone.city}${phone.number}"
             },
-            contactComment = dto.contacts?.phones?.get(0)?.comment,
+            contactComment = if (dto.contacts?.phones.isNullOrEmpty()) null else dto.contacts?.phones?.get(0)?.comment,
             logoUrl = dto.employer?.logoUrlsDto?.original,
             logoUrl90 = dto.employer?.logoUrlsDto?.art90,
             logoUrl240 = dto.employer?.logoUrlsDto?.art240,
