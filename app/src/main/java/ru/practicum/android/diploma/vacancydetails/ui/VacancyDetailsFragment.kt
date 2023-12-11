@@ -16,6 +16,7 @@ import ru.practicum.android.diploma.core.ui.RootActivity
 import ru.practicum.android.diploma.databinding.FragmentVacancyDetailsBinding
 import ru.practicum.android.diploma.util.BindingFragment
 import ru.practicum.android.diploma.util.getSalaryDescription
+import ru.practicum.android.diploma.util.scaleAnimation
 import ru.practicum.android.diploma.vacancydetails.presentation.VacancyDetailsScreenState
 import ru.practicum.android.diploma.vacancydetails.presentation.VacancyDetailsViewModel
 
@@ -199,7 +200,9 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
             true
         }
 
-        toolbar.menu.findItem(R.id.favorite).setOnMenuItemClickListener {
+        toolbar.menu.findItem(R.id.favorite).setOnMenuItemClickListener { menuItem ->
+            val itemView = requireActivity().findViewById<View>(menuItem.itemId)
+            scaleAnimation(itemView)
             viewModel.clickInFavorites()
             true
         }
