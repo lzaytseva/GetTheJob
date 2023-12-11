@@ -17,9 +17,11 @@ class SearchVacanciesRepository(private val networkClient: NetworkClient)  : Sea
         val request = VacanciesSearchRequest(text = text)
         val response = networkClient.doRequest(request)
         emit(
-            if (response.resultCode == RetrofitNetworkClient.RC_OK)
+            if (response.resultCode == RetrofitNetworkClient.RC_OK) {
                 (response as VacancySearchResponse).items.map { it.toVacancyInList() }
-            else null
+            } else {
+                null
+            }
         )
     }
 }
