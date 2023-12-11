@@ -140,7 +140,7 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
         ToolbarUtils.configureToolbar(
             activity = requireActivity(),
             navController = findNavController(),
-            title = getString(R.string.header_industry)
+            title = getString(R.string.header_filter_settings)
         )
     }
 }
