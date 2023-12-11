@@ -46,7 +46,7 @@ class VacanciesAdapter(
                 setImage(vacancy.logo)
                 vacancyNameTextView.text = vacancy.name
                 employerNameTextView.text = vacancy.employerName
-                salaryInfoTextView.text = vacancy.salary
+                salaryInfoTextView.text = vacancy.salaryFrom.toString() // get correct string
             }
         }
 

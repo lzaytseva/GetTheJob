@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -76,7 +77,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
             text?.toString()?.run {
                 searchIsNotEmpty = this.isNotBlank()
                 binding.searchFieldImageView.isEnabled = searchIsNotEmpty
-                viewModel::search
+                if (searchIsNotEmpty) viewModel.search(this)
             }
         }
         val inputMethodManager = ContextCompat.getSystemService(requireContext(), InputMethodManager::class.java)
@@ -104,9 +105,9 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
 
     private fun onError(error: ErrorType) {
         when (error) {
-            ErrorType.NO_INTERNET -> {}
-            ErrorType.SERVER_ERROR -> {}
-            ErrorType.NO_CONTENT -> {}
+            ErrorType.NO_INTERNET -> { Toast.makeText(requireContext(), "NoInternet", Toast.LENGTH_SHORT).show() }
+            ErrorType.SERVER_ERROR -> { Toast.makeText(requireContext(), "ServerError", Toast.LENGTH_SHORT).show() }
+            ErrorType.NO_CONTENT -> { Toast.makeText(requireContext(), "NoContent", Toast.LENGTH_SHORT).show() }
         }
     }
 
@@ -114,8 +115,8 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
         val adapter = binding.resultsListRecyclerView.adapter as? VacanciesAdapter
         adapter?.setContent(content)
         binding.resultsListRecyclerView.isVisible = true
-        binding.resultMessageTextView.setText("") // get plurals for correct message
-
+        binding.resultMessageTextView.isVisible = true
+        binding.resultMessageTextView.text = getString(R.string.search) // get plurals for correct message
     }
 
     private fun setupAdapter() {
