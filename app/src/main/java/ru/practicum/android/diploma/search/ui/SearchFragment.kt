@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -14,6 +13,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.domain.models.ErrorType
@@ -47,6 +48,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
         setObserver()
         configureToolbar()
         setupAdapter()
+        setOnScrollListener()
     }
 
     override fun onResume() {
@@ -62,12 +64,26 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
 
     private fun setObserver() {
         viewModel.screenState.observe(viewLifecycleOwner) { screenState ->
+            // Из hindeContent убрала скрытие recyclerView, т.к. из-за этого прогресс бар отображался поверх ресайклера
+            // при загрузке новой страницы
             hideContent()
             binding.searchEditText.setText(screenState.state)
             when (screenState) {
-                is SearchScreenState.Loading -> binding.progressBar.isVisible = true
-                is SearchScreenState.Error -> onError(screenState.error)
-                is SearchScreenState.Content -> onContent(screenState.content)
+                is SearchScreenState.Loading -> {
+                    binding.progressBar.isVisible = true
+                    binding.resultsListRecyclerView.isGone = true
+                }
+                is SearchScreenState.Error -> {
+                    binding.resultsListRecyclerView.isGone = true
+                    onError(screenState.error)
+                }
+                is SearchScreenState.Content ->  {
+                    binding.resultsListRecyclerView.isVisible = true
+                    onContent(screenState.content)
+                }
+                is SearchScreenState.LoadingNextPage -> {
+                    binding.progressBar.isVisible = true
+                }
             }
         }
     }
@@ -98,17 +114,29 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
             searchImageView.isGone = true
             resultMessageTextView.isGone = true
             onErrorTextView.isGone = true
-            resultsListRecyclerView.isGone = true
             progressBar.isGone = true
         }
     }
 
     private fun onError(error: ErrorType) {
+        binding.onErrorTextView.isVisible = true
+        binding.searchImageView.isVisible = true
         when (error) {
-            ErrorType.NO_INTERNET -> { Toast.makeText(requireContext(), "NoInternet", Toast.LENGTH_SHORT).show() }
-            ErrorType.SERVER_ERROR -> { Toast.makeText(requireContext(), "ServerError", Toast.LENGTH_SHORT).show() }
-            ErrorType.NO_CONTENT -> { Toast.makeText(requireContext(), "NoContent", Toast.LENGTH_SHORT).show() }
+            ErrorType.NO_INTERNET -> {
+                showError(R.drawable.ph_no_internet, R.string.error_no_internet)
+            }
+            ErrorType.SERVER_ERROR -> {
+                showError(R.drawable.ph_server_error_search, R.string.error_server)
+            }
+            ErrorType.NO_CONTENT -> {
+                showError(R.drawable.ph_nothing_found, R.string.error_getting_vacancies)
+            }
         }
+    }
+
+    private fun showError(imageResId: Int, stringResId: Int) {
+        binding.searchImageView.setImageResource(imageResId)
+        binding.onErrorTextView.text = getString(stringResId)
     }
 
     private fun onContent(content: List<VacancyInList>) {
@@ -144,6 +172,23 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
                 true
             }
         }
+    }
+
+    private fun setOnScrollListener() {
+        binding.resultsListRecyclerView.addOnScrollListener(
+            object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (dy > 0) {
+                        val pos = (binding.resultsListRecyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                        val itemsCount = binding.resultsListRecyclerView.adapter!!.itemCount
+                        if (pos >= itemsCount-1) {
+                            viewModel.loadNextPage()
+                        }
+                    }
+                }
+            }
+        )
     }
 
     companion object {
