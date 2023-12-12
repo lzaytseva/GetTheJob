@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.flow
 import ru.practicum.android.diploma.core.data.network.NetworkClient
 import ru.practicum.android.diploma.core.data.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
+import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.filters.data.dto.IndustriesRequest
 import ru.practicum.android.diploma.filters.data.dto.IndustriesResponse
 import ru.practicum.android.diploma.filters.data.mapper.IndustryMapper
@@ -20,8 +21,7 @@ class IndustriesRepositoryImpl @Inject constructor(
 
         when (response.resultCode) {
             RetrofitNetworkClient.RC_NO_INTERNET -> {
-                // убрать ошибки в enum
-                emit(Resource.Error("Нет интернета"))
+                emit(Resource.Error(ErrorType.NO_INTERNET))
             }
 
             RetrofitNetworkClient.RC_OK -> {
@@ -35,8 +35,7 @@ class IndustriesRepositoryImpl @Inject constructor(
             }
 
             else -> {
-                // убрать ошибки в enum
-                emit(Resource.Error("Ошибка сервера"))
+                emit(Resource.Error(ErrorType.SERVER_ERROR))
             }
         }
     }

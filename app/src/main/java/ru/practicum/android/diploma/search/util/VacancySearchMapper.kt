@@ -10,6 +10,8 @@ private const val AREA = "area"
 private const val INDUSTRY = "industry"
 private const val ONLY_WITH_SALARY = "only_with_salary"
 private const val CURRENCY = "currency"
+private const val PER_PAGE = "per_page"
+private const val PAGE = "page"
 
 fun VacancySearchDto.toVacancyInList(): VacancyInList =
     VacancyInList(
@@ -25,6 +27,8 @@ fun VacancySearchDto.toVacancyInList(): VacancyInList =
 
 fun VacanciesSearchRequest.toQueryMap(): Map<String, String> = buildMap {
     put(TEXT, text)
+    put(PER_PAGE, perPage)
+    page?.also { put(PAGE, it.toString()) }
     salary?.also { put(SALARY, it) }
     regionId?.also { put(AREA, it) }
     industryId?.also { put(INDUSTRY, it) }
