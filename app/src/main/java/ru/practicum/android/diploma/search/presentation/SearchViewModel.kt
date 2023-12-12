@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.single
+import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.core.domain.api.SearchRepo
 import ru.practicum.android.diploma.core.domain.models.ErrorType
@@ -13,6 +15,7 @@ import ru.practicum.android.diploma.search.domain.model.VacancyInList
 import ru.practicum.android.diploma.search.presentation.SearchScreenState.Content
 import ru.practicum.android.diploma.search.presentation.SearchScreenState.Error
 import ru.practicum.android.diploma.search.presentation.SearchScreenState.Loading
+import ru.practicum.android.diploma.util.Resource
 import ru.practicum.android.diploma.util.SingleLiveEvent
 import ru.practicum.android.diploma.util.debounce
 import javax.inject.Inject
@@ -44,12 +47,8 @@ class SearchViewModel @Inject constructor(
 
         viewModelScope.launch {
             searchRepository.search(text, currentPage)
-                .collect {
-                    processResult(
-                        searchResult = it.data,
-                        error = it.errorType
-                    )
-                }
+                .single()
+                .processResult()
         }
     }
 
@@ -70,12 +69,7 @@ class SearchViewModel @Inject constructor(
             _screenState.postValue(SearchScreenState.LoadingNextPage)
             viewModelScope.launch {
                 isNextPageLoading = true
-                searchRepository.search(lastSearchedText, currentPage).collect {
-                    processResult(
-                        searchResult = it.data,
-                        error = it.errorType
-                    )
-                }
+                searchRepository.search(lastSearchedText, currentPage).singleOrNull()?.processResult()
             }
         }
     }
@@ -89,29 +83,25 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    private fun processResult(searchResult: SearchResult?, error: ErrorType?) {
+    private fun Resource<SearchResult>.processResult() {
         isNextPageLoading = false
 
-        if (searchResult != null) {
-            vacancies.addAll(searchResult.vacancies)
-            pages = searchResult.pages
+        if (data != null) {
+            vacancies.addAll(data.vacancies)
+            pages = data.pages
         }
+
         when {
-            error != null -> {
-                // Если прилетел результат первого поиска
-                if (currentPage == 0) {
-                    _screenState.postValue(Error(error))
-                } else {
-                    // Ошибка загрузка следующей страницы
-                    _showLoadingNewPageError.postValue(error)
-                }
+            errorType != null -> if (currentPage == 0) {
+                _screenState.postValue(Error(errorType))
+            } else {
+                // Ошибка загрузки следующей страницы
+                _showLoadingNewPageError.postValue(errorType)
             }
 
             vacancies.isEmpty() -> _screenState.postValue(Error(ErrorType.NO_CONTENT))
 
-            else -> {
-                _screenState.postValue(Content(vacancies))
-            }
+            else -> _screenState.postValue(Content(vacancies))
         }
     }
 

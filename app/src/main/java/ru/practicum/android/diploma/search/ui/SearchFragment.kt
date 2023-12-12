@@ -47,6 +47,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
         super.onViewCreated(view, savedInstanceState)
         configureSearchField()
         setObserver()
+        setLoadingNewPageObserver()
         configureToolbar()
         setupAdapter()
         setOnScrollListener()
@@ -90,6 +91,9 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
                 }
             }
         }
+    }
+
+    private fun setLoadingNewPageObserver() {
         viewModel.showLoadingNewPageError.observe(viewLifecycleOwner) {
             binding.progressBar.isGone = true
             when (it) {
@@ -124,12 +128,10 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
     }
 
     private fun showSearchNotStarted() {
+        hideContent()
         with(binding) {
-            searchImageView.isVisible = true
-            resultMessageTextView.isGone = true
-            onErrorTextView.isGone = true
-            progressBar.isGone = true
             resultsListRecyclerView.isGone = true
+            searchImageView.isVisible = true
             searchImageView.setImageResource(R.drawable.ph_start_search)
         }
     }
@@ -152,17 +154,9 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
         binding.onErrorTextView.isVisible = true
         binding.searchImageView.isVisible = true
         when (error) {
-            ErrorType.NO_INTERNET -> {
-                showError(R.drawable.ph_no_internet, R.string.error_no_internet)
-            }
-
-            ErrorType.SERVER_ERROR -> {
-                showError(R.drawable.ph_server_error_search, R.string.error_server)
-            }
-
-            ErrorType.NO_CONTENT -> {
-                showError(R.drawable.ph_nothing_found, R.string.error_getting_vacancies)
-            }
+            ErrorType.NO_INTERNET -> showError(R.drawable.ph_no_internet, R.string.error_no_internet)
+            ErrorType.SERVER_ERROR -> showError(R.drawable.ph_server_error_search, R.string.error_server)
+            ErrorType.NO_CONTENT -> showError(R.drawable.ph_nothing_found, R.string.error_getting_vacancies)
         }
     }
 
@@ -185,7 +179,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
                 SearchFragmentDirections.actionSearchFragmentToVacancyDetailsFragment(vacancyId)
             findNavController().navigate(searchToDetails)
         }
-        binding.resultsListRecyclerView.adapter = VacanciesAdapter(resources, onVacancyClick)
+        binding.resultsListRecyclerView.adapter = VacanciesAdapter(onVacancyClick)
     }
 
     private fun setFiltersVisibility(isVisible: Boolean) {

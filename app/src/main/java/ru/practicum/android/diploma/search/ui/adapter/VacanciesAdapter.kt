@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.search.ui.adapter
 
-import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -14,7 +13,6 @@ import ru.practicum.android.diploma.search.domain.model.VacancyInList
 import ru.practicum.android.diploma.util.getSalaryDescription
 
 class VacanciesAdapter(
-    private val resources: Resources,
     private val onClick: (String) -> Unit
 ) : RecyclerView.Adapter<VacanciesAdapter.VacancyViewHolder>() {
 
@@ -49,8 +47,12 @@ class VacanciesAdapter(
                 setImage(vacancy.logo)
                 vacancyNameTextView.text = vacancy.name
                 employerNameTextView.text = vacancy.employerName
-                salaryInfoTextView.text =
-                    getSalaryDescription(resources, vacancy.salaryFrom, vacancy.salaryTo, vacancy.salaryCurrency)
+                salaryInfoTextView.text = getSalaryDescription(
+                    itemView.resources,
+                    vacancy.salaryFrom,
+                    vacancy.salaryTo,
+                    vacancy.salaryCurrency
+                )
             }
         }
 
