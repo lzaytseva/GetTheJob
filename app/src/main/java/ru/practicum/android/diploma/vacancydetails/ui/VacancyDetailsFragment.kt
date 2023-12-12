@@ -97,7 +97,7 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
             companyLocation.text = getCompanyLocation(vacancyDetails)
             experience.text = vacancyDetails.experience
             schedulesInfo.text = vacancyDetails.schedule ?: ""
-            description.setText(Html.fromHtml(vacancyDetails.description, Html.FROM_HTML_MODE_COMPACT))
+            description.setText(Html.fromHtml(vacancyDetails.description, Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM))
             if (vacancyDetails.keySkills.isNullOrEmpty()) {
                 keySkillsTitle.visibility = View.GONE
                 keySkills.visibility = View.GONE
@@ -135,7 +135,7 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
 
     private fun getKeySkills(keySkills: List<String>?): String {
         val keySkillsText = StringBuilder("")
-        keySkills?.map { skill -> keySkillsText.append("-").append(skill).append(System.lineSeparator()) }
+        keySkills?.map { skill -> keySkillsText.append("  \u2022   ").append(skill).append(System.lineSeparator()) }
         return keySkillsText.toString()
     }
 
