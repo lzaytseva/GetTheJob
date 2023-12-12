@@ -9,16 +9,18 @@
 
     <ImageView
         android:id="@+id/vacancy_icon_image_view"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/progressbar_size"
+        android:layout_height="@dimen/progressbar_size"
         android:scaleType="center"
+        app:contentPadding="5dp"
+        android:foreground="@drawable/vacancy_icon_foreground"
         android:src="@drawable/ic_vacancy_placeholder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/vacancy_name_text_view"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/vacancy_card_gap"
         android:textAppearance="@style/medium_text_style"
@@ -29,7 +31,7 @@
 
     <TextView
         android:id="@+id/employer_name_text_view"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:textAppearance="@style/regular_text_style"
         app:layout_constraintBottom_toTopOf="@id/salary_info_text_view"
@@ -40,7 +42,7 @@
 
     <TextView
         android:id="@+id/salary_info_text_view"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:textAppearance="@style/regular_text_style"
         app:layout_constraintBottom_toBottomOf="parent"

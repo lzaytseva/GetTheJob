@@ -23,7 +23,9 @@
     <dimen name="search_medium_padding">@dimen/team_screen_horizontal_margin</dimen>
     <dimen name="search_small_padding">8dp</dimen>
     <dimen name="search_field_corner_radius">12dp</dimen>
+    <dimen name="results_top_padding">35dp</dimen>
     <dimen name="search_tiny_padding">4dp</dimen>
+    <dimen name="zero">0dp</dimen>
 
     <!-- Отступы на vacancyCard -->
     <dimen name="vacancy_card_horizontal_padding">@dimen/vacancy_screen_horizontal_margin</dimen>
