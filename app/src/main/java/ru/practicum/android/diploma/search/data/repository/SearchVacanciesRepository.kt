@@ -20,7 +20,7 @@ class SearchVacanciesRepository(private val networkClient: NetworkClient) : Sear
         val response = networkClient.doRequest(request)
         emit(
             when (response.resultCode) {
-                RetrofitNetworkClient.RC_OK -> {
+                RetrofitNetworkClient.CODE_SUCCESS -> {
                     val vacancies = (response as VacancySearchResponse).items.map {
                         it.toVacancyInList()
                     }
@@ -30,7 +30,7 @@ class SearchVacanciesRepository(private val networkClient: NetworkClient) : Sear
                     )
                 }
 
-                RetrofitNetworkClient.RC_NO_INTERNET -> {
+                RetrofitNetworkClient.CODE_NO_INTERNET -> {
                     Resource.Error(ErrorType.NO_INTERNET)
                 }
 

@@ -16,8 +16,6 @@ import ru.practicum.android.diploma.filters.data.dto.IndustriesResponse
 import ru.practicum.android.diploma.search.util.toQueryMap
 import ru.practicum.android.diploma.util.ConnectionChecker
 
-private const val TAG = "RetrofitNetworkClient"
-
 class RetrofitNetworkClient(
     private val context: Context,
     private val hhService: HhApiService
@@ -25,7 +23,7 @@ class RetrofitNetworkClient(
 
     override suspend fun doRequest(request: Any): Response {
         if (!ConnectionChecker.isConnected(context)) {
-            return Response().apply { resultCode = RC_NO_INTERNET }
+            return Response().apply { resultCode = CODE_NO_INTERNET }
         }
 
         return withContext(Dispatchers.IO) {
@@ -34,7 +32,7 @@ class RetrofitNetworkClient(
                 is IndustriesRequest -> getIndustries()
                 is VacanciesSearchRequest -> getVacanciesList(request.toQueryMap())
                 is SimilarVacanciesSearchRequest -> getSimilarVacanciesById(request.id)
-                else -> Response().apply { resultCode = RC_NOK_SERVER_ERROR }
+                else -> Response().apply { resultCode = CODE_WRONG_REQUEST }
             }
         }
     }
@@ -42,29 +40,29 @@ class RetrofitNetworkClient(
     private suspend fun getVacancyDetailsById(id: String): Response {
         return try {
             val response = hhService.getVacancyDetailsById(id)
-            if (response.code() == RC_OK && response.body() != null) {
+            if (response.code() == CODE_SUCCESS && response.body() != null) {
                 VacancyDetailsSearchResponse(response.body()!!)
-                    .apply { resultCode = RC_OK }
+                    .apply { resultCode = CODE_SUCCESS }
             } else {
-                Response().apply { resultCode = RC_NOK }
+                Response().apply { resultCode = CODE_SERVER_ERROR }
             }
         } catch (e: HttpException) {
             Log.e(TAG, e.toString())
-            Response().apply { resultCode = RC_NOK }
+            Response().apply { resultCode = CODE_SERVER_ERROR }
         }
     }
 
     private suspend fun getVacanciesList(queryMap: Map<String, String>): Response = withContext(Dispatchers.IO) {
         try {
             with(hhService.getVacancies(queryMap)) {
-                if (code() == RC_OK && body() != null) {
-                    body()!!.apply { resultCode = RC_OK }
+                if (code() == CODE_SUCCESS && body() != null) {
+                    body()!!.apply { resultCode = CODE_SUCCESS }
                 } else {
-                    Response().apply { resultCode = RC_NOK }
+                    Response().apply { resultCode = CODE_SERVER_ERROR }
                 }
             }
         } catch (_: Exception) {
-            Response().apply { resultCode = RC_NOK }
+            Response().apply { resultCode = CODE_SERVER_ERROR }
         }
     }
 
@@ -73,38 +71,37 @@ class RetrofitNetworkClient(
             val response = hhService.getIndustries()
             if (response.body() != null) {
                 IndustriesResponse(response.body()!!).apply {
-                    resultCode = RC_OK
+                    resultCode = CODE_SUCCESS
                 }
             } else {
-                Response().apply { resultCode = RC_NOK }
+                Response().apply { resultCode = CODE_SERVER_ERROR }
             }
         } catch (e: HttpException) {
             Log.e(TAG, e.toString())
-            Response().apply { resultCode = RC_NOK }
+            Response().apply { resultCode = CODE_SERVER_ERROR }
         }
     }
 
     private suspend fun getSimilarVacanciesById(id: String): Response {
         return try {
             val response = hhService.getSimilarVacanciesById(id)
-            if (response.code() == RC_OK && !response.body().isNullOrEmpty()) {
+            if (response.code() == CODE_SUCCESS && !response.body().isNullOrEmpty()) {
                 VacancySearchResponse(response.body()!!)
-                    .apply { resultCode = RC_OK }
+                    .apply { resultCode = CODE_SUCCESS }
             } else {
-                Response().apply { resultCode = RC_NOK }
+                Response().apply { resultCode = CODE_SERVER_ERROR }
             }
         } catch (e: HttpException) {
             Log.e(TAG, e.toString())
-            Response().apply { resultCode = RC_NOK }
+            Response().apply { resultCode = CODE_SERVER_ERROR }
         }
     }
 
-
-    // Надо переделать в enum, как предлагал Женя
     companion object {
-        const val RC_NO_INTERNET = -1
-        const val RC_OK = 200
-        const val RC_NOK = 500
-        const val RC_NOK_SERVER_ERROR = 500
+        const val CODE_NO_INTERNET = -1
+        const val CODE_SUCCESS = 200
+        const val CODE_WRONG_REQUEST = 400
+        const val CODE_SERVER_ERROR = 500
+        private const val TAG = "RetrofitNetworkClient"
     }
 }
