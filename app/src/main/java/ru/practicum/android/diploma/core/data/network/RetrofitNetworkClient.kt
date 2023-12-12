@@ -10,7 +10,6 @@ import ru.practicum.android.diploma.core.data.dto.requests.VacanciesSearchReques
 import ru.practicum.android.diploma.core.data.dto.requests.VacancyDetailsSearchRequest
 import ru.practicum.android.diploma.core.data.dto.responses.Response
 import ru.practicum.android.diploma.core.data.dto.responses.VacancyDetailsSearchResponse
-import ru.practicum.android.diploma.core.data.dto.responses.VacancySearchResponse
 import ru.practicum.android.diploma.filters.data.dto.IndustriesRequest
 import ru.practicum.android.diploma.filters.data.dto.IndustriesResponse
 import ru.practicum.android.diploma.search.util.toQueryMap

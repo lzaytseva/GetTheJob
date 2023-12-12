@@ -36,7 +36,7 @@ class SimilarVacanciesViewModel @Inject constructor(
                 if (response is Resource.Success) {
                     _similarVacanciesScreenState.postValue(response.data?.let { SimilarVacanciesScreenState.Content(it) })
                 } else {
-                    _similarVacanciesScreenState.postValue(SimilarVacanciesScreenState.Error)
+                    _similarVacanciesScreenState.postValue(SimilarVacanciesScreenState.Error(response?.errorType))
                 }
             }
         }

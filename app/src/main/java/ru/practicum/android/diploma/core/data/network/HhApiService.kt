@@ -7,7 +7,6 @@ import retrofit2.http.Path
 import retrofit2.http.QueryMap
 import ru.practicum.android.diploma.BuildConfig.HH_ACCESS_TOKEN
 import ru.practicum.android.diploma.core.data.dto.VacancyDetailsDto
-import ru.practicum.android.diploma.core.data.dto.VacancySearchDto
 import ru.practicum.android.diploma.filters.data.dto.ParentIndustryDto
 import ru.practicum.android.diploma.search.data.responses.VacancySearchResponse
 

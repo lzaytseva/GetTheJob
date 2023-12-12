@@ -69,6 +69,9 @@
         <argument
             android:name="vacancyId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_similarVacanciesFragment_to_vacancyDetailsFragment"
+            app:destination="@id/vacancyDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/choiceWorkplaceFragment"
