@@ -33,17 +33,17 @@ class FavoritesFragment : BindingFragment<FragmentFavoritesBinding>() {
         viewModel.screenState.observe(viewLifecycleOwner) { state ->
             render(state)
         }
-        vacanciesAdapter = VacanciesAdapter(resources) { vacancyId ->
+        vacanciesAdapter = VacanciesAdapter { vacancyId ->
             val action =
                 FavoritesFragmentDirections.actionFavoritesFragmentToVacancyDetailsFragment(vacancyId)
             findNavController().navigate(action)
         }
         binding.rvVacancies.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         binding.rvVacancies.adapter = vacanciesAdapter
-        viewModel.getVacancies()
     }
 
     override fun onDestroyView() {
+        binding.rvVacancies.adapter = null
         super.onDestroyView()
         vacanciesAdapter = null
     }

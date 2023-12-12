@@ -13,6 +13,7 @@ import ru.practicum.android.diploma.core.data.dto.responses.VacancyDetailsSearch
 import ru.practicum.android.diploma.core.data.dto.responses.VacancySearchResponse
 import ru.practicum.android.diploma.filters.data.dto.IndustriesRequest
 import ru.practicum.android.diploma.filters.data.dto.IndustriesResponse
+import ru.practicum.android.diploma.search.util.toQueryMap
 import ru.practicum.android.diploma.util.ConnectionChecker
 
 private const val TAG = "RetrofitNetworkClient"
@@ -31,6 +32,7 @@ class RetrofitNetworkClient(
             when (request) {
                 is VacancyDetailsSearchRequest -> getVacancyDetailsById(request.id)
                 is IndustriesRequest -> getIndustries()
+                is VacanciesSearchRequest -> getVacanciesList(request.toQueryMap())
                 is SimilarVacanciesSearchRequest -> getSimilarVacanciesById(request.id)
 
                 is VacanciesSearchRequest -> {
@@ -56,13 +58,20 @@ class RetrofitNetworkClient(
             Response().apply { resultCode = RC_NOK }
         }
     }
-//    private suspend fun getVacanciesList(queryMap: Map<String, String>) = withContext(Dispatchers.IO) {
-//        try {
-//            Resource.Success(hhService.getVacancies(queryMap))
-//        } catch (_: Exception) {
-//            Resource.Error("$RC_NOK_SERVER_ERROR")
-//        }
-//    }
+
+    private suspend fun getVacanciesList(queryMap: Map<String, String>): Response = withContext(Dispatchers.IO) {
+        try {
+            with(hhService.getVacancies(queryMap)) {
+                if (code() == RC_OK && body() != null) {
+                    body()!!.apply { resultCode = RC_OK }
+                } else {
+                    Response().apply { resultCode = RC_NOK }
+                }
+            }
+        } catch (_: Exception) {
+            Response().apply { resultCode = RC_NOK }
+        }
+    }
 
     private suspend fun getIndustries(): Response {
         return try {

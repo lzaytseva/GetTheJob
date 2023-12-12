@@ -16,12 +16,10 @@
         <action
             android:id="@+id/action_searchFragment_to_vacancyDetailsFragment"
             app:destination="@id/vacancyDetailsFragment">
-            <!--suppress NavigationFile -->
             <argument
                 android:name="vacancyId"
                 app:argType="string"
-                app:nullable="false"
-                />
+                app:nullable="false" />
         </action>
 
     </fragment>

@@ -13,10 +13,12 @@ import ru.practicum.android.diploma.search.data.responses.VacancySearchResponse
 
 interface HhApiService {
 
-    @GET("/vacancies?access_token=$HH_ACCESS_TOKEN")
-    fun getVacancies(
-        @QueryMap params: Map<String, String>
-    ): VacancySearchResponse
+    @Headers(
+        "Authorization: Bearer $HH_ACCESS_TOKEN",
+        "HH-User-Agent: GetTheJob (lvzaytseva1@gmail.com)"
+    )
+    @GET("/vacancies")
+    suspend fun getVacancies(@QueryMap params: Map<String, String>): Response<VacancySearchResponse>
 
     @Headers(
         "Authorization: Bearer $HH_ACCESS_TOKEN",

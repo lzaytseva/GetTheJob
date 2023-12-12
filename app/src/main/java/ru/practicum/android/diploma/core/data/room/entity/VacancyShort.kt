@@ -6,6 +6,7 @@ data class VacancyShort(
     val salaryCurrency: String?,
     val salaryFrom: Int?,
     val salaryTo: Int?,
+    val salaryGross: Boolean?,
     val employerName: String?,
     val logoUrl: String?
 )

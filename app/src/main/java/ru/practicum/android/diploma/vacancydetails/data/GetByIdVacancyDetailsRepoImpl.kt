@@ -11,6 +11,7 @@ import ru.practicum.android.diploma.core.data.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.core.data.room.VacancyEntityMapper
 import ru.practicum.android.diploma.core.data.room.dao.VacancyDao
 import ru.practicum.android.diploma.core.domain.api.GetDataByIdRepo
+import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.core.domain.models.VacancyDetails
 import ru.practicum.android.diploma.util.Resource
 
@@ -23,7 +24,6 @@ class GetByIdVacancyDetailsRepoImpl(
             VacancyEntityMapper.map(vacancyEntity)
         }
         if (vacancyFromDb != null) {
-            emit(Resource.Success(vacancyFromDb))
             val response = networkClient.doRequest(VacancyDetailsSearchRequest(id))
             if (response.resultCode == RetrofitNetworkClient.RC_OK) {
                 vacancyDao.updateVacancy(
@@ -38,17 +38,19 @@ class GetByIdVacancyDetailsRepoImpl(
                         }
                     )
                 )
+            } else {
+                emit(Resource.Success(vacancyFromDb))
             }
         } else {
             val response = networkClient.doRequest(VacancyDetailsSearchRequest(id))
             when (response.resultCode) {
-                RetrofitNetworkClient.RC_NO_INTERNET -> emit(Resource.Error("No internet"))
+                RetrofitNetworkClient.RC_NO_INTERNET -> emit(Resource.Error(ErrorType.NO_INTERNET))
 
                 RetrofitNetworkClient.RC_OK -> emit(
                     Resource.Success(VacancyDetailsDtoMapper.map((response as VacancyDetailsSearchResponse).dto))
                 )
 
-                else -> emit(Resource.Error("Server error"))
+                else -> emit(Resource.Error(ErrorType.SERVER_ERROR))
             }
         }
     }.flowOn(Dispatchers.IO)

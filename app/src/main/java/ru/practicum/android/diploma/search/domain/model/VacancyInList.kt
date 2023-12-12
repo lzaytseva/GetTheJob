@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.core.domain.models
+package ru.practicum.android.diploma.search.domain.model
 
 data class VacancyInList(
     val id: String,
@@ -6,6 +6,7 @@ data class VacancyInList(
     val salaryCurrency: String?,
     val salaryFrom: Int?,
     val salaryTo: Int?,
+    val salaryGross: Boolean?,
     val employerName: String,
     val logo: String?
 )

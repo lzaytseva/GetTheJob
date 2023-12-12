@@ -9,7 +9,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.favorites.domain.api.FavoritesVacancyListRepository
-import ru.practicum.android.diploma.core.domain.models.VacancyInList
 import java.sql.SQLException
 import javax.inject.Inject
 
@@ -21,15 +20,17 @@ class FavoritesViewModel @Inject constructor(
     private val _screenState: MutableLiveData<FavoritesState> = MutableLiveData()
     val screenState: LiveData<FavoritesState> get() = _screenState
 
-    fun getVacancies() {
-        var list: List<VacancyInList>
+    init {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                list = favoritesVacancyListRepository.getFavoritesVacancyList()
-                if (list.isEmpty()) {
-                    _screenState.postValue(FavoritesState.Empty)
-                } else {
-                    _screenState.postValue(FavoritesState.Content(list))
+                favoritesVacancyListRepository.getFavoritesVacancyList().collect() { list ->
+                    if (list == null) {
+                        _screenState.postValue(FavoritesState.DbError)
+                    } else if (list.isEmpty()) {
+                        _screenState.postValue(FavoritesState.Empty)
+                    } else {
+                        _screenState.postValue(FavoritesState.Content(list))
+                    }
                 }
             } catch (e: SQLException) {
                 _screenState.postValue(FavoritesState.DbError)
