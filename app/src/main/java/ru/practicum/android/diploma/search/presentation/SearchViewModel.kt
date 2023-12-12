@@ -80,7 +80,6 @@ class SearchViewModel @Inject constructor(
 
     private fun Resource<SearchResult>.processResult() {
         isNextPageLoading = false
-
         if (data != null) {
             vacancies.addAll(data.vacancies)
             pages = data.pages
@@ -95,7 +94,17 @@ class SearchViewModel @Inject constructor(
 
             vacancies.isEmpty() -> _screenState.postValue(Error(ErrorType.NO_CONTENT))
 
-            else -> _screenState.postValue(Content(vacancies))
+            else -> _screenState.postValue(Content(vacancies, getResultMessage(data?.found?.toString() ?: "0")))
+        }
+    }
+
+    private fun getResultMessage(num: String): String {
+        return when {
+            num.last() == '1' && if (num.length > 1) num[num.lastIndex - 1] != '1' else true ->
+                "Найдена $num вакансия"
+            num.last() in '2'..'4' && if (num.length > 1) num[num.lastIndex - 1] != '1' else true ->
+                "Найдено $num вакансии"
+            else -> "Найдено $num вакансий"
         }
     }
 

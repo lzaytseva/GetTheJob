@@ -26,7 +26,7 @@ class SearchVacanciesRepository(private val networkClient: NetworkClient) : Sear
                     }
                     val pages = response.pages
                     Resource.Success(
-                        SearchResult(vacancies, pages)
+                        SearchResult(vacancies, pages = pages, found = response.found)
                     )
                 }
 
