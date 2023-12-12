@@ -47,7 +47,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
         super.onViewCreated(view, savedInstanceState)
         configureSearchField()
         setObserver()
-        setLoadingNewPageObserver()
+        setQueryStateObserver()
         configureToolbar()
         setupAdapter()
         setOnScrollListener()
@@ -66,51 +66,53 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
 
     private fun setObserver() {
         viewModel.screenState.observe(viewLifecycleOwner) { screenState ->
-            // Из hindeContent убрала скрытие recyclerView, т.к. из-за этого прогресс бар отображался поверх ресайклера
-            // при загрузке новой страницы
-            hideContent()
-            binding.searchEditText.setText(screenState.state)
             when (screenState) {
                 is SearchScreenState.Loading -> {
-                    binding.progressBar.isVisible = true
-                    binding.resultsListRecyclerView.isGone = true
+                    hideContent(progressBarFlag = false)
                 }
 
                 is SearchScreenState.Error -> {
-                    binding.resultsListRecyclerView.isGone = true
                     onError(screenState.error)
                 }
 
                 is SearchScreenState.Content -> {
-                    binding.resultsListRecyclerView.isVisible = true
-                    onContent(screenState.content)
+                    onContent(screenState.content, screenState.resultMessage)
                 }
 
                 is SearchScreenState.LoadingNextPage -> {
                     binding.progressBar.isVisible = true
                 }
+
+                is SearchScreenState.LoadingNextPageError -> {
+                    onLoadingPageError(screenState.error)
+                }
             }
         }
     }
 
-    private fun setLoadingNewPageObserver() {
-        viewModel.showLoadingNewPageError.observe(viewLifecycleOwner) {
-            binding.progressBar.isGone = true
-            when (it) {
-                ErrorType.NO_INTERNET -> FeedbackUtils.showSnackbar(
-                    requireView(),
-                    getString(R.string.error_check_connection)
-                )
+    private fun setQueryStateObserver() {
+        viewModel.savedQueryState.observe(viewLifecycleOwner) {
+            binding.searchEditText.setText(it)
+        }
+    }
 
-                else -> FeedbackUtils.showSnackbar(
-                    requireView(),
-                    getString(R.string.error_something_went_wrong)
-                )
-            }
+    private fun onLoadingPageError(errorType: ErrorType) {
+        binding.progressBar.isGone = true
+        when (errorType) {
+            ErrorType.NO_INTERNET -> FeedbackUtils.showSnackbar(
+                requireView(),
+                getString(R.string.error_check_connection)
+            )
+
+            else -> FeedbackUtils.showSnackbar(
+                requireView(),
+                getString(R.string.error_something_went_wrong)
+            )
         }
     }
 
     private fun configureSearchField() {
+        searchIsNotEmpty = binding.searchEditText.text.isNotBlank()
         binding.searchEditText.doOnTextChanged { text, _, _, _ ->
             text?.toString()?.run {
                 searchIsNotEmpty = this.isNotBlank()
@@ -119,7 +121,6 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
             }
         }
         val inputMethodManager = ContextCompat.getSystemService(requireContext(), InputMethodManager::class.java)
-
         binding.searchFieldImageView.setOnClickListener {
             binding.searchEditText.setText("")
             inputMethodManager?.hideSoftInputFromWindow(binding.searchEditText.windowToken, 0)
@@ -128,12 +129,8 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
     }
 
     private fun showSearchNotStarted() {
-        hideContent()
-        with(binding) {
-            resultsListRecyclerView.isGone = true
-            searchImageView.isVisible = true
-            searchImageView.setImageResource(R.drawable.ph_start_search)
-        }
+        hideContent(searchImageFlag = false)
+        binding.searchImageView.setImageResource(R.drawable.ph_start_search)
     }
 
     private fun changeIcon(flag: Boolean) {
@@ -141,36 +138,45 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
         binding.searchFieldImageView.setImageResource(image)
     }
 
-    private fun hideContent() {
+    private fun hideContent(
+        resultsFlag: Boolean = true,
+        searchImageFlag: Boolean = true,
+        resultsMessageFlag: Boolean = true,
+        onErrorFlag: Boolean = true,
+        progressBarFlag: Boolean = true
+    ) {
         with(binding) {
-            searchImageView.isGone = true
-            resultMessageTextView.isGone = true
-            onErrorTextView.isGone = true
-            progressBar.isGone = true
+            resultsListRecyclerView.isGone = resultsFlag
+            searchImageView.isGone = searchImageFlag
+            resultMessageTextView.isGone = resultsMessageFlag
+            onErrorTextView.isGone = onErrorFlag
+            progressBar.isGone = progressBarFlag
         }
     }
 
     private fun onError(error: ErrorType) {
-        binding.onErrorTextView.isVisible = true
-        binding.searchImageView.isVisible = true
+        hideContent(onErrorFlag = false, searchImageFlag = false)
         when (error) {
             ErrorType.NO_INTERNET -> showError(R.drawable.ph_no_internet, R.string.error_no_internet)
             ErrorType.SERVER_ERROR -> showError(R.drawable.ph_server_error_search, R.string.error_server)
-            ErrorType.NO_CONTENT -> showError(R.drawable.ph_nothing_found, R.string.error_getting_vacancies)
+            ErrorType.NO_CONTENT -> {
+                showError(R.drawable.ph_nothing_found, R.string.error_getting_vacancies)
+                binding.resultMessageTextView.isVisible = true
+                binding.resultMessageTextView.setText(R.string.no_such_vacancies)
+            }
         }
     }
 
     private fun showError(imageResId: Int, stringResId: Int) {
         binding.searchImageView.setImageResource(imageResId)
-        binding.onErrorTextView.text = getString(stringResId)
+        binding.onErrorTextView.setText(stringResId)
     }
 
-    private fun onContent(content: List<VacancyInList>) {
+    private fun onContent(content: List<VacancyInList>, resultMessage: String) {
         val adapter = binding.resultsListRecyclerView.adapter as? VacanciesAdapter
         adapter?.setContent(content)
-        binding.resultsListRecyclerView.isVisible = true
-        binding.resultMessageTextView.isVisible = true
-        binding.resultMessageTextView.text = getString(R.string.search) // get plurals for correct message
+        binding.resultMessageTextView.text = resultMessage
+        hideContent(resultsFlag = false, resultsMessageFlag = false)
     }
 
     private fun setupAdapter() {
@@ -208,8 +214,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
 
                     if (dy > 0) {
                         with(binding.resultsListRecyclerView) {
-                            val pos =
-                                (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                            val pos = (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
                             val itemsCount = adapter!!.itemCount
                             if (pos >= itemsCount - 1) {
                                 viewModel.loadNextPage()
