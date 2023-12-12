@@ -16,7 +16,7 @@
         android:layout_marginTop="@dimen/search_small_padding"
         android:background="@drawable/edit_text_bg"
         android:paddingVertical="@dimen/search_tiny_padding"
-        android:paddingStart="@dimen/search_small_padding"
+        android:paddingStart="@dimen/search_medium_padding"
         android:paddingEnd="@dimen/search_tiny_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
