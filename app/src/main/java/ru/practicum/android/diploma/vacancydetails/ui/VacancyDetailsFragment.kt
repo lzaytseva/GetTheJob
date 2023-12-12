@@ -94,7 +94,7 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
             companyLocation.text = getCompanyLocation(vacancyDetails)
             experience.text = vacancyDetails.experience
             schedulesInfo.text = vacancyDetails.schedule ?: ""
-            description.setText(Html.fromHtml(vacancyDetails.description, Html.FROM_HTML_MODE_COMPACT))
+            description.setText(Html.fromHtml(vacancyDetails.description, Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM))
             if (vacancyDetails.keySkills.isNullOrEmpty()) {
                 keySkillsTitle.visibility = View.GONE
                 keySkills.visibility = View.GONE
