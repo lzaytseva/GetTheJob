@@ -132,7 +132,7 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
 
     private fun getKeySkills(keySkills: List<String>?): String {
         val keySkillsText = StringBuilder("")
-        keySkills?.map { skill -> keySkillsText.append("-").append(skill).append(System.lineSeparator()) }
+        keySkills?.map { skill -> keySkillsText.append("  \u2022   ").append(skill).append(System.lineSeparator()) }
         return keySkillsText.toString()
     }
 
