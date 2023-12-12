@@ -38,6 +38,16 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
             viewModel.openLink()
         }
 
+        binding.similarVacanciesBtn.setOnClickListener {
+            if (viewModel.vacancyDetailsScreenState.value is VacancyDetailsScreenState.Content) {
+                val action = VacancyDetailsFragmentDirections.actionVacancyDetailsFragmentToSimilarVacanciesFragment(
+                    (viewModel.vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content).vacancyDetails.id
+                )
+                findNavController().navigate(action)
+            }
+
+        }
+
         viewModel.vacancyDetailsScreenState.observe(viewLifecycleOwner) { screenState ->
             when (screenState) {
                 is VacancyDetailsScreenState.Content -> showContent(screenState.vacancyDetails)

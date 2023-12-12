@@ -87,9 +87,8 @@ class RetrofitNetworkClient(
     private suspend fun getSimilarVacanciesById(id: String): Response {
         return try {
             val response = hhService.getSimilarVacanciesById(id)
-            if (response.code() == RC_OK && !response.body().isNullOrEmpty()) {
-                VacancySearchResponse(response.body()!!)
-                    .apply { resultCode = RC_OK }
+            if (response.code() == RC_OK && response.body() != null) {
+                response.body()!!.apply { resultCode = RC_OK }
             } else {
                 Response().apply { resultCode = RC_NOK }
             }

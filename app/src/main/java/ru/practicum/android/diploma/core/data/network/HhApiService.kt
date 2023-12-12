@@ -32,7 +32,7 @@ interface HhApiService {
         "HH-User-Agent: GetTheJob (lvzaytseva1@gmail.com)"
     )
     @GET("/vacancies/{vacancy_id}/similar_vacancies")
-    suspend fun getSimilarVacanciesById(@Path("vacancy_id") vacancyId: String): Response<List<VacancySearchDto>>
+    suspend fun getSimilarVacanciesById(@Path("vacancy_id") vacancyId: String): Response<VacancySearchResponse>
 
     @Headers(
         "Authorization: Bearer $HH_ACCESS_TOKEN",
