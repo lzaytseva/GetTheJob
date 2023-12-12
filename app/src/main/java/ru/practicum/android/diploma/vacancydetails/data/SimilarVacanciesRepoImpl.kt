@@ -9,37 +9,29 @@ import ru.practicum.android.diploma.core.data.dto.responses.VacancySearchRespons
 import ru.practicum.android.diploma.core.data.network.NetworkClient
 import ru.practicum.android.diploma.core.data.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.core.domain.api.GetDataByIdRepo
-import ru.practicum.android.diploma.core.domain.models.Vacancy
+import ru.practicum.android.diploma.core.domain.models.ErrorType
+import ru.practicum.android.diploma.search.domain.model.VacancyInList
+import ru.practicum.android.diploma.search.util.toVacancyInList
 import ru.practicum.android.diploma.util.Resource
 
 class SimilarVacanciesRepoImpl(
     private val networkClient: NetworkClient
-) : GetDataByIdRepo<Resource<List<Vacancy>>> {
+) : GetDataByIdRepo<Resource<List<VacancyInList>>> {
 
-    override fun getById(id: String): Flow<Resource<List<Vacancy>>> = flow {
+    override fun getById(id: String): Flow<Resource<List<VacancyInList>>> = flow {
         val response = networkClient.doRequest(SimilarVacanciesSearchRequest(id))
         when (response.resultCode) {
-            RetrofitNetworkClient.RC_NO_INTERNET -> emit(Resource.Error("No internet"))
+            RetrofitNetworkClient.RC_NO_INTERNET -> emit(Resource.Error(ErrorType.NO_INTERNET))
 
             RetrofitNetworkClient.RC_OK -> emit(
                 Resource.Success(
                     (response as VacancySearchResponse).dtos.map { dto ->
-                        Vacancy( // add mapping when search will be ready
-                            id = dto.id,
-                            name = dto.name,
-                            area = dto.area.name,
-                            salaryCurrency = dto.salary?.currency,
-                            salaryFrom = dto.salary?.from,
-                            salaryTo = dto.salary?.to,
-                            logoUrl90 = dto.employer?.logoUrlsDto?.art90,
-                            address = null,
-                            employerName = dto.employer?.name,
-                        )
+                        dto.toVacancyInList()
                     }
                 )
             )
 
-            else -> emit(Resource.Error("Server error"))
+            else -> emit(Resource.Error(ErrorType.SERVER_ERROR))
         }
     }.flowOn(Dispatchers.IO)
 }

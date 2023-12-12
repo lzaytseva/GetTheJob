@@ -10,7 +10,6 @@ import ru.practicum.android.diploma.core.data.room.dao.VacancyDao
 import ru.practicum.android.diploma.core.domain.api.GetDataByIdRepo
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
 import ru.practicum.android.diploma.core.domain.api.SearchRepo
-import ru.practicum.android.diploma.core.domain.models.Vacancy
 import ru.practicum.android.diploma.core.domain.models.VacancyDetails
 import ru.practicum.android.diploma.favorites.data.FavoritesVacancyListRepositoryImpl
 import ru.practicum.android.diploma.favorites.domain.api.FavoritesVacancyListRepository
@@ -18,6 +17,7 @@ import ru.practicum.android.diploma.filters.data.repository.IndustriesRepository
 import ru.practicum.android.diploma.filters.domain.model.Industry
 import ru.practicum.android.diploma.search.data.repository.SearchVacanciesRepository
 import ru.practicum.android.diploma.search.domain.model.SearchResult
+import ru.practicum.android.diploma.search.domain.model.VacancyInList
 import ru.practicum.android.diploma.util.Resource
 import ru.practicum.android.diploma.vacancydetails.data.DeleteVacancyRepositoryImpl
 import ru.practicum.android.diploma.vacancydetails.data.GetByIdVacancyDetailsRepoImpl
@@ -44,7 +44,7 @@ class RepositoryModule {
     @Singleton
     fun provideSimilarVacanciesRepoImpl(
         networkClient: NetworkClient,
-    ): GetDataByIdRepo<Resource<List<Vacancy>>> {
+    ): GetDataByIdRepo<Resource<List<VacancyInList>>> {
         return SimilarVacanciesRepoImpl(networkClient)
     }
 
