@@ -15,22 +15,21 @@ import ru.practicum.android.diploma.util.Resource
 class SearchVacanciesRepository(private val networkClient: NetworkClient) : SearchRepo<SearchResult> {
 
     override fun search(text: String, page: Int): Flow<Resource<SearchResult>> = flow {
-        // build VacanciesSearchRequest
-        val request = VacanciesSearchRequest(text = text)
+        val request = VacanciesSearchRequest(text = text, page = page)
         val response = networkClient.doRequest(request)
         emit(
             when (response.resultCode) {
-                RetrofitNetworkClient.RC_OK -> {
+                RetrofitNetworkClient.CODE_SUCCESS -> {
                     val vacancies = (response as VacancySearchResponse).items.map {
                         it.toVacancyInList()
                     }
                     val pages = response.pages
                     Resource.Success(
-                        SearchResult(vacancies, pages)
+                        SearchResult(vacancies, pages = pages, found = response.found)
                     )
                 }
 
-                RetrofitNetworkClient.RC_NO_INTERNET -> {
+                RetrofitNetworkClient.CODE_NO_INTERNET -> {
                     Resource.Error(ErrorType.NO_INTERNET)
                 }
 

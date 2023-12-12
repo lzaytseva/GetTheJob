@@ -25,7 +25,7 @@ class GetByIdVacancyDetailsRepoImpl(
         }
         if (vacancyFromDb != null) {
             val response = networkClient.doRequest(VacancyDetailsSearchRequest(id))
-            if (response.resultCode == RetrofitNetworkClient.RC_OK) {
+            if (response.resultCode == RetrofitNetworkClient.CODE_SUCCESS) {
                 vacancyDao.updateVacancy(
                     VacancyEntityMapper.map(
                         VacancyDetailsDtoMapper.map((response as VacancyDetailsSearchResponse).dto)
@@ -44,9 +44,9 @@ class GetByIdVacancyDetailsRepoImpl(
         } else {
             val response = networkClient.doRequest(VacancyDetailsSearchRequest(id))
             when (response.resultCode) {
-                RetrofitNetworkClient.RC_NO_INTERNET -> emit(Resource.Error(ErrorType.NO_INTERNET))
+                RetrofitNetworkClient.CODE_NO_INTERNET -> emit(Resource.Error(ErrorType.NO_INTERNET))
 
-                RetrofitNetworkClient.RC_OK -> emit(
+                RetrofitNetworkClient.CODE_SUCCESS -> emit(
                     Resource.Success(VacancyDetailsDtoMapper.map((response as VacancyDetailsSearchResponse).dto))
                 )
 

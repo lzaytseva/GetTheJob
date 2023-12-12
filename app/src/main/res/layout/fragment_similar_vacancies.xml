@@ -22,7 +22,6 @@
         android:id="@+id/error_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-32dp"
         android:scaleType="fitCenter"
         android:src="@drawable/ph_no_internet"
         android:visibility="gone"

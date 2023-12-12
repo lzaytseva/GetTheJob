@@ -21,9 +21,9 @@ class SimilarVacanciesRepoImpl(
     override fun getById(id: String): Flow<Resource<List<VacancyInList>>> = flow {
         val response = networkClient.doRequest(SimilarVacanciesSearchRequest(id))
         when (response.resultCode) {
-            RetrofitNetworkClient.RC_NO_INTERNET -> emit(Resource.Error(ErrorType.NO_INTERNET))
+            RetrofitNetworkClient.CODE_NO_INTERNET -> emit(Resource.Error(ErrorType.NO_INTERNET))
 
-            RetrofitNetworkClient.RC_OK -> emit(
+            RetrofitNetworkClient.CODE_SUCCESS -> emit(
                 Resource.Success(
                     (response as VacancySearchResponse).items.map { dto ->
                         dto.toVacancyInList()

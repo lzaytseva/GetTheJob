@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.VacancyCardBinding
@@ -60,7 +60,7 @@ class VacanciesAdapter(
             val cornerRadius = itemView.resources.getDimensionPixelSize(R.dimen.search_field_corner_radius)
             Glide.with(itemView)
                 .load(imageUrl)
-                .transform(CenterCrop(), RoundedCorners(cornerRadius))
+                .transform(FitCenter(), RoundedCorners(cornerRadius))
                 .placeholder(R.drawable.ic_vacancy_placeholder)
                 .into(binding.vacancyIconImageView)
         }

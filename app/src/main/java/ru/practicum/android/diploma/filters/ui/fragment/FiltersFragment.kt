@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
 import ru.practicum.android.diploma.filters.presentation.FiltersViewModel
@@ -25,41 +28,75 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setBtnApplyClickListener()
+        setBtnDiscardClickListener()
+        configureSalaryField()
+        configureFiltersFields()
+        updateButtonsVisibility()
+        configureToolbar()
+    }
+
+    private fun setBtnApplyClickListener() {
+        with(binding) {
+            btnApplyChanges.setOnClickListener {
+                // Сохранить настройки в SP
+            }
+        }
+    }
+
+    private fun setBtnDiscardClickListener() {
+        binding.btnDiscardChanges.setOnClickListener {
+            clearFields()
+            setButtonsVisibility(isVisible = false)
+            // И удалить настрйоки из sp
+        }
+    }
+
+    private fun clearFields() {
+        with(binding) {
+            etSalary.text?.clear()
+            etIndustry.text?.clear()
+            etPlace.text?.clear()
+            checkBoxSalary.isChecked = false
+        }
+    }
+
+    private fun configureSalaryField() {
         setSalaryFieldHintColorBehaviour()
         setSalaryCheckBoxChangeListener()
         setSalaryTextWatcher()
         setEditorActionListener()
+    }
+
+    private fun configureFiltersFields() {
         setIndustryClickListener()
         setPlaceClickListener()
+        setFiltersTextWatchers()
         setFiltersFieldsHintColorBehaviour()
         setFilterFieldsEndIcon()
-        setBtnsVisibility()
-        configureToolbar()
-        setBtnDiscardClickListener()
     }
 
     private fun setSalaryFieldHintColorBehaviour() {
-        binding.etSalary.setOnFocusChangeListener { v, hasFocus ->
-            val hintColorStateListId =
-                if (!hasFocus && !binding.etSalary.text.isNullOrBlank()) {
-                    R.color.salary_hint_color_populated
-                } else {
-                    R.color.salary_hint_color
-                }
-            binding.tilSalary.defaultHintTextColor =
-                ContextCompat.getColorStateList(requireContext(), hintColorStateListId)
-        }
+        val hintColorStateListId =
+            if (!binding.etSalary.text.isNullOrBlank()) {
+                R.color.salary_hint_color_populated
+            } else {
+                R.color.salary_hint_color
+            }
+        binding.tilSalary.defaultHintTextColor =
+            ContextCompat.getColorStateList(requireContext(), hintColorStateListId)
     }
 
     private fun setSalaryCheckBoxChangeListener() {
         binding.checkBoxSalary.setOnCheckedChangeListener { buttonView, isChecked ->
-            setBtnsVisibility()
+            updateButtonsVisibility()
         }
     }
 
     private fun setSalaryTextWatcher() {
         binding.etSalary.doOnTextChanged { text, start, before, count ->
-            setBtnsVisibility()
+            updateButtonsVisibility()
+            setSalaryFieldHintColorBehaviour()
         }
     }
 
@@ -70,66 +107,6 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
                 true
             }
             false
-        }
-    }
-
-    private fun setFilterFieldsEndIcon() {
-        with(binding) {
-            tilIndustry.endIconDrawable = TextInputLayoutUtils.getEndIconDrawable(
-                context = requireContext(),
-                iconResId = getEndIconId(isTextFieldEmpty = etIndustry.text.isNullOrBlank())
-            )
-            tilPlace.endIconDrawable = TextInputLayoutUtils.getEndIconDrawable(
-                context = requireContext(),
-                iconResId = getEndIconId(isTextFieldEmpty = etPlace.text.isNullOrBlank())
-            )
-        }
-    }
-
-    private fun getEndIconId(isTextFieldEmpty: Boolean): Int? {
-        return if (isTextFieldEmpty) {
-            R.drawable.ic_arrow_forward
-        } else {
-            null
-        }
-    }
-
-    private fun setFiltersFieldsHintColorBehaviour() {
-        with(binding) {
-            tilIndustry.defaultHintTextColor = TextInputLayoutUtils
-                .getHintColorStateList(
-                    context = requireContext(),
-                    isTextFieldEmpty = etIndustry.text.isNullOrBlank()
-                )
-            tilPlace.defaultHintTextColor = TextInputLayoutUtils
-                .getHintColorStateList(
-                    context = requireContext(),
-                    isTextFieldEmpty = etPlace.text.isNullOrBlank()
-                )
-        }
-    }
-
-
-    private fun setBtnsVisibility() {
-        val visible = hasNonEmptyFields()
-        binding.btnApplyChanges.visibility = if (visible) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
-        binding.btnDiscardChanges.visibility = if (visible) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
-    }
-
-    private fun hasNonEmptyFields(): Boolean {
-        return with(binding) {
-            !etIndustry.text.isNullOrBlank() ||
-                !etPlace.text.isNullOrBlank() ||
-                !etSalary.text.isNullOrBlank() ||
-                checkBoxSalary.isChecked
         }
     }
 
@@ -149,23 +126,81 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
         }
     }
 
+    private fun setFiltersTextWatchers() {
+        with(binding) {
+            setFilterTextWatcher(tilIndustry, etIndustry)
+            setFilterTextWatcher(tilPlace, etPlace)
+        }
+    }
+
+    private fun setFilterTextWatcher(textInputLayout: TextInputLayout, textInputEditText: TextInputEditText) {
+        textInputEditText.doOnTextChanged { _, _, _, _ ->
+            setFilterEndIcon(textInputLayout, textInputEditText)
+            setFilterHintColor(textInputLayout, textInputEditText)
+        }
+    }
+
+    private fun setFiltersFieldsHintColorBehaviour() {
+        with(binding) {
+            setFilterHintColor(tilIndustry, etIndustry)
+            setFilterHintColor(tilPlace, etPlace)
+        }
+    }
+
+    private fun setFilterHintColor(textInputLayout: TextInputLayout, textInputEditText: TextInputEditText) {
+        textInputLayout.defaultHintTextColor = TextInputLayoutUtils
+            .getHintColorStateList(
+                context = requireContext(),
+                isTextFieldEmpty = textInputEditText.text.isNullOrBlank()
+            )
+    }
+
+    private fun setFilterFieldsEndIcon() {
+        with(binding) {
+            setFilterEndIcon(tilIndustry, etIndustry)
+            setFilterEndIcon(tilPlace, etPlace)
+        }
+    }
+
+    private fun setFilterEndIcon(textInputLayout: TextInputLayout, textInputEditText: TextInputEditText) {
+        textInputLayout.endIconDrawable = TextInputLayoutUtils.getEndIconDrawable(
+            context = requireContext(),
+            iconResId = getEndIconId(isTextFieldEmpty = textInputEditText.text.isNullOrBlank())
+        )
+    }
+
+    private fun getEndIconId(isTextFieldEmpty: Boolean): Int? {
+        return if (isTextFieldEmpty) {
+            R.drawable.ic_arrow_forward
+        } else {
+            null
+        }
+    }
+
+    private fun updateButtonsVisibility() {
+        val isVisible = hasNonEmptyFields()
+        setButtonsVisibility(isVisible)
+    }
+
+    private fun setButtonsVisibility(isVisible: Boolean) {
+        binding.btnApplyChanges.isGone = !isVisible
+        binding.btnDiscardChanges.isGone = !isVisible
+    }
+
+    private fun hasNonEmptyFields(): Boolean {
+        return with(binding) {
+            !etIndustry.text.isNullOrBlank() ||
+                !etPlace.text.isNullOrBlank() ||
+                !etSalary.text.isNullOrBlank() ||
+                checkBoxSalary.isChecked
+        }
+    }
+
     private fun configureToolbar() {
         ToolbarUtils.configureToolbar(
             activity = requireActivity(),
             navController = findNavController(),
             title = getString(R.string.header_filter_settings)
         )
-    }
-
-    private fun setBtnDiscardClickListener() {
-        with(binding) {
-            btnDiscardChanges.setOnClickListener {
-                etSalary.text?.clear()
-                etIndustry.text?.clear()
-                etPlace.text?.clear()
-                checkBoxSalary.isChecked = false
-                // И удалить настрйоки из sp
-            }
-        }
     }
 }

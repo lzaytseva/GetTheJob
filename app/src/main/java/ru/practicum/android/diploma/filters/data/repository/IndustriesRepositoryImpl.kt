@@ -20,11 +20,11 @@ class IndustriesRepositoryImpl @Inject constructor(
         val response = networkClient.doRequest(IndustriesRequest)
 
         when (response.resultCode) {
-            RetrofitNetworkClient.RC_NO_INTERNET -> {
+            RetrofitNetworkClient.CODE_NO_INTERNET -> {
                 emit(Resource.Error(ErrorType.NO_INTERNET))
             }
 
-            RetrofitNetworkClient.RC_OK -> {
+            RetrofitNetworkClient.CODE_SUCCESS -> {
                 emit(Resource.Success(
                     IndustryMapper.mapDtoToEntityList(
                         (response as IndustriesResponse).industries
