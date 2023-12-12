@@ -10,13 +10,13 @@
     <!-- Поле поиска -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/search_field"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/search_medium_padding"
         android:layout_marginTop="@dimen/search_small_padding"
         android:background="@drawable/edit_text_bg"
         android:paddingVertical="@dimen/search_tiny_padding"
-        android:paddingStart="@dimen/search_small_padding"
+        android:paddingStart="@dimen/search_medium_padding"
         android:paddingEnd="@dimen/search_tiny_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,8 +24,8 @@
 
         <EditText
             android:id="@+id/search_edit_text"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/zero"
             android:background="@android:color/transparent"
             android:ellipsize="end"
             android:hint="@string/et_search_hint"
@@ -43,7 +43,7 @@
         <ImageView
             android:id="@+id/search_field_image_view"
             android:layout_width="48dp"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/zero"
             android:scaleType="center"
             android:src="@drawable/ic_search"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -57,8 +57,8 @@
     <!-- Список результатов-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/results_list_recycler_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/zero"
+        android:layout_height="@dimen/zero"
         android:layout_marginTop="@dimen/search_small_padding"
         android:orientation="vertical"
         android:visibility="gone"
@@ -91,7 +91,7 @@
     <!-- Изображение -->
     <ImageView
         android:id="@+id/search_image_view"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="223dp"
         android:layout_marginHorizontal="@dimen/search_medium_padding"
         android:scaleType="fitCenter"
