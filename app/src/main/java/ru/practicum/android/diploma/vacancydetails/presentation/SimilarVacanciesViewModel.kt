@@ -34,7 +34,9 @@ class SimilarVacanciesViewModel @Inject constructor(
         viewModelScope.launch {
             similarVacanciesRepository.getById(id).collect() { response ->
                 if (response is Resource.Success) {
-                    _similarVacanciesScreenState.postValue(response.data?.let { SimilarVacanciesScreenState.Content(it) })
+                    _similarVacanciesScreenState.postValue(
+                        response.data?.let { SimilarVacanciesScreenState.Content(it) }
+                    )
                 } else {
                     _similarVacanciesScreenState.postValue(SimilarVacanciesScreenState.Error(response?.errorType))
                 }
