@@ -15,7 +15,7 @@ import ru.practicum.android.diploma.util.Resource
 class SearchVacanciesRepository(private val networkClient: NetworkClient) : SearchRepo<SearchResult> {
 
     override fun search(text: String, page: Int): Flow<Resource<SearchResult>> = flow {
-        val request = VacanciesSearchRequest(text = text)
+        val request = VacanciesSearchRequest(text = text, page = page)
         val response = networkClient.doRequest(request)
         emit(
             when (response.resultCode) {
