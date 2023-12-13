@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
+import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.filters.domain.model.Industry
 import ru.practicum.android.diploma.filters.domain.model.IndustryScreenState
 import ru.practicum.android.diploma.util.Resource
@@ -28,6 +29,7 @@ class ChoiceIndustryViewModel @Inject constructor(
 
     private fun getIndustries() {
         viewModelScope.launch {
+            _state.postValue(IndustryScreenState.Loading)
             repository.get().collect {
                 when (it) {
                     is Resource.Error -> {
@@ -36,7 +38,7 @@ class ChoiceIndustryViewModel @Inject constructor(
 
                     is Resource.Success -> {
                         if (it.data.isNullOrEmpty()) {
-                            _state.postValue(IndustryScreenState.Empty)
+                            _state.postValue(IndustryScreenState.Error(ErrorType.NO_CONTENT))
                         } else {
                             fullList.addAll(it.data)
                             _state.postValue(IndustryScreenState.Content(fullList))

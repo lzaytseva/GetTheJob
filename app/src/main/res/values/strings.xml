@@ -19,6 +19,7 @@
     <string name="error_empty_list">Список пуст</string>
     <string name="error_something_went_wrong">Произошла ошибка</string>
     <string name="no_such_vacancies">Таких вакансий нет</string>
+    <string name="error_no_such_industry">Такой отрасли нет</string>
 
     <!-- Toolbar -->
     <string name="search_screen">Поиск вакансий</string>
