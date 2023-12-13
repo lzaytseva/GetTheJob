@@ -10,8 +10,6 @@ import ru.practicum.android.diploma.core.data.dto.requests.VacanciesSearchReques
 import ru.practicum.android.diploma.core.data.dto.requests.VacancyDetailsSearchRequest
 import ru.practicum.android.diploma.core.data.dto.responses.Response
 import ru.practicum.android.diploma.core.data.dto.responses.VacancyDetailsSearchResponse
-import ru.practicum.android.diploma.filters.data.dto.IndustriesRequest
-import ru.practicum.android.diploma.filters.data.dto.IndustriesResponse
 import ru.practicum.android.diploma.search.util.toQueryMap
 import ru.practicum.android.diploma.util.ConnectionChecker
 
@@ -28,7 +26,6 @@ class RetrofitNetworkClient(
         return withContext(Dispatchers.IO) {
             when (request) {
                 is VacancyDetailsSearchRequest -> getVacancyDetailsById(request.id)
-                is IndustriesRequest -> getIndustries()
                 is VacanciesSearchRequest -> getVacanciesList(request.toQueryMap())
                 is SimilarVacanciesSearchRequest -> getSimilarVacanciesById(request.id)
                 else -> Response().apply { resultCode = CODE_WRONG_REQUEST }
@@ -61,22 +58,6 @@ class RetrofitNetworkClient(
                 }
             }
         } catch (_: Exception) {
-            Response().apply { resultCode = CODE_SERVER_ERROR }
-        }
-    }
-
-    private suspend fun getIndustries(): Response {
-        return try {
-            val response = hhService.getIndustries()
-            if (response.body() != null) {
-                IndustriesResponse(response.body()!!).apply {
-                    resultCode = CODE_SUCCESS
-                }
-            } else {
-                Response().apply { resultCode = CODE_SERVER_ERROR }
-            }
-        } catch (e: HttpException) {
-            Log.e(TAG, e.toString())
             Response().apply { resultCode = CODE_SERVER_ERROR }
         }
     }
