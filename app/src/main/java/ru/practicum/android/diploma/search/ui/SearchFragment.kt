@@ -109,6 +109,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
                 getString(R.string.error_something_went_wrong)
             )
         }
+        viewModel.switchState()
     }
 
     private fun configureSearchField() {
