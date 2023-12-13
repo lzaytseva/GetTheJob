@@ -5,12 +5,14 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
+import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.core.domain.models.VacancyDetails
 import ru.practicum.android.diploma.core.ui.RootActivity
 import ru.practicum.android.diploma.databinding.FragmentVacancyDetailsBinding
@@ -52,7 +54,7 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
             when (screenState) {
                 is VacancyDetailsScreenState.Content -> showContent(screenState.vacancyDetails)
                 is VacancyDetailsScreenState.Loading -> showLoading()
-                is VacancyDetailsScreenState.Error -> showError()
+                is VacancyDetailsScreenState.Error -> showError(screenState.error)
             }
         }
     }
@@ -87,10 +89,21 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
         binding.loading.visibility = View.VISIBLE
     }
 
-    private fun showError() {
+    private fun showError(error: ErrorType?) {
         binding.loading.visibility = View.GONE
         binding.content.visibility = View.GONE
         binding.error.visibility = View.VISIBLE
+        if (error == ErrorType.NO_INTERNET) {
+            binding.errorMessage.text = getString(R.string.error_no_internet)
+            binding.errorImage.setImageDrawable(
+                AppCompatResources.getDrawable(requireContext(), R.drawable.ph_no_internet)
+            )
+        } else {
+            binding.errorMessage.text = getString(R.string.error_server)
+            binding.errorImage.setImageDrawable(
+                AppCompatResources.getDrawable(requireContext(), R.drawable.ph_server_error_vacancy)
+            )
+        }
     }
 
     private fun bindDataToViews(vacancyDetails: VacancyDetails) {
@@ -107,7 +120,12 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
             companyLocation.text = getCompanyLocation(vacancyDetails)
             experience.text = vacancyDetails.experience
             schedulesInfo.text = vacancyDetails.schedule ?: ""
-            description.setText(Html.fromHtml(vacancyDetails.description, Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM))
+            description.setText(
+                Html.fromHtml(
+                    vacancyDetails.description,
+                    Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM
+                )
+            )
             if (vacancyDetails.keySkills.isNullOrEmpty()) {
                 keySkillsTitle.visibility = View.GONE
                 keySkills.visibility = View.GONE
