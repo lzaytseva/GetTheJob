@@ -5,11 +5,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import ru.practicum.android.diploma.core.data.dto.requests.SimilarVacanciesSearchRequest
-import ru.practicum.android.diploma.core.data.dto.responses.VacancySearchResponse
 import ru.practicum.android.diploma.core.data.network.NetworkClient
 import ru.practicum.android.diploma.core.data.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.core.domain.api.GetDataByIdRepo
 import ru.practicum.android.diploma.core.domain.models.ErrorType
+import ru.practicum.android.diploma.search.data.responses.VacancySearchResponse
 import ru.practicum.android.diploma.search.domain.model.VacancyInList
 import ru.practicum.android.diploma.search.util.toVacancyInList
 import ru.practicum.android.diploma.util.Resource
@@ -25,7 +25,7 @@ class SimilarVacanciesRepoImpl(
 
             RetrofitNetworkClient.CODE_SUCCESS -> emit(
                 Resource.Success(
-                    (response as VacancySearchResponse).dtos.map { dto ->
+                    (response as VacancySearchResponse).items.map { dto ->
                         dto.toVacancyInList()
                     }
                 )

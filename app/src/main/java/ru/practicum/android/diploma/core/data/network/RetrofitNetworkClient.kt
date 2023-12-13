@@ -10,7 +10,6 @@ import ru.practicum.android.diploma.core.data.dto.requests.VacanciesSearchReques
 import ru.practicum.android.diploma.core.data.dto.requests.VacancyDetailsSearchRequest
 import ru.practicum.android.diploma.core.data.dto.responses.Response
 import ru.practicum.android.diploma.core.data.dto.responses.VacancyDetailsSearchResponse
-import ru.practicum.android.diploma.core.data.dto.responses.VacancySearchResponse
 import ru.practicum.android.diploma.filters.data.dto.IndustriesRequest
 import ru.practicum.android.diploma.filters.data.dto.IndustriesResponse
 import ru.practicum.android.diploma.search.util.toQueryMap
@@ -85,9 +84,8 @@ class RetrofitNetworkClient(
     private suspend fun getSimilarVacanciesById(id: String): Response {
         return try {
             val response = hhService.getSimilarVacanciesById(id)
-            if (response.code() == CODE_SUCCESS && !response.body().isNullOrEmpty()) {
-                VacancySearchResponse(response.body()!!)
-                    .apply { resultCode = CODE_SUCCESS }
+            if (response.code() == CODE_SUCCESS && response.body() != null) {
+                response.body()!!.apply { resultCode = CODE_SUCCESS }
             } else {
                 Response().apply { resultCode = CODE_SERVER_ERROR }
             }
