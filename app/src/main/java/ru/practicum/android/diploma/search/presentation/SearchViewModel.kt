@@ -39,10 +39,6 @@ class SearchViewModel @Inject constructor(
     val savedQueryState: LiveData<String>
         get() = _savedQueryState
 
-    private val _errorMessageEvent: SingleLiveEvent<ErrorType> = SingleLiveEvent()
-    val errorMessageEvent: LiveData<ErrorType>
-        get() = _errorMessageEvent
-
     private val searchRequest: (String) -> Unit = debounce(SEARCH_DELAY, viewModelScope, true) { text ->
         _screenState.postValue(Loading)
 
@@ -94,7 +90,6 @@ class SearchViewModel @Inject constructor(
                 _screenState.postValue(Error(errorType))
             } else {
                 _screenState.postValue(LoadingNextPageError(errorType))
-                _errorMessageEvent.postValue(errorType!!)
             }
 
             vacancies.isEmpty() -> _screenState.postValue(Error(ErrorType.NO_CONTENT))
@@ -107,10 +102,8 @@ class SearchViewModel @Inject constructor(
         return when {
             num.last() == '1' && if (num.length > 1) num[num.lastIndex - 1] != '1' else true ->
                 "Найдена $num вакансия"
-
             num.last() in '2'..'4' && if (num.length > 1) num[num.lastIndex - 1] != '1' else true ->
                 "Найдено $num вакансии"
-
             else -> "Найдено $num вакансий"
         }
     }

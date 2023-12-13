@@ -84,12 +84,9 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
                 }
 
                 is SearchScreenState.LoadingNextPageError -> {
-                    binding.progressBar.isGone = true
+                    onLoadingPageError(screenState.error)
                 }
             }
-        }
-        viewModel.errorMessageEvent.observe(viewLifecycleOwner) { error ->
-            onLoadingPageError(error)
         }
     }
 
@@ -100,6 +97,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
     }
 
     private fun onLoadingPageError(errorType: ErrorType) {
+        binding.progressBar.isGone = true
         when (errorType) {
             ErrorType.NO_INTERNET -> FeedbackUtils.showSnackbar(
                 requireView(),
