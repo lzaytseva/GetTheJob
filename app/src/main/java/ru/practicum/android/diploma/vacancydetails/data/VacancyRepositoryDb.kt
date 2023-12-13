@@ -10,23 +10,30 @@ import ru.practicum.android.diploma.core.data.network.NetworkClient
 import ru.practicum.android.diploma.core.data.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.core.data.room.VacancyEntityMapper
 import ru.practicum.android.diploma.core.data.room.dao.VacancyDao
+import ru.practicum.android.diploma.core.domain.api.DeleteDataRepo
 import ru.practicum.android.diploma.core.domain.api.GetDataByIdRepo
+import ru.practicum.android.diploma.core.domain.api.SaveDataRepo
 import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.core.domain.models.VacancyDetails
 import ru.practicum.android.diploma.util.Resource
 
-class GetByIdVacancyDetailsRepoImpl(
-    private val networkClient: NetworkClient,
-    private val vacancyDao: VacancyDao,
-) : GetDataByIdRepo<Resource<VacancyDetails>> {
+class VacancyRepositoryDb(
+    private val dao: VacancyDao,
+    private val networkClient: NetworkClient
+) : DeleteDataRepo<String>, SaveDataRepo<VacancyDetails>, GetDataByIdRepo<Resource<VacancyDetails>> {
+
+    override suspend fun delete(data: String) {
+        dao.deleteVacancy(data)
+    }
+
     override fun getById(id: String): Flow<Resource<VacancyDetails>?> = flow {
-        val vacancyFromDb = vacancyDao.getVacancyById(id)?.let { vacancyEntity ->
+        val vacancyFromDb = dao.getVacancyById(id)?.let { vacancyEntity ->
             VacancyEntityMapper.map(vacancyEntity)
         }
         if (vacancyFromDb != null) {
             val response = networkClient.doRequest(VacancyDetailsSearchRequest(id))
             if (response.resultCode == RetrofitNetworkClient.CODE_SUCCESS) {
-                vacancyDao.updateVacancy(
+                dao.updateVacancy(
                     VacancyEntityMapper.map(
                         VacancyDetailsDtoMapper.map((response as VacancyDetailsSearchResponse).dto)
                     )
@@ -54,4 +61,9 @@ class GetByIdVacancyDetailsRepoImpl(
             }
         }
     }.flowOn(Dispatchers.IO)
+
+    override suspend fun save(data: VacancyDetails) {
+        dao.saveVacancy(VacancyEntityMapper.map(data))
+    }
+
 }

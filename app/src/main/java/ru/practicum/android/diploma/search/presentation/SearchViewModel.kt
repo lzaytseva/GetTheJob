@@ -69,6 +69,7 @@ class SearchViewModel @Inject constructor(
                 searchRepository.search(lastSearchedText, currentPage)
                     .singleOrNull()
                     ?.processResult()
+
             }
         }
     }
