@@ -327,11 +327,13 @@
         android:visibility="gone">
 
         <ImageView
+            android:id="@+id/error_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/ph_server_error_vacancy" />
 
         <TextView
+            android:id="@+id/error_message"
             style="@style/medium_text_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

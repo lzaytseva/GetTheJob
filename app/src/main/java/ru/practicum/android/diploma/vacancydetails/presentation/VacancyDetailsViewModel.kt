@@ -44,7 +44,7 @@ class VacancyDetailsViewModel @Inject constructor(
                 if (response is Resource.Success) {
                     _vacancyDetailsScreenState.postValue(response.data?.let { VacancyDetailsScreenState.Content(it) })
                 } else {
-                    _vacancyDetailsScreenState.postValue(VacancyDetailsScreenState.Error)
+                    _vacancyDetailsScreenState.postValue(VacancyDetailsScreenState.Error(response?.errorType))
                 }
             }
         }
