@@ -18,7 +18,9 @@ class ChoiceIndustryViewModel @Inject constructor(
     private val repository: GetDataRepo<Resource<List<Industry>>>
 ) : ViewModel() {
 
-    private val fullList = mutableListOf<Industry>()
+    private val originalList = mutableListOf<Industry>()
+    private val filteredList = mutableListOf<Industry>()
+
     private val _state = MutableLiveData<IndustryScreenState>()
     val state: LiveData<IndustryScreenState>
         get() = _state
@@ -40,8 +42,8 @@ class ChoiceIndustryViewModel @Inject constructor(
                         if (it.data.isNullOrEmpty()) {
                             _state.postValue(IndustryScreenState.Error(ErrorType.NO_CONTENT))
                         } else {
-                            fullList.addAll(it.data)
-                            _state.postValue(IndustryScreenState.Content(fullList))
+                            originalList.addAll(it.data)
+                            _state.postValue(IndustryScreenState.Content(originalList))
                         }
                     }
 
