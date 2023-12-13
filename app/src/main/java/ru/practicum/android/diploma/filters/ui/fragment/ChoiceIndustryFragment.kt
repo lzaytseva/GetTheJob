@@ -165,9 +165,7 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
     private fun hideKeyboard() {
         val keyboard =
             requireActivity().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
-        keyboard.hideSoftInputFromWindow(
-            binding.etSearchIndustry.windowToken, 0
-        )
+        keyboard.hideSoftInputFromWindow(binding.etSearchIndustry.windowToken, 0)
     }
 
     private fun setEditorActionListener() {
