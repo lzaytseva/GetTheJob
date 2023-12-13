@@ -50,13 +50,16 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
     override fun onResume() {
         super.onResume()
         configureToolbar()
-
     }
 
     override fun onPause() {
         super.onPause()
         toolbarIconsOnPause()
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        toolbar.menu.findItem(R.id.favorite).setIcon(R.drawable.ic_favorite)
     }
 
     private fun showContent(vacancyDetails: VacancyDetails) {
