@@ -85,6 +85,7 @@
         tools:visibility="gone" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_select"
         style="@style/btn_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
