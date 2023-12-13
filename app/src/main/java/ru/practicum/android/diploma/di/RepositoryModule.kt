@@ -38,7 +38,7 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideVacancyGetById(vacancyRepo: VacancyRepositoryDb): GetDataByIdRepo<Resource<VacancyDetails>> {
-        return  vacancyRepo
+        return vacancyRepo
     }
 
     @Provides
