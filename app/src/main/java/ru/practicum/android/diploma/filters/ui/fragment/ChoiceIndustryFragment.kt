@@ -25,7 +25,10 @@ import ru.practicum.android.diploma.util.ToolbarUtils
 class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() {
 
     private val viewModel: ChoiceIndustryViewModel by viewModels()
-    private val adapter = IndustryAdapter()
+    private val adapter = IndustryAdapter { industry, position ->
+        onIndustryClicked(industry, position)
+    }
+    private var lastSelectedIndustry: Industry? = null
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentChoiceIndustryBinding =
         FragmentChoiceIndustryBinding.inflate(inflater, container, false)
@@ -148,6 +151,26 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
         binding.rvIndustries.adapter = adapter
         binding.rvIndustries.itemAnimator = null
     }
+
+    private fun onIndustryClicked(industry: Industry, position: Int) {
+        val newList = adapter.currentList.toMutableList()
+        if (industry.selected) {
+            newList[position] = industry.copy(selected = false)
+            lastSelectedIndustry = null
+        } else {
+            if (lastSelectedIndustry != null) {
+                val lastSelectedIndex = newList.indexOf(lastSelectedIndustry)
+                if (lastSelectedIndex != -1) {
+                    newList[lastSelectedIndex] = newList[lastSelectedIndex].copy(selected = false)
+                }
+            }
+            newList[position] = industry.copy(selected = true)
+            lastSelectedIndustry = industry.copy(selected = true)
+        }
+        adapter.submitList(newList)
+        binding.btnSelect.isGone = lastSelectedIndustry == null
+    }
+
 
     private fun configureToolbar() {
         ToolbarUtils.configureToolbar(
