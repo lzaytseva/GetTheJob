@@ -26,6 +26,7 @@ class SearchViewModel @Inject constructor(
 ) : ViewModel() {
     private var pages = 0
     private var currentPage = 0
+    private var found = 0
     private val vacancies = mutableListOf<VacancyInList>()
     private var isNextPageLoading = false
 
@@ -83,6 +84,7 @@ class SearchViewModel @Inject constructor(
         if (data != null) {
             vacancies.addAll(data.vacancies)
             pages = data.pages
+            found = data.found
         }
 
         when {
@@ -94,7 +96,13 @@ class SearchViewModel @Inject constructor(
 
             vacancies.isEmpty() -> _screenState.postValue(Error(ErrorType.NO_CONTENT))
 
-            else -> _screenState.postValue(Content(vacancies, getResultMessage(data?.found?.toString() ?: "0")))
+            else -> _screenState.postValue(Content(vacancies, getResultMessage(found.toString())))
+        }
+    }
+
+    fun switchState() {
+        if (screenState.value is LoadingNextPageError) {
+            _screenState.postValue(Content(vacancies, getResultMessage(found.toString())))
         }
     }
 
