@@ -170,48 +170,33 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
     private fun showContactInfo(vacancyDetails: VacancyDetails) {
         with(binding) {
             if (vacancyDetails.contactEmail.isNullOrBlank() && vacancyDetails.phones?.get(0).isNullOrBlank()) {
-                contacts.visibility = View.GONE
-                contactPerson.visibility = View.GONE
-                contactPersonName.visibility = View.GONE
-                contactPersonEmailTitle.visibility = View.GONE
-                contactPersonEmail.visibility = View.GONE
-                contactPersonPhoneTitle.visibility = View.GONE
-                contactPersonPhone.visibility = View.GONE
-                contactPersonCommentTitle.visibility = View.GONE
-                contactPersonComment.visibility = View.GONE
+                contactsBlock.visibility = View.GONE
             } else {
                 contacts.visibility = View.VISIBLE
-                contactPerson.visibility = View.VISIBLE
-                contactPersonName.visibility = View.VISIBLE
+                contactPersonGroup.visibility = View.VISIBLE
                 contactPersonName.text = vacancyDetails.contactName
             }
             if (!vacancyDetails.contactEmail.isNullOrEmpty()) {
-                contactPersonEmailTitle.visibility = View.VISIBLE
-                contactPersonEmail.visibility = View.VISIBLE
+                contactPersonEmailGroup.visibility = View.VISIBLE
                 contactPersonEmail.text = vacancyDetails.contactEmail
                 contactPersonEmail.setOnClickListener { viewModel.sendEmail() }
             } else {
-                contactPersonEmailTitle.visibility = View.GONE
-                contactPersonEmail.visibility = View.GONE
+                contactPersonEmailGroup.visibility = View.GONE
             }
             if (!vacancyDetails.phones.isNullOrEmpty() && vacancyDetails.phones[0].isNotBlank()) {
-                contactPersonPhoneTitle.visibility = View.VISIBLE
-                contactPersonPhone.visibility = View.VISIBLE
-                contactPersonPhone.text = vacancyDetails.phones?.get(0)
+                contactPersonPhoneGroup.visibility = View.VISIBLE
+                contactPersonPhone.text = vacancyDetails.phones[0]
                 contactPersonPhone.setOnClickListener {
                     viewModel.makePhoneCall()
                 }
             } else {
-                contactPersonPhoneTitle.visibility = View.GONE
-                contactPersonPhone.visibility = View.GONE
+                contactPersonPhoneGroup.visibility = View.GONE
             }
             if (!vacancyDetails.contactComment.isNullOrBlank()) {
-                contactPersonCommentTitle.visibility = View.VISIBLE
-                contactPersonComment.visibility = View.VISIBLE
+                contactPersonCommentGroup.visibility = View.VISIBLE
                 contactPersonComment.text = vacancyDetails.contactComment
             } else {
-                contactPersonCommentTitle.visibility = View.GONE
-                contactPersonComment.visibility = View.GONE
+                contactPersonCommentGroup.visibility = View.GONE
             }
         }
     }

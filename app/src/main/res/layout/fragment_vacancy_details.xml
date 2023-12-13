@@ -161,7 +161,7 @@
                 app:layout_constraintEnd_toEndOf="@id/guideline_end"
                 app:layout_constraintStart_toEndOf="@id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@id/description_title"
-                tools:text="@string/mock_description" />
+                tools:text="Работать" />
 
             <TextView
                 android:id="@+id/key_skills_title"
@@ -183,7 +183,14 @@
                 app:layout_constraintEnd_toEndOf="@id/guideline_end"
                 app:layout_constraintStart_toEndOf="@id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@id/key_skills_title"
-                tools:text="@string/vacancy_key_skills_mock" />
+                tools:text="Не быть ленивым" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/contacts_block"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="contacts, contact_person_comment_group,
+                contact_person_email_group, contact_person_phone_group, contact_person_group" />
 
             <TextView
                 android:id="@+id/contacts"
@@ -196,6 +203,11 @@
                 app:layout_constraintStart_toEndOf="@id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@id/key_skills" />
 
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/contact_person_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="contact_person, contact_person_name" />
 
             <TextView
                 android:id="@+id/contact_person"
@@ -218,6 +230,12 @@
                 app:layout_constraintStart_toEndOf="@id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@id/contact_person"
                 tools:text="Ирина" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/contact_person_email_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="contact_person_email_title, contact_person_email" />
 
             <TextView
                 android:id="@+id/contact_person_email_title"
@@ -244,6 +262,12 @@
                 app:layout_constraintTop_toBottomOf="@id/contact_person_email_title"
                 tools:text="i.lozgkina@yandex.ru" />
 
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/contact_person_phone_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="contact_person_phone_title, contact_person_phone" />
+
             <TextView
                 android:id="@+id/contact_person_phone_title"
                 style="@style/bold_regular_text_style"
@@ -268,6 +292,12 @@
                 app:layout_constraintStart_toEndOf="@id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@id/contact_person_phone_title"
                 tools:text="+7 (904) 329-27-71" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/contact_person_comment_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="contact_person_comment_title, contact_person_comment" />
 
             <TextView
                 android:id="@+id/contact_person_comment_title"
