@@ -11,6 +11,7 @@ import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.filters.domain.model.Industry
 import ru.practicum.android.diploma.filters.domain.model.IndustryScreenState
 import ru.practicum.android.diploma.util.Resource
+import ru.practicum.android.diploma.util.debounce
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,6 +22,12 @@ class ChoiceIndustryViewModel @Inject constructor(
     private val originalList = mutableListOf<Industry>()
     private val filteredList = mutableListOf<Industry>()
 
+    private val searchDebounce: (String) -> Unit =
+        debounce(SEARCH_DELAY_IN_MILLIS, viewModelScope, true) { searchText ->
+            searchRequest(searchText)
+        }
+    private var lastSearchedText: String? = null
+
     private val _state = MutableLiveData<IndustryScreenState>()
     val state: LiveData<IndustryScreenState>
         get() = _state
@@ -29,27 +36,57 @@ class ChoiceIndustryViewModel @Inject constructor(
         getIndustries()
     }
 
-    private fun getIndustries() {
+    fun getIndustries() {
         viewModelScope.launch {
-            _state.postValue(IndustryScreenState.Loading)
-            repository.get().collect {
-                when (it) {
-                    is Resource.Error -> {
-                        _state.postValue(IndustryScreenState.Error(it.errorType!!))
-                    }
-
-                    is Resource.Success -> {
-                        if (it.data.isNullOrEmpty()) {
-                            _state.postValue(IndustryScreenState.Error(ErrorType.NO_CONTENT))
-                        } else {
-                            originalList.addAll(it.data)
-                            _state.postValue(IndustryScreenState.Content(originalList))
+            if (originalList.isEmpty()) {
+                _state.postValue(IndustryScreenState.Loading)
+                repository.get().collect {
+                    when (it) {
+                        is Resource.Error -> {
+                            _state.postValue(IndustryScreenState.Error(it.errorType!!))
                         }
-                    }
 
-                    null -> {}
+                        is Resource.Success -> {
+                            if (it.data.isNullOrEmpty()) {
+                                _state.postValue(IndustryScreenState.Error(ErrorType.NO_CONTENT))
+                            } else {
+                                originalList.addAll(it.data)
+                                _state.postValue(IndustryScreenState.Content(originalList))
+                            }
+                        }
+
+                        null -> {}
+                    }
                 }
+            } else {
+                _state.postValue(IndustryScreenState.Content(originalList))
             }
         }
+    }
+
+    fun search(searchText: String) {
+        if (searchText != lastSearchedText) {
+            searchDebounce(searchText)
+            lastSearchedText = searchText
+        }
+    }
+
+    private fun searchRequest(searchText: String) {
+        _state.postValue(IndustryScreenState.Loading)
+        filteredList.clear()
+        originalList.forEach { industry ->
+            if (industry.name.contains(searchText, true)) {
+                filteredList.add(industry)
+            }
+        }
+        if (filteredList.isEmpty()) {
+            _state.postValue(IndustryScreenState.Error(ErrorType.NO_CONTENT))
+        } else {
+            _state.postValue(IndustryScreenState.Content(filteredList))
+        }
+    }
+
+    companion object {
+        private const val SEARCH_DELAY_IN_MILLIS = 2000L
     }
 }

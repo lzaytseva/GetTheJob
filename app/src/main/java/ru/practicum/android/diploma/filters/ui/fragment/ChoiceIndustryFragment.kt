@@ -4,12 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.domain.models.ErrorType
@@ -39,6 +43,7 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
         observeViewModel()
 
         setIndustrySearchTextWatcher()
+        setEditorActionListener()
         initRecyclerView()
         configureToolbar()
     }
@@ -127,18 +132,52 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
     private fun setIndustrySearchTextWatcher() {
         binding.etSearchIndustry.doOnTextChanged { text, _, _, _ ->
             if (!text.isNullOrBlank()) {
-                binding.tilSearchIndustry.endIconDrawable =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_clear)
-                binding.tilSearchIndustry.setEndIconOnClickListener {
-                    binding.etSearchIndustry.text?.clear()
-                }
+                search(text.toString())
+                setEndIconClear()
+
             } else {
-                binding.tilSearchIndustry.endIconDrawable =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_search)
-                binding.tilSearchIndustry.setEndIconOnClickListener {
-                    // Поиск
-                }
+                setEndIconSearch()
+                viewModel.getIndustries()
             }
+        }
+    }
+
+    private fun search(text: String) {
+        viewModel.search(text)
+    }
+
+    private fun setEndIconClear() {
+        binding.tilSearchIndustry.endIconDrawable =
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_clear)
+        binding.tilSearchIndustry.setEndIconOnClickListener {
+            binding.etSearchIndustry.text?.clear()
+            lastSelectedIndustry = null
+            binding.btnSelect.isGone = true
+            hideKeyboard()
+        }
+    }
+
+    private fun setEndIconSearch() {
+        binding.tilSearchIndustry.endIconDrawable =
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_search)
+    }
+
+    private fun hideKeyboard() {
+        val keyboard =
+            requireActivity().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+        keyboard.hideSoftInputFromWindow(
+            binding.etSearchIndustry.windowToken, 0
+        )
+    }
+
+    private fun setEditorActionListener() {
+        binding.etSearchIndustry.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                search(binding.etSearchIndustry.text.toString())
+                binding.etSearchIndustry.clearFocus()
+                true
+            }
+            false
         }
     }
 
@@ -148,8 +187,15 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
             LinearLayoutManager.VERTICAL,
             false
         )
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                super.onItemRangeInserted(positionStart, itemCount)
+                binding.rvIndustries.scrollToPosition(0)
+            }
+        })
         binding.rvIndustries.adapter = adapter
         binding.rvIndustries.itemAnimator = null
+
     }
 
     private fun onIndustryClicked(industry: Industry, position: Int) {
