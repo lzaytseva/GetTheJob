@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -49,25 +50,75 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
         when (state) {
             is IndustryScreenState.Content -> showContent(state.industries)
             is IndustryScreenState.Error -> showError(state.error)
-            is IndustryScreenState.Empty -> showEmpty()
             is IndustryScreenState.Loading -> showLoading()
         }
     }
 
     private fun showContent(industries: List<Industry>) {
+        hideFields(
+            hideProgressBar = true,
+            hideRecyclerView = false,
+            hideErrorView = true
+        )
         adapter.submitList(industries)
     }
 
     private fun showError(error: ErrorType) {
-        TODO("Not implemented yet")
+        hideFields(
+            hideProgressBar = true,
+            hideRecyclerView = true,
+            hideErrorView = false
+        )
+        when (error) {
+            ErrorType.NO_INTERNET -> {
+                setErrorPlaceholders(
+                    imageResId = R.drawable.ph_no_internet,
+                    messageResId = R.string.error_no_internet
+                )
+            }
+
+            ErrorType.SERVER_ERROR -> {
+                setErrorPlaceholders(
+                    imageResId = R.drawable.ph_server_error_search,
+                    messageResId = R.string.error_server
+                )
+            }
+
+            ErrorType.NO_CONTENT -> {
+                setErrorPlaceholders(
+                    imageResId = R.drawable.ph_nothing_found,
+                    messageResId = R.string.error_no_such_industry
+                )
+            }
+        }
     }
 
-    private fun showEmpty() {
-        TODO("Not implemented yet")
+    private fun setErrorPlaceholders(imageResId: Int, messageResId: Int) {
+        with(binding) {
+            ivPlaceholderImage.setImageResource(imageResId)
+            tvErrorMessage.setText(messageResId)
+        }
     }
 
     private fun showLoading() {
-        TODO("Not implemented yet")
+        hideFields(
+            hideProgressBar = false,
+            hideRecyclerView = true,
+            hideErrorView = true
+        )
+    }
+
+    private fun hideFields(
+        hideProgressBar: Boolean,
+        hideRecyclerView: Boolean,
+        hideErrorView: Boolean
+    ) {
+        with(binding) {
+            rvIndustries.isGone = hideRecyclerView
+            progressBar.isGone = hideProgressBar
+            tvErrorMessage.isGone = hideErrorView
+            ivPlaceholderImage.isGone = hideErrorView
+        }
     }
 
     private fun setIndustrySearchTextWatcher() {

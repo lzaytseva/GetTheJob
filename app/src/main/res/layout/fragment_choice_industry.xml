@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,6 +10,41 @@
     android:paddingTop="@dimen/root_layout_padding"
     tools:context=".filters.ui.fragment.ChoiceIndustryFragment">
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/blue"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_search_industry" />
+
+    <ImageView
+        android:id="@+id/iv_placeholder_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/tv_error_message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_search_industry"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:src="@drawable/ph_no_internet" />
+
+    <TextView
+        android:id="@+id/tv_error_message"
+        style="@style/medium_text_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/elements_margin_16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_placeholder_image"
+        tools:text="Нет интернета" />
+
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_search_industry"
         style="@style/salary_til_style"
@@ -19,7 +54,10 @@
         app:endIconDrawable="@drawable/ic_search"
         app:endIconMode="custom"
         app:expandedHintEnabled="false"
-        app:hintEnabled="false">
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_search_industry"
@@ -39,20 +77,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/elements_margin_16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_search_industry"
         tools:itemCount="5"
-        tools:listitem="@layout/item_industry" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        tools:listitem="@layout/item_industry"
+        tools:visibility="gone" />
 
     <androidx.appcompat.widget.AppCompatButton
         style="@style/btn_style"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/btn_select"
         android:layout_marginTop="@dimen/elements_margin_16dp"
-        android:layout_marginBottom="@dimen/elements_margin_24dp" />
-</LinearLayout>
+        android:layout_marginBottom="@dimen/elements_margin_24dp"
+        android:text="@string/btn_select"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

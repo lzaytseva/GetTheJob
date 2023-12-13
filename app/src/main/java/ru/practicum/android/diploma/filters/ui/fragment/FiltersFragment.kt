@@ -46,6 +46,8 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
 
     private fun setBtnDiscardClickListener() {
         binding.btnDiscardChanges.setOnClickListener {
+            // Вот эти два метода вероятно не понадобятся, если будет подписка на обновления SP и будут
+            // устанавливаться пустые строки, тогда сработают TextWatchers
             clearFields()
             setButtonsVisibility(isVisible = false)
             // И удалить настрйоки из sp
