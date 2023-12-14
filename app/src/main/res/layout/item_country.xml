@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/country_horizontal_margin"
+    android:paddingVertical="@dimen/country_vertical_padding"
+    android:backgroundTint="@color/screen_bg">
+
+    <TextView
+        android:id="@+id/country_name"
+        style="@style/regular_text_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_gravity="start"
+        tools:text="Russia" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:backgroundTint="@color/screen_bg"
+        android:src="@drawable/ic_arrow_forward" />
+
+
+</FrameLayout>
