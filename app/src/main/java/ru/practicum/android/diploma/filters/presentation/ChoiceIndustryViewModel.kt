@@ -20,7 +20,6 @@ class ChoiceIndustryViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val originalList = mutableListOf<Industry>()
-    private val filteredList = mutableListOf<Industry>()
 
     private val searchDebounce: (String) -> Unit =
         debounce(SEARCH_DELAY_IN_MILLIS, viewModelScope, true) { searchText ->
@@ -73,7 +72,7 @@ class ChoiceIndustryViewModel @Inject constructor(
 
     private fun searchRequest(searchText: String) {
         _state.postValue(IndustryScreenState.Loading)
-        filteredList.clear()
+        val filteredList = mutableListOf<Industry>()
         originalList.forEach { industry ->
             if (industry.name.contains(searchText, true)) {
                 filteredList.add(industry)
