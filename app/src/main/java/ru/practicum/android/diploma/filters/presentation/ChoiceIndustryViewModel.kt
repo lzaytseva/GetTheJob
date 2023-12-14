@@ -31,16 +31,12 @@ class ChoiceIndustryViewModel @Inject constructor(
     val state: LiveData<IndustryScreenState>
         get() = _state
 
-    init {
-        getIndustries()
-    }
-
     fun getIndustries() {
+        if (originalList.isNotEmpty()) {
+            _state.postValue(IndustryScreenState.Content(originalList))
+            return
+        }
         viewModelScope.launch {
-            if (originalList.isNotEmpty()) {
-                _state.postValue(IndustryScreenState.Content(originalList))
-                return@launch
-            }
             _state.postValue(IndustryScreenState.Loading)
             repository.get().collect {
                 when (it) {
