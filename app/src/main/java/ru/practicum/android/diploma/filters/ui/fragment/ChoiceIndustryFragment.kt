@@ -48,6 +48,14 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
         configureToolbar()
     }
 
+    override fun onResume() {
+        super.onResume()
+        val searchText = binding.etSearchIndustry.text
+        if (searchText.isNullOrBlank()) {
+            viewModel.getIndustries()
+        }
+    }
+
     private fun observeViewModel() {
         viewModel.state.observe(viewLifecycleOwner) {
             renderState(it)
