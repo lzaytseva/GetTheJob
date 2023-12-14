@@ -139,7 +139,7 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
 
     private fun setIndustrySearchTextWatcher() {
         binding.etSearchIndustry.doOnTextChanged { text, _, _, _ ->
-            if (!text.isNullOrBlank()) {
+            if (text != null) {
                 search(text.toString())
                 setEndIconClear()
 
@@ -179,7 +179,10 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
     private fun setEditorActionListener() {
         binding.etSearchIndustry.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                search(binding.etSearchIndustry.text.toString())
+                val text = binding.etSearchIndustry.text
+                if (text != null) {
+                    search(text.toString())
+                }
                 binding.etSearchIndustry.clearFocus()
                 true
             }
@@ -201,7 +204,6 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
         })
         binding.rvIndustries.adapter = adapter
         binding.rvIndustries.itemAnimator = null
-
     }
 
     private fun onIndustryClicked(industry: Industry, position: Int) {

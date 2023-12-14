@@ -37,31 +37,32 @@ class ChoiceIndustryViewModel @Inject constructor(
 
     fun getIndustries() {
         viewModelScope.launch {
-            if (originalList.isEmpty()) {
-                _state.postValue(IndustryScreenState.Loading)
-                repository.get().collect {
-                    when (it) {
-                        is Resource.Error -> {
-                            _state.postValue(IndustryScreenState.Error(it.errorType!!))
-                        }
-
-                        is Resource.Success -> {
-                            if (it.data.isNullOrEmpty()) {
-                                _state.postValue(IndustryScreenState.Error(ErrorType.NO_CONTENT))
-                            } else {
-                                originalList.addAll(it.data)
-                                _state.postValue(IndustryScreenState.Content(originalList))
-                            }
-                        }
-
-                        null -> {}
-                    }
-                }
-            } else {
+            if (originalList.isNotEmpty()) {
                 _state.postValue(IndustryScreenState.Content(originalList))
+                return@launch
+            }
+            _state.postValue(IndustryScreenState.Loading)
+            repository.get().collect {
+                when (it) {
+                    is Resource.Error -> {
+                        _state.postValue(IndustryScreenState.Error(it.errorType!!))
+                    }
+
+                    is Resource.Success -> {
+                        if (it.data.isNullOrEmpty()) {
+                            _state.postValue(IndustryScreenState.Error(ErrorType.NO_CONTENT))
+                        } else {
+                            originalList.addAll(it.data)
+                            _state.postValue(IndustryScreenState.Content(originalList))
+                        }
+                    }
+
+                    null -> {}
+                }
             }
         }
     }
+
 
     fun search(searchText: String) {
         if (searchText != lastSearchedText) {
@@ -71,6 +72,10 @@ class ChoiceIndustryViewModel @Inject constructor(
     }
 
     private fun searchRequest(searchText: String) {
+        if (searchText.isEmpty()) {
+            getIndustries()
+            return
+        }
         _state.postValue(IndustryScreenState.Loading)
         val filteredList = mutableListOf<Industry>()
         originalList.forEach { industry ->
