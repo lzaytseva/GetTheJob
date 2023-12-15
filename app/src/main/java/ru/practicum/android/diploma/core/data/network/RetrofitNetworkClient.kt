@@ -98,7 +98,7 @@ class RetrofitNetworkClient(
         }
     }
 
-    private suspend fun getCountries() : Response {
+    private suspend fun getCountries(): Response {
         return try {
             val response = hhService.getCountries()
             if (response.body() != null) {
