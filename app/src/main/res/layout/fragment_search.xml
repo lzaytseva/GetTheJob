@@ -1,9 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/screen_bg"
     tools:context=".search.ui.SearchFragment">
 
+    <!-- Поле поиска -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/search_field"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/search_medium_padding"
+        android:layout_marginTop="@dimen/search_small_padding"
+        android:background="@drawable/edit_text_bg"
+        android:paddingVertical="@dimen/search_tiny_padding"
+        android:paddingStart="@dimen/search_medium_padding"
+        android:paddingEnd="@dimen/search_tiny_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/search_edit_text"
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/zero"
+            android:background="@android:color/transparent"
+            android:ellipsize="end"
+            android:hint="@string/et_search_hint"
+            android:maxLength="40"
+            android:maxLines="1"
+            android:inputType="text"
+            android:textAppearance="@style/et_text_style"
+            android:textColorHint="@color/et_hint_text_color"
+            android:textColor="@color/basic_text_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/search_field_image_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/search_field_image_view"
+            android:layout_width="48dp"
+            android:layout_height="@dimen/zero"
+            android:scaleType="center"
+            android:src="@drawable/ic_search"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="h, 1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/search_edit_text"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Список результатов-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/results_list_recycler_view"
+        android:layout_width="@dimen/zero"
+        android:layout_height="@dimen/zero"
+        android:layout_marginTop="@dimen/search_small_padding"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/progress_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_field" />
+
+    <!-- Сообщение о результате -->
+    <TextView
+        android:id="@+id/result_message_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/search_small_padding"
+        android:background="@drawable/btn_bg"
+        android:ellipsize="end"
+        android:maxLength="40"
+        android:maxLines="1"
+        android:paddingHorizontal="@dimen/search_field_corner_radius"
+        android:paddingVertical="@dimen/search_tiny_padding"
+        android:textAppearance="@style/et_text_style"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_field"
+        tools:text="@string/tv_no_vacancies" />
+
+    <!-- Изображение -->
+    <ImageView
+        android:id="@+id/search_image_view"
+        android:layout_width="@dimen/zero"
+        android:layout_height="223dp"
+        android:layout_marginHorizontal="@dimen/search_medium_padding"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ph_start_search"
+        app:layout_constraintBottom_toTopOf="@id/on_error_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_field"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <!-- Сообщение об ошибке -->
+    <TextView
+        android:id="@+id/on_error_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/search_medium_padding"
+        android:textAppearance="@style/medium_text_style"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_image_view"
+        tools:text="@string/error_no_internet" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/blue"
+        android:layout_marginVertical="@dimen/elements_margin_24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/results_list_recycler_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>

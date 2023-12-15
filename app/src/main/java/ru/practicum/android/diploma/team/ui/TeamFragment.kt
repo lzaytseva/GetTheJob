@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import ru.practicum.android.diploma.R
+import ru.practicum.android.diploma.core.ui.RootActivity
 import ru.practicum.android.diploma.databinding.FragmentTeamBinding
 import ru.practicum.android.diploma.team.presentation.TeamViewModel
 import ru.practicum.android.diploma.util.BindingFragment
 import ru.practicum.android.diploma.util.FeedbackUtils
+import ru.practicum.android.diploma.util.ToolbarUtils.hideMenu
 
 @AndroidEntryPoint
 class TeamFragment : BindingFragment<FragmentTeamBinding>() {
@@ -21,6 +24,7 @@ class TeamFragment : BindingFragment<FragmentTeamBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        configureToolbar()
 
         viewModel.showError.observe(viewLifecycleOwner) {
             FeedbackUtils.showSnackbar(root = requireView(), text = it)
@@ -41,5 +45,12 @@ class TeamFragment : BindingFragment<FragmentTeamBinding>() {
         binding.developer4.setOnClickListener {
             viewModel.contactWithDeveloper(TeamViewModel.Developers.DEV4)
         }
+    }
+
+    private fun configureToolbar() {
+        val toolbar = (requireActivity() as RootActivity).toolbar
+        toolbar.title = getString(R.string.team)
+        toolbar.hideMenu()
+        toolbar.navigationIcon = null
     }
 }

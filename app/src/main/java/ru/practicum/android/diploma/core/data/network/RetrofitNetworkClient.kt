@@ -1,7 +1,16 @@
 package ru.practicum.android.diploma.core.data.network
 
 import android.content.Context
-import ru.practicum.android.diploma.core.data.dto.Response
+import android.util.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import retrofit2.HttpException
+import ru.practicum.android.diploma.core.data.dto.requests.SimilarVacanciesSearchRequest
+import ru.practicum.android.diploma.core.data.dto.requests.VacanciesSearchRequest
+import ru.practicum.android.diploma.core.data.dto.requests.VacancyDetailsSearchRequest
+import ru.practicum.android.diploma.core.data.dto.responses.Response
+import ru.practicum.android.diploma.core.data.dto.responses.VacancyDetailsSearchResponse
+import ru.practicum.android.diploma.search.util.toQueryMap
 import ru.practicum.android.diploma.util.ConnectionChecker
 
 class RetrofitNetworkClient(
@@ -9,14 +18,69 @@ class RetrofitNetworkClient(
     private val hhService: HhApiService
 ) : NetworkClient {
 
-    override fun doRequest(request: Any): Response {
+    override suspend fun doRequest(request: Any): Response {
         if (!ConnectionChecker.isConnected(context)) {
-            return Response().apply { resultCode = RC_NO_INTERNET }
+            return Response().apply { resultCode = CODE_NO_INTERNET }
         }
-        return Response()
+
+        return withContext(Dispatchers.IO) {
+            when (request) {
+                is VacancyDetailsSearchRequest -> getVacancyDetailsById(request.id)
+                is VacanciesSearchRequest -> getVacanciesList(request.toQueryMap())
+                is SimilarVacanciesSearchRequest -> getSimilarVacanciesById(request.id)
+                else -> Response().apply { resultCode = CODE_WRONG_REQUEST }
+            }
+        }
+    }
+
+    private suspend fun getVacancyDetailsById(id: String): Response {
+        return try {
+            val response = hhService.getVacancyDetailsById(id)
+            if (response.code() == CODE_SUCCESS && response.body() != null) {
+                VacancyDetailsSearchResponse(response.body()!!)
+                    .apply { resultCode = CODE_SUCCESS }
+            } else {
+                Response().apply { resultCode = CODE_SERVER_ERROR }
+            }
+        } catch (e: HttpException) {
+            Log.e(TAG, e.toString())
+            Response().apply { resultCode = CODE_SERVER_ERROR }
+        }
+    }
+
+    private suspend fun getVacanciesList(queryMap: Map<String, String>): Response = withContext(Dispatchers.IO) {
+        try {
+            with(hhService.getVacancies(queryMap)) {
+                if (code() == CODE_SUCCESS && body() != null) {
+                    body()!!.apply { resultCode = CODE_SUCCESS }
+                } else {
+                    Response().apply { resultCode = CODE_SERVER_ERROR }
+                }
+            }
+        } catch (_: Exception) {
+            Response().apply { resultCode = CODE_SERVER_ERROR }
+        }
+    }
+
+    private suspend fun getSimilarVacanciesById(id: String): Response {
+        return try {
+            val response = hhService.getSimilarVacanciesById(id)
+            if (response.code() == CODE_SUCCESS && response.body() != null) {
+                response.body()!!.apply { resultCode = CODE_SUCCESS }
+            } else {
+                Response().apply { resultCode = CODE_SERVER_ERROR }
+            }
+        } catch (e: HttpException) {
+            Log.e(TAG, e.toString())
+            Response().apply { resultCode = CODE_SERVER_ERROR }
+        }
     }
 
     companion object {
-        const val RC_NO_INTERNET = -1
+        const val CODE_NO_INTERNET = -1
+        const val CODE_SUCCESS = 200
+        const val CODE_WRONG_REQUEST = 400
+        const val CODE_SERVER_ERROR = 500
+        private const val TAG = "RetrofitNetworkClient"
     }
 }

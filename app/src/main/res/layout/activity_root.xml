@@ -4,7 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/screen_bg"
     tools:context=".core.ui.RootActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/screen_bg"
+        app:layout_constraintBottom_toTopOf="@id/root_fragment_container_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextAppearance="@style/medium_text_style"
+        tools:title="Get the job" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/root_fragment_container_view"
@@ -12,10 +25,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_view_line_above"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_view_line_above"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:navGraph="@navigation/root_navigation_graph" />
 
     <View
@@ -23,22 +36,22 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gray"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_view"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:itemTextAppearanceActive="@style/bottom_navigation_text"
-        app:itemTextAppearanceInactive="@style/bottom_navigation_text"
         app:itemBackground="@color/screen_bg"
         app:itemIconTint="@color/bottom_nav_view_color"
+        app:itemTextAppearanceActive="@style/bottom_navigation_text"
+        app:itemTextAppearanceInactive="@style/bottom_navigation_text"
         app:itemTextColor="@color/bottom_nav_view_color"
-        app:menu="@menu/bottom_navigation_menu"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_navigation_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
