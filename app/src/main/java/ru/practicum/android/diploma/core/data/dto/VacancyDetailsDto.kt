@@ -10,7 +10,8 @@ import ru.practicum.android.diploma.core.data.dto.innerdto.VacancyElementDto
 
 data class VacancyDetailsDto(
     val id: String,
-    @SerializedName("alternate_url") val url: String,
+    @SerializedName("alternate_url")
+    val url: String,
     val name: String,
     val area: VacancyElementDto,
     val salary: SalaryDto?,
@@ -20,6 +21,7 @@ data class VacancyDetailsDto(
     val address: AddressDto?,
     val employer: EmployerDto?,
     val employment: VacancyElementDto?,
-    @SerializedName("key_skills") val keySkills: List<SkillDto>?,
+    @SerializedName("key_skills")
+    val keySkills: List<SkillDto>?,
     val description: String
 )
