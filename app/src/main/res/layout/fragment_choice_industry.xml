@@ -25,6 +25,7 @@
         android:id="@+id/iv_placeholder_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/tv_error_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,6 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/elements_margin_16dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,13 +79,15 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/elements_margin_16dp"
+        android:clipToPadding="false"
+        android:paddingBottom="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_search_industry"
         tools:itemCount="5"
         tools:listitem="@layout/item_industry"
-        tools:visibility="gone" />
+        tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_select"
