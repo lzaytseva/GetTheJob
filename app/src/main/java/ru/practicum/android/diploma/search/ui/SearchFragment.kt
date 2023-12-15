@@ -67,25 +67,11 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
     private fun setObserver() {
         viewModel.screenState.observe(viewLifecycleOwner) { screenState ->
             when (screenState) {
-                is SearchScreenState.Loading -> {
-                    hideContent(progressBarFlag = false)
-                }
-
-                is SearchScreenState.Error -> {
-                    onError(screenState.error)
-                }
-
-                is SearchScreenState.Content -> {
-                    onContent(screenState.content, screenState.resultMessage)
-                }
-
-                is SearchScreenState.LoadingNextPage -> {
-                    binding.progressBar.isVisible = true
-                }
-
-                is SearchScreenState.LoadingNextPageError -> {
-                    onLoadingPageError(screenState.error)
-                }
+                is SearchScreenState.Loading -> hideContent(progressBarFlag = false)
+                is SearchScreenState.Error -> onError(screenState.error)
+                is SearchScreenState.Content -> onContent(screenState.content, screenState.resultMessage)
+                is SearchScreenState.LoadingNextPage -> binding.progressBar.isVisible = true
+                is SearchScreenState.LoadingNextPageError -> onLoadingPageError(screenState.error)
             }
         }
     }
