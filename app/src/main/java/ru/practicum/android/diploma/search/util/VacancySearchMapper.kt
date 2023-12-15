@@ -27,7 +27,7 @@ fun VacancySearchDto.toVacancyInList(): VacancyInList =
 
 fun VacanciesSearchRequest.toQueryMap(): Map<String, String> = buildMap {
     put(TEXT, text)
-    put(PER_PAGE, perPage)
+    put(PER_PAGE, perPage.toString())
     page?.also { put(PAGE, it.toString()) }
     salary?.also { put(SALARY, it) }
     regionId?.also { put(AREA, it) }
