@@ -43,8 +43,7 @@ class RetrofitNetworkClient(
         return try {
             val response = hhService.getVacancyDetailsById(id)
             if (response.code() == CODE_SUCCESS && response.body() != null) {
-                VacancyDetailsSearchResponse(response.body()!!)
-                    .apply { resultCode = CODE_SUCCESS }
+                VacancyDetailsSearchResponse(response.body()!!).apply { resultCode = CODE_SUCCESS }
             } else {
                 Response().apply { resultCode = CODE_SERVER_ERROR }
             }
@@ -72,9 +71,7 @@ class RetrofitNetworkClient(
         return try {
             val response = hhService.getIndustries()
             if (response.body() != null) {
-                IndustriesResponse(response.body()!!).apply {
-                    resultCode = CODE_SUCCESS
-                }
+                IndustriesResponse(response.body()!!).apply { resultCode = CODE_SUCCESS }
             } else {
                 Response().apply { resultCode = CODE_SERVER_ERROR }
             }
@@ -102,9 +99,7 @@ class RetrofitNetworkClient(
         return try {
             val response = hhService.getCountries()
             if (response.body() != null) {
-                CountriesResponse(response.body()!!).apply {
-                    resultCode = CODE_SUCCESS
-                }
+                CountriesResponse(response.body()!!).apply { resultCode = CODE_SUCCESS }
             } else {
                 Response().apply { resultCode = CODE_SERVER_ERROR }
             }
