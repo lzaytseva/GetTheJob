@@ -78,4 +78,5 @@ class RepositoryModule {
     fun provideSearchRepository(networkClient: NetworkClient): SearchRepo<SearchResult> {
         return SearchVacanciesRepository(networkClient)
     }
+
 }
