@@ -73,8 +73,7 @@ class VacancyDetailsViewModel @Inject constructor(
             val screenState = vacancyDetailsScreenState.value as VacancyDetailsScreenState.Content
             externalNavigator.sendEmail(
                 EmailData(
-                    emailAddress = screenState.vacancyDetails.contactEmail
-                        ?: "",
+                    emailAddress = screenState.vacancyDetails.contactEmail ?: "",
                     subject = screenState.vacancyDetails.name,
                     text = ""
                 )
