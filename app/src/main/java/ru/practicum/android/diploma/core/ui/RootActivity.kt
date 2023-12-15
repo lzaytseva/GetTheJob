@@ -15,7 +15,8 @@ class RootActivity : AppCompatActivity() {
 
     private val binding: ActivityRootBinding by lazy { ActivityRootBinding.inflate(layoutInflater) }
 
-    val toolbar: Toolbar get() = binding.toolbar
+    val toolbar: Toolbar
+        get() = binding.toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
