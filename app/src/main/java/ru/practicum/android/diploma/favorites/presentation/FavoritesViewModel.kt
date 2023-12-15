@@ -24,12 +24,10 @@ class FavoritesViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 favoritesVacancyListRepository.getFavoritesVacancyList().collect() { list ->
-                    if (list == null) {
-                        _screenState.postValue(FavoritesState.DbError)
-                    } else if (list.isEmpty()) {
-                        _screenState.postValue(FavoritesState.Empty)
-                    } else {
-                        _screenState.postValue(FavoritesState.Content(list))
+                    when {
+                        list == null -> _screenState.postValue(FavoritesState.DbError)
+                        list.isEmpty() -> _screenState.postValue(FavoritesState.Empty)
+                        else -> _screenState.postValue(FavoritesState.Content(list))
                     }
                 }
             } catch (e: SQLException) {
