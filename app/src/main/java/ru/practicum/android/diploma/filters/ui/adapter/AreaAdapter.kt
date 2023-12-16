@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import ru.practicum.android.diploma.databinding.ItemAreaBinding
 import ru.practicum.android.diploma.filters.domain.model.Area
 
+// класс для страны и для региона
 class AreaAdapter(
     private val onCountryClick: (Area) -> Unit
 ) : ListAdapter<Area, AreaViewHolder>(AreaDiffCallback) {
