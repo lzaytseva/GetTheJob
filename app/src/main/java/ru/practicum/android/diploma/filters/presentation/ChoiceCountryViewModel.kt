@@ -1,11 +1,14 @@
 package ru.practicum.android.diploma.filters.presentation
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
+import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
 import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.filters.domain.model.Country
@@ -15,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChoiceCountryViewModel @Inject constructor(
-    private val countryRepository: GetDataRepo<Resource<List<Country>>>
+    private val countryRepository: GetDataRepo<Resource<List<Country>>>,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     private val _screenState = MutableLiveData<ChoiceCountryScreenState>()
@@ -42,7 +46,8 @@ class ChoiceCountryViewModel @Inject constructor(
                     is Resource.Success -> {
                         if (!response.data.isNullOrEmpty()) {
                             allCountries.addAll(response.data)
-                            _screenState.postValue(ChoiceCountryScreenState.Content(response.data))
+                            val filteredCountries = filterDefaultCountries(response.data)
+                            _screenState.postValue(ChoiceCountryScreenState.Content(filteredCountries))
                         } else {
                             _screenState.postValue(ChoiceCountryScreenState.Error(ErrorType.NO_CONTENT))
                         }
@@ -60,6 +65,24 @@ class ChoiceCountryViewModel @Inject constructor(
             lastSearchedText = query
         }
     }
+
+    fun showAllCountries() {
+        _screenState.value = ChoiceCountryScreenState.Content(allCountries)
+    }
+
+    private fun filterDefaultCountries(countries: List<Country>): List<Country> {
+        val filteredCountries = mutableListOf<Country>()
+        countries.forEach { country ->
+            if (isCountryDefault(country)) {
+                filteredCountries.add(country)
+            }
+        }
+        filteredCountries.add(Country(id = "", name = context.resources.getString(R.string.other_regions)))
+        return filteredCountries
+    }
+
+    private fun isCountryDefault(country: Country): Boolean =
+        defaultCountries.contains(country.name)
 
     private fun filter(query: String) {
         val filtered = mutableListOf<Country>()
@@ -81,6 +104,16 @@ class ChoiceCountryViewModel @Inject constructor(
 
     companion object {
         private const val FILTER_DELAY_IN_MILLIS = 2000L
+        private val defaultCountries = setOf<String>(
+            "Россия",
+            "Украина",
+            "Беларусь",
+            "Казахстан",
+            "Азербайджан",
+            "Грузия",
+            "Кыргызстан",
+            "Узбекистан",
+        )
     }
 
 }

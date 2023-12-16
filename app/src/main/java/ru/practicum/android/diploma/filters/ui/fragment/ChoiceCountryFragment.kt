@@ -94,7 +94,15 @@ class ChoiceCountryFragment : BindingFragment<FragmentChoiceCountryBinding>() {
         binding.placeholder.visibility = View.GONE
         binding.progressBar.visibility = View.GONE
         binding.countries.visibility = View.VISIBLE
-        val adapter = CountryAdapter(onCountryClick = { })
+        val adapter = CountryAdapter(onCountryClick = { country ->
+            if (country.name == getString(R.string.other_regions)) {
+                viewModel.showAllCountries()
+            } else {
+                val action = ChoiceCountryFragmentDirections.actionChoiceCountryFragmentToChoiceWorkplaceFragment()
+                findNavController().navigate(action)
+            }
+
+        })
         binding.countries.adapter = adapter
         adapter.submitList(countries)
 
