@@ -1,7 +1,9 @@
 package ru.practicum.android.diploma.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -72,7 +74,20 @@ class DataModule {
         return RetrofitNetworkClient(context, hhService)
     }
 
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
+        return context.getSharedPreferences(GET_THE_JOB, Context.MODE_PRIVATE)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGson(): Gson {
+        return Gson()
+    }
+
     companion object {
         private const val HH_BASE_URL = "https://api.hh.ru/"
+        private const val GET_THE_JOB = "GetTheJobKey"
     }
 }
