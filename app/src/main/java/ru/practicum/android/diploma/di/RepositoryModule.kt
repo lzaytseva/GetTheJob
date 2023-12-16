@@ -21,7 +21,7 @@ import ru.practicum.android.diploma.favorites.data.FavoritesVacancyListRepositor
 import ru.practicum.android.diploma.favorites.domain.api.FavoritesVacancyListRepository
 import ru.practicum.android.diploma.filters.data.repository.CountriesRepositoryImpl
 import ru.practicum.android.diploma.filters.data.repository.IndustriesRepositoryImpl
-import ru.practicum.android.diploma.filters.domain.model.Country
+import ru.practicum.android.diploma.filters.domain.model.Area
 import ru.practicum.android.diploma.filters.domain.model.Industry
 import ru.practicum.android.diploma.search.data.repository.SearchVacanciesRepository
 import ru.practicum.android.diploma.search.domain.model.SearchResult
@@ -90,7 +90,7 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideCountryRepository(networkClient: NetworkClient): GetDataRepo<Resource<List<Country>>> {
+    fun provideCountryRepository(networkClient: NetworkClient): GetDataRepo<Resource<List<Area>>> {
         return CountriesRepositoryImpl(networkClient)
     }
 

@@ -47,7 +47,7 @@
     <dimen name="favorites_margin_160">160dp</dimen>
     <dimen name="favorites_margin_32">32dp</dimen>
 
-    <!--  country item  -->
+    <!--  area item  -->
     <dimen name="country_horizontal_margin">16dp</dimen>
     <dimen name="country_vertical_padding">16dp</dimen>
 

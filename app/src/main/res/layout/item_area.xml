@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/country_horizontal_margin"
-    android:paddingVertical="@dimen/country_vertical_padding"
-    android:backgroundTint="@color/screen_bg">
+    android:backgroundTint="@color/screen_bg"
+    android:paddingVertical="@dimen/country_vertical_padding">
 
     <TextView
-        android:id="@+id/country_name"
+        android:id="@+id/area_name"
         style="@style/regular_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
         android:layout_gravity="start"
+        android:layout_marginTop="6dp"
         tools:text="Russia" />
 
     <ImageButton
@@ -22,6 +22,5 @@
         android:layout_gravity="end"
         android:backgroundTint="@color/screen_bg"
         android:src="@drawable/ic_arrow_forward" />
-
 
 </FrameLayout>

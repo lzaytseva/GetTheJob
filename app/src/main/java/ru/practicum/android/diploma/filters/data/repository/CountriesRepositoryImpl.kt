@@ -9,13 +9,13 @@ import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.filters.data.dto.CountriesRequest
 import ru.practicum.android.diploma.filters.data.dto.CountriesResponse
 import ru.practicum.android.diploma.filters.data.mapper.CountryMapper
-import ru.practicum.android.diploma.filters.domain.model.Country
+import ru.practicum.android.diploma.filters.domain.model.Area
 import ru.practicum.android.diploma.util.Resource
 
 class CountriesRepositoryImpl(
     private val networkClient: NetworkClient
-) : GetDataRepo<Resource<List<Country>>> {
-    override fun get(): Flow<Resource<List<Country>>?> = flow {
+) : GetDataRepo<Resource<List<Area>>> {
+    override fun get(): Flow<Resource<List<Area>>?> = flow {
         val response = networkClient.doRequest(CountriesRequest)
 
         when (response.resultCode) {
