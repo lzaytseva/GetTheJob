@@ -14,7 +14,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.core.ui.RootActivity
 import ru.practicum.android.diploma.databinding.FragmentSimilarVacanciesBinding
-import ru.practicum.android.diploma.search.domain.model.VacancyInList
+import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.search.ui.adapter.VacanciesAdapter
 import ru.practicum.android.diploma.util.BindingFragment
 import ru.practicum.android.diploma.util.debounce
@@ -52,7 +52,7 @@ class SimilarVacanciesFragment : BindingFragment<FragmentSimilarVacanciesBinding
         configureToolbar()
     }
 
-    private fun showContent(vacancies: List<VacancyInList>) {
+    private fun showContent(vacancies: List<Vacancy>) {
         binding.progressBar.visibility = View.GONE
         binding.errorImage.visibility = View.GONE
         binding.errorMessage.visibility = View.GONE

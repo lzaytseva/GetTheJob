@@ -9,14 +9,14 @@ import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.VacancyCardBinding
-import ru.practicum.android.diploma.search.domain.model.VacancyInList
+import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.util.getSalaryDescription
 
 class VacanciesAdapter(
     private val onClick: (String) -> Unit
 ) : RecyclerView.Adapter<VacanciesAdapter.VacancyViewHolder>() {
 
-    private val vacanciesList: MutableList<VacancyInList> = ArrayList()
+    private val vacanciesList: MutableList<Vacancy> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VacancyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -32,7 +32,7 @@ class VacanciesAdapter(
         holder.bind(vacanciesList[position])
     }
 
-    fun setContent(newList: List<VacancyInList>) {
+    fun setContent(newList: List<Vacancy>) {
         val diffCallback = VacanciesDiffCallback(vacanciesList, newList)
         val diffVacancies = DiffUtil.calculateDiff(diffCallback)
         vacanciesList.clear()
@@ -42,7 +42,7 @@ class VacanciesAdapter(
 
     inner class VacancyViewHolder(private val binding: VacancyCardBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(vacancy: VacancyInList) {
+        fun bind(vacancy: Vacancy) {
             with(binding) {
                 setImage(vacancy.logo)
                 vacancyNameTextView.text = vacancy.name

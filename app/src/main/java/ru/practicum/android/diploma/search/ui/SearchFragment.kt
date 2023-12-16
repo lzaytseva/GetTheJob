@@ -20,7 +20,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.core.ui.RootActivity
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
-import ru.practicum.android.diploma.search.domain.model.VacancyInList
+import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.search.presentation.SearchScreenState
 import ru.practicum.android.diploma.search.presentation.SearchViewModel
 import ru.practicum.android.diploma.search.ui.adapter.VacanciesAdapter
@@ -120,8 +120,8 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
         binding.searchImageView.setImageResource(R.drawable.ph_start_search)
     }
 
-    private fun changeIcon(flag: Boolean) {
-        val image = if (flag) R.drawable.ic_clear else R.drawable.ic_search
+    private fun changeIcon(isIconClear: Boolean) {
+        val image = if (isIconClear) R.drawable.ic_clear else R.drawable.ic_search
         binding.searchFieldImageView.setImageResource(image)
     }
 
@@ -159,7 +159,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
         binding.onErrorTextView.setText(stringResId)
     }
 
-    private fun onContent(content: List<VacancyInList>, resultMessage: String) {
+    private fun onContent(content: List<Vacancy>, resultMessage: String) {
         val adapter = binding.resultsListRecyclerView.adapter as? VacanciesAdapter
         adapter?.setContent(content)
         binding.resultMessageTextView.text = resultMessage

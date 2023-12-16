@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.search.domain.model
 
 data class SearchResult(
-    val vacancies: List<VacancyInList>,
+    val vacancies: List<Vacancy>,
     val pages: Int,
     val found: Int
 )

@@ -8,14 +8,14 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.core.domain.api.GetDataByIdRepo
-import ru.practicum.android.diploma.search.domain.model.VacancyInList
+import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.util.Resource
 import javax.inject.Inject
 
 @HiltViewModel
 class SimilarVacanciesViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val similarVacanciesRepository: GetDataByIdRepo<Resource<List<VacancyInList>>>
+    private val similarVacanciesRepository: GetDataByIdRepo<Resource<List<Vacancy>>>
 ) : ViewModel() {
 
     private val _similarVacanciesScreenState = MutableLiveData<SimilarVacanciesScreenState>()
