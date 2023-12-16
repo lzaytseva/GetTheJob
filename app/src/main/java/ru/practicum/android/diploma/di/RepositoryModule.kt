@@ -25,7 +25,7 @@ import ru.practicum.android.diploma.filters.domain.model.Country
 import ru.practicum.android.diploma.filters.domain.model.Industry
 import ru.practicum.android.diploma.search.data.repository.SearchVacanciesRepository
 import ru.practicum.android.diploma.search.domain.model.SearchResult
-import ru.practicum.android.diploma.search.domain.model.VacancyInList
+import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.util.Resource
 import ru.practicum.android.diploma.vacancydetails.data.SimilarVacanciesRepoImpl
 import ru.practicum.android.diploma.vacancydetails.data.VacancyRepositoryDb
@@ -63,7 +63,7 @@ class RepositoryModule {
     @Singleton
     fun provideSimilarVacanciesRepoImpl(
         networkClient: NetworkClient,
-    ): GetDataByIdRepo<Resource<List<VacancyInList>>> {
+    ): GetDataByIdRepo<Resource<List<Vacancy>>> {
         return SimilarVacanciesRepoImpl(networkClient)
     }
 

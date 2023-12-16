@@ -2,7 +2,7 @@ package ru.practicum.android.diploma.search.util
 
 import ru.practicum.android.diploma.core.data.dto.VacancySearchDto
 import ru.practicum.android.diploma.core.data.dto.requests.VacanciesSearchRequest
-import ru.practicum.android.diploma.search.domain.model.VacancyInList
+import ru.practicum.android.diploma.search.domain.model.Vacancy
 
 private const val TEXT = "text"
 private const val SALARY = "salary"
@@ -13,8 +13,8 @@ private const val CURRENCY = "currency"
 private const val PER_PAGE = "per_page"
 private const val PAGE = "page"
 
-fun VacancySearchDto.toVacancyInList(): VacancyInList =
-    VacancyInList(
+fun VacancySearchDto.toVacancyInList(): Vacancy =
+    Vacancy(
         id = id,
         name = name,
         salaryFrom = salaryDto?.from,
