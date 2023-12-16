@@ -83,9 +83,7 @@
     <string name="header_region">Выбор региона</string>
     <string name="hint_country">Страна</string>
     <string name="hint_region">Регион</string>
-
-    <!--  Фильтр страна  -->
-    <string name="country_hint">Введите наименование страны</string>
+    <string name="country_hint_search">Введите наименование страны</string>
 
 
 </resources>

@@ -39,9 +39,9 @@ class ChoiceCountryFragment : BindingFragment<FragmentChoiceCountryBinding>() {
 
         viewModel.screenState.observe(viewLifecycleOwner) { screenState ->
             when (screenState) {
-                is ChoiceCountryScreenState.Error -> showError(screenState.message)
                 is ChoiceCountryScreenState.Loading -> showLoading()
                 is ChoiceCountryScreenState.Content -> showContent(screenState.countries)
+                is ChoiceCountryScreenState.Error -> showError(screenState.message)
             }
         }
     }

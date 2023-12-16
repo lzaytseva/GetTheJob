@@ -16,7 +16,7 @@
         app:endIconMode="custom"
         app:expandedHintEnabled="false"
         app:hintEnabled="false"
-        android:hint="@string/country_hint"
+        android:hint="@string/country_hint_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/placeholder_image"
