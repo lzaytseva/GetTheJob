@@ -8,7 +8,10 @@ import ru.practicum.android.diploma.core.domain.api.GetDataRepo
 import ru.practicum.android.diploma.core.domain.api.SaveDataRepo
 import ru.practicum.android.diploma.core.domain.models.Filters
 
-class FiltersRepository(private val sharedPreferences: SharedPreferences, private val gson: Gson) : SaveDataRepo<Filters>, GetDataRepo<Filters> {
+class FiltersRepository(
+    private val sharedPreferences: SharedPreferences,
+    private val gson: Gson
+) : SaveDataRepo<Filters>, GetDataRepo<Filters> {
 
     override fun get(): Flow<Filters?> = flow {
         sharedPreferences.getString(FILTERS_KEY, null)?.let { filtersJson ->
