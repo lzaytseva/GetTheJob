@@ -105,61 +105,71 @@ class ChoiceIndustryViewModel @Inject constructor(
 
     fun updateIndustrySelected(industry: Industry, position: Int, currentList: List<Industry>? = null) {
         // Не смотрите ради христа в этот код, это высер моего сознания
-        val unselectedIndustry = industry.copy(selected = false)
-        val selectedIndustry = industry.copy(selected = true)
 
         // Если находимся на полном списке, а не результатх поиска
         if (currentList == null) {
-            // Если отрасль была выбрана, снимаем с нее выделение
-            if (industry.selected) {
-                originalList[position] = unselectedIndustry
-                lastSelectedIndustry = null
-                lastSelectedIndex = -1
-            } else {
-                // Если хотим выбрать тек. отрасль, то сначала снимаем выделение с последней выбранной
-                if (lastSelectedIndustry != null) {
-                    originalList[lastSelectedIndex] = lastSelectedIndustry!!.copy(selected = false)
-                }
-                // делаем новую выбранной и меняем последнюю выбранную
-                originalList[position] = selectedIndustry
-                lastSelectedIndustry = selectedIndustry
-                lastSelectedIndex = position
-            }
-            _state.postValue(
-                IndustryScreenState.Content(
-                    industries = originalList,
-                    applyBtnVisible = lastSelectedIndustry != null
-                )
-            )
+            updateOriginalList(industry, position)
             // Если выделяем отрасль на списке результатов отрасли
         } else {
-            val newList = currentList.toMutableList()
-
-            if (industry.selected) {
-                newList[position] = industry.copy(selected = false)
-                originalList[lastSelectedIndex] = lastSelectedIndustry!!.copy(selected = false)
-                lastSelectedIndustry = null
-                lastSelectedIndex = -1
-            } else {
-                if (lastSelectedIndustry != null) {
-                    val lastSelectedIndexCurrent = newList.indexOf(lastSelectedIndustry)
-                    if (lastSelectedIndexCurrent != -1) {
-                        newList[lastSelectedIndexCurrent] = newList[lastSelectedIndexCurrent].copy(selected = false)
-                    }
-                    originalList[lastSelectedIndex] = lastSelectedIndustry!!.copy(selected = false)
-                }
-                lastSelectedIndex = originalList.indexOf(industry)
-                lastSelectedIndustry = selectedIndustry
-                newList[position] = selectedIndustry
-                originalList[lastSelectedIndex] = lastSelectedIndustry!!
-            }
-            _state.postValue(
-                IndustryScreenState.Content(
-                    industries = newList,
-                    applyBtnVisible = lastSelectedIndustry != null
-                )
-            )
+            updateBothLists(industry, position, currentList)
         }
+    }
+
+    private fun updateOriginalList(industry: Industry, position: Int) {
+        val unselectedIndustry = industry.copy(selected = false)
+        val selectedIndustry = industry.copy(selected = true)
+
+        // Если отрасль была выбрана, снимаем с нее выделение
+        if (industry.selected) {
+            originalList[position] = unselectedIndustry
+            lastSelectedIndustry = null
+            lastSelectedIndex = -1
+        } else {
+            // Если хотим выбрать тек. отрасль, то сначала снимаем выделение с последней выбранной
+            if (lastSelectedIndustry != null) {
+                originalList[lastSelectedIndex] = lastSelectedIndustry!!.copy(selected = false)
+            }
+            // делаем новую выбранной и меняем последнюю выбранную
+            originalList[position] = selectedIndustry
+            lastSelectedIndustry = selectedIndustry
+            lastSelectedIndex = position
+        }
+        _state.postValue(
+            IndustryScreenState.Content(
+                industries = originalList,
+                applyBtnVisible = lastSelectedIndustry != null
+            )
+        )
+    }
+
+    private fun updateBothLists(industry: Industry, position: Int, currentList: List<Industry>) {
+        val selectedIndustry = industry.copy(selected = true)
+        val newList = currentList.toMutableList()
+
+        if (industry.selected) {
+            newList[position] = industry.copy(selected = false)
+            originalList[lastSelectedIndex] = lastSelectedIndustry!!.copy(selected = false)
+            lastSelectedIndustry = null
+            lastSelectedIndex = -1
+        } else {
+            if (lastSelectedIndustry != null) {
+                val lastSelectedIndexCurrent = newList.indexOf(lastSelectedIndustry)
+                if (lastSelectedIndexCurrent != -1) {
+                    newList[lastSelectedIndexCurrent] = newList[lastSelectedIndexCurrent].copy(selected = false)
+                }
+                originalList[lastSelectedIndex] = lastSelectedIndustry!!.copy(selected = false)
+            }
+            lastSelectedIndex = originalList.indexOf(industry)
+            lastSelectedIndustry = selectedIndustry
+            newList[position] = selectedIndustry
+            originalList[lastSelectedIndex] = lastSelectedIndustry!!
+        }
+        _state.postValue(
+            IndustryScreenState.Content(
+                industries = newList,
+                applyBtnVisible = lastSelectedIndustry != null
+            )
+        )
     }
 
     companion object {
