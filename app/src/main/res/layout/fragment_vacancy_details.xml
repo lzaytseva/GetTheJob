@@ -168,7 +168,6 @@
                 style="@style/medium_text_style"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
                 android:text="@string/vacancy_key_skills"
                 app:layout_constraintEnd_toEndOf="@id/guideline_end"
                 app:layout_constraintStart_toEndOf="@id/guideline_start"
