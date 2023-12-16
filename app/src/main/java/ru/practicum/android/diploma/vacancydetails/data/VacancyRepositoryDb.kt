@@ -62,8 +62,10 @@ class VacancyRepositoryDb(
         }
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun save(data: VacancyDetails) {
-        dao.saveVacancy(VacancyEntityMapper.map(data))
+    override suspend fun save(data: VacancyDetails?) {
+        data?.run {
+            dao.saveVacancy(VacancyEntityMapper.map(this))
+        }
     }
 
 }

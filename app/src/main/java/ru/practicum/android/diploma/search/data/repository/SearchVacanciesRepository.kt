@@ -1,22 +1,33 @@
 package ru.practicum.android.diploma.search.data.repository
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.singleOrNull
 import ru.practicum.android.diploma.core.data.dto.requests.VacanciesSearchRequest
 import ru.practicum.android.diploma.core.data.network.NetworkClient
 import ru.practicum.android.diploma.core.data.network.RetrofitNetworkClient
+import ru.practicum.android.diploma.core.domain.api.GetDataRepo
 import ru.practicum.android.diploma.core.domain.api.SearchRepo
 import ru.practicum.android.diploma.core.domain.models.ErrorType
+import ru.practicum.android.diploma.core.domain.models.Filters
 import ru.practicum.android.diploma.search.data.responses.VacancySearchResponse
 import ru.practicum.android.diploma.search.domain.model.SearchResult
 import ru.practicum.android.diploma.search.util.toVacancyInList
 import ru.practicum.android.diploma.util.Resource
 
-class SearchVacanciesRepository(private val networkClient: NetworkClient) : SearchRepo<SearchResult> {
+class SearchVacanciesRepository(
+    private val networkClient: NetworkClient,
+    private val getFiltersRepository: GetDataRepo<Filters>
+) : SearchRepo<SearchResult> {
 
     override fun search(text: String, page: Int): Flow<Resource<SearchResult>> = flow {
-        val request = VacanciesSearchRequest(text = text, page = page)
+        val filters = getFiltersRepository.get().singleOrNull()
+        val request = buildRequest(filters, text, page)
+
         val response = networkClient.doRequest(request)
+
         emit(
             when (response.resultCode) {
                 RetrofitNetworkClient.CODE_SUCCESS -> {
@@ -38,6 +49,15 @@ class SearchVacanciesRepository(private val networkClient: NetworkClient) : Sear
                 }
             }
         )
-    }
+    }.flowOn(Dispatchers.IO)
 
+    private fun buildRequest(filters: Filters?, text: String, page: Int): VacanciesSearchRequest =
+        VacanciesSearchRequest(
+            text = text,
+            page = page,
+            salary = filters?.salary,
+            salaryFlag = filters?.salaryFlag,
+            industryId = filters?.industryId,
+            currency = filters?.currency
+        )
 }

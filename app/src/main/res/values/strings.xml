@@ -84,6 +84,7 @@
     <string name="hint_country">Страна</string>
     <string name="hint_region">Регион</string>
     <string name="country_hint_search">Введите наименование страны</string>
+    <string name="hint_region_edit_text">Введите регион</string>
 
 
 </resources>
