@@ -32,7 +32,6 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
     private val adapter = IndustryAdapter { industry, position ->
         onIndustryClicked(industry, position)
     }
-    private var lastSelectedIndustry: Industry? = null
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentChoiceIndustryBinding =
         FragmentChoiceIndustryBinding.inflate(inflater, container, false)
@@ -76,7 +75,7 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
             hideRecyclerView = false,
             hideErrorView = true
         )
-        adapter.submitList(industries)
+        adapter.industries = industries.toMutableList()
     }
 
     private fun showError(error: ErrorType) {
@@ -139,7 +138,7 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
 
     private fun setIndustrySearchTextWatcher() {
         binding.etSearchIndustry.doOnTextChanged { text, _, _, _ ->
-            if (text != null) {
+            if (!text.isNullOrBlank()) {
                 search(text.toString())
                 setEndIconClear()
 
@@ -159,8 +158,6 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_clear)
         binding.tilSearchIndustry.setEndIconOnClickListener {
             binding.etSearchIndustry.text?.clear()
-            lastSelectedIndustry = null
-            binding.btnSelect.isGone = true
             hideKeyboard()
         }
     }
@@ -207,24 +204,12 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
     }
 
     private fun onIndustryClicked(industry: Industry, position: Int) {
-        val newList = adapter.currentList.toMutableList()
-        if (industry.selected) {
-            newList[position] = industry.copy(selected = false)
-            lastSelectedIndustry = null
+        if (binding.etSearchIndustry.text.isNullOrBlank()) {
+            viewModel.updateIndustrySelected(industry, position)
         } else {
-            if (lastSelectedIndustry != null) {
-                val lastSelectedIndex = newList.indexOf(lastSelectedIndustry)
-                if (lastSelectedIndex != -1) {
-                    newList[lastSelectedIndex] = newList[lastSelectedIndex].copy(selected = false)
-                }
-            }
-            newList[position] = industry.copy(selected = true)
-            lastSelectedIndustry = industry.copy(selected = true)
+            viewModel.updateIndustrySelected(industry, position, adapter.industries)
         }
-        adapter.submitList(newList)
-        binding.btnSelect.isGone = lastSelectedIndustry == null
     }
-
 
     private fun configureToolbar() {
         ToolbarUtils.configureToolbar(

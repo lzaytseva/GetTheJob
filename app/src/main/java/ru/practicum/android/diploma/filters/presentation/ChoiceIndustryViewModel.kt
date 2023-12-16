@@ -20,6 +20,8 @@ class ChoiceIndustryViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val originalList = mutableListOf<Industry>()
+    private var lastSelectedIndustry: Industry? = null
+    private var lastSelectedIndex: Int = -1
 
     private val searchDebounce: (String) -> Unit =
         debounce(SEARCH_DELAY_IN_MILLIS, viewModelScope, true) { searchText ->
@@ -83,6 +85,49 @@ class ChoiceIndustryViewModel @Inject constructor(
             _state.postValue(IndustryScreenState.Error(ErrorType.NO_CONTENT))
         } else {
             _state.postValue(IndustryScreenState.Content(filteredList))
+        }
+    }
+
+    fun updateIndustrySelected(industry: Industry, position: Int, currentList: List<Industry>? = null) {
+        // Не смотрите ради христа в этот код, это высер моего сознания
+        val unselectedIndustry = industry.copy(selected = false)
+        val selectedIndustry = industry.copy(selected = true)
+
+        if (currentList == null) {
+            if (industry.selected) {
+                originalList[position] = unselectedIndustry
+                lastSelectedIndustry = null
+                lastSelectedIndex = -1
+            } else {
+                if (lastSelectedIndustry != null) {
+                    originalList[lastSelectedIndex] = lastSelectedIndustry!!.copy(selected = false)
+                }
+                originalList[position] = selectedIndustry
+                lastSelectedIndustry = selectedIndustry
+                lastSelectedIndex = position
+            }
+            _state.postValue(IndustryScreenState.Content(originalList))
+        } else {
+            val newList = currentList.toMutableList()
+            if (industry.selected) {
+                newList[position] = industry.copy(selected = false)
+                originalList[lastSelectedIndex] = lastSelectedIndustry!!.copy(selected = false)
+                lastSelectedIndustry = null
+                lastSelectedIndex = -1
+            } else {
+                if (lastSelectedIndustry != null) {
+                    val lastSelectedIndexCurrent = newList.indexOf(lastSelectedIndustry)
+                    if (lastSelectedIndexCurrent != -1) {
+                        newList[lastSelectedIndexCurrent] = newList[lastSelectedIndexCurrent].copy(selected = false)
+                    }
+                    originalList[lastSelectedIndex] = lastSelectedIndustry!!.copy(selected = false)
+                }
+                lastSelectedIndex = originalList.indexOf(industry)
+                lastSelectedIndustry = selectedIndustry
+                newList[position] = selectedIndustry
+                originalList[lastSelectedIndex] = lastSelectedIndustry!!
+            }
+            _state.postValue(IndustryScreenState.Content(newList))
         }
     }
 
