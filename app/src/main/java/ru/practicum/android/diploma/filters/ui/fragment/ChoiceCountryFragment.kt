@@ -4,14 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
+import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.databinding.FragmentChoiceCountryBinding
+import ru.practicum.android.diploma.filters.domain.model.Country
+import ru.practicum.android.diploma.filters.presentation.ChoiceCountryScreenState
 import ru.practicum.android.diploma.filters.presentation.ChoiceCountryViewModel
+import ru.practicum.android.diploma.filters.ui.adapter.CountryAdapter
 import ru.practicum.android.diploma.util.BindingFragment
 import ru.practicum.android.diploma.util.ToolbarUtils
 
+@AndroidEntryPoint
 class ChoiceCountryFragment : BindingFragment<FragmentChoiceCountryBinding>() {
 
     private val viewModel: ChoiceCountryViewModel by viewModels()
@@ -21,7 +28,16 @@ class ChoiceCountryFragment : BindingFragment<FragmentChoiceCountryBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         configureToolbar()
+
+        viewModel.screenState.observe(viewLifecycleOwner) { screenState ->
+            when (screenState) {
+                is ChoiceCountryScreenState.Error -> showError(screenState.message)
+                is ChoiceCountryScreenState.Loading -> showLoading()
+                is ChoiceCountryScreenState.Content -> showContent(screenState.countries)
+            }
+        }
     }
 
     private fun configureToolbar() {
@@ -30,5 +46,50 @@ class ChoiceCountryFragment : BindingFragment<FragmentChoiceCountryBinding>() {
             navController = findNavController(),
             title = getString(R.string.header_country)
         )
+    }
+
+    private fun showError(error: ErrorType?) {
+        when (error) {
+            ErrorType.NO_INTERNET -> {
+                with(binding) {
+                    placeholder.visibility = View.VISIBLE
+                    progressBar.visibility = View.GONE
+                    countries.visibility = View.GONE
+                    placeholderImage.setImageDrawable(
+                        AppCompatResources.getDrawable(requireContext(), R.drawable.ph_no_internet)
+                    )
+                    placeholderMessage.text = getString(R.string.error_no_internet)
+                }
+            }
+
+            else -> {
+                with(binding) {
+                    placeholder.visibility = View.VISIBLE
+                    countries.visibility = View.GONE
+                    placeholderImage.setImageDrawable(
+                        AppCompatResources.getDrawable(requireContext(), R.drawable.ph_error_get_list)
+                    )
+                    placeholderMessage.text = getString(R.string.error_getting_list)
+                }
+            }
+        }
+    }
+
+    private fun showLoading() {
+        with(binding) {
+            placeholder.visibility = View.GONE
+            progressBar.visibility = View.VISIBLE
+            countries.visibility = View.GONE
+        }
+    }
+
+    private fun showContent(countries: List<Country>) {
+        binding.placeholder.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
+        binding.countries.visibility = View.VISIBLE
+        val adapter = CountryAdapter(onCountryClick = { })
+        binding.countries.adapter = adapter
+        adapter.submitList(countries)
+
     }
 }
