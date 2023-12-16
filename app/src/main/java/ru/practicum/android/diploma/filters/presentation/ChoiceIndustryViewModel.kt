@@ -9,7 +9,6 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
 import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.filters.domain.model.Industry
-import ru.practicum.android.diploma.filters.domain.model.IndustryScreenState
 import ru.practicum.android.diploma.util.Resource
 import ru.practicum.android.diploma.util.debounce
 import javax.inject.Inject

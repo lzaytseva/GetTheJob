@@ -19,7 +19,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.databinding.FragmentChoiceIndustryBinding
 import ru.practicum.android.diploma.filters.domain.model.Industry
-import ru.practicum.android.diploma.filters.domain.model.IndustryScreenState
+import ru.practicum.android.diploma.filters.presentation.IndustryScreenState
 import ru.practicum.android.diploma.filters.presentation.ChoiceIndustryViewModel
 import ru.practicum.android.diploma.filters.ui.adapter.IndustryAdapter
 import ru.practicum.android.diploma.util.BindingFragment
