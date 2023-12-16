@@ -81,7 +81,10 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideSearchRepository(networkClient: NetworkClient, filtersRepo: FiltersRepository): SearchRepo<SearchResult> {
+    fun provideSearchRepository(
+        networkClient: NetworkClient,
+        filtersRepo: FiltersRepository
+    ): SearchRepo<SearchResult> {
         return SearchVacanciesRepository(networkClient, filtersRepo)
     }
 
