@@ -3,13 +3,12 @@ package ru.practicum.android.diploma.filters.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.databinding.ItemIndustryBinding
 import ru.practicum.android.diploma.filters.domain.model.Industry
 
 class IndustryAdapter(
     private val onIndustryClickListener: (Industry, Int) -> Unit
-) : ListAdapter<Industry, IndustryAdapter.IndustryViewHolder>(IndustryDiffCallback) {
+) : ListAdapter<Industry, IndustryViewHolder>(IndustryDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IndustryViewHolder {
         val binding = ItemIndustryBinding.inflate(
@@ -32,15 +31,5 @@ class IndustryAdapter(
         }
 
         holder.bind(industry)
-    }
-
-    class IndustryViewHolder(val binding: ItemIndustryBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(industry: Industry) {
-            with(binding) {
-                tvIndustryName.text = industry.name
-                checkBoxIndustry.isChecked = industry.selected
-            }
-        }
     }
 }
