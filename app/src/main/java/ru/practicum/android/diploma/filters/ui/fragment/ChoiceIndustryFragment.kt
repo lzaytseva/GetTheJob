@@ -63,26 +63,28 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
 
     private fun renderState(state: IndustryScreenState) {
         when (state) {
-            is IndustryScreenState.Content -> showContent(state.industries)
+            is IndustryScreenState.Content -> showContent(state)
             is IndustryScreenState.Error -> showError(state.error)
             is IndustryScreenState.Loading -> showLoading()
         }
     }
 
-    private fun showContent(industries: List<Industry>) {
+    private fun showContent(state: IndustryScreenState.Content) {
         hideFields(
             hideProgressBar = true,
             hideRecyclerView = false,
-            hideErrorView = true
+            hideErrorView = true,
+            hideSelectButton = !state.applyBtnVisible
         )
-        adapter.industries = industries.toMutableList()
+        adapter.industries = state.industries.toMutableList()
     }
 
     private fun showError(error: ErrorType) {
         hideFields(
             hideProgressBar = true,
             hideRecyclerView = true,
-            hideErrorView = false
+            hideErrorView = false,
+            hideSelectButton = true
         )
         when (error) {
             ErrorType.NO_INTERNET -> {
@@ -119,20 +121,23 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
         hideFields(
             hideProgressBar = false,
             hideRecyclerView = true,
-            hideErrorView = true
+            hideErrorView = true,
+            hideSelectButton = true
         )
     }
 
     private fun hideFields(
         hideProgressBar: Boolean,
         hideRecyclerView: Boolean,
-        hideErrorView: Boolean
+        hideErrorView: Boolean,
+        hideSelectButton: Boolean
     ) {
         with(binding) {
             rvIndustries.isGone = hideRecyclerView
             progressBar.isGone = hideProgressBar
             tvErrorMessage.isGone = hideErrorView
             ivPlaceholderImage.isGone = hideErrorView
+            btnSelect.isGone = hideSelectButton
         }
     }
 

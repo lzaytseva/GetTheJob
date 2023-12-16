@@ -35,7 +35,12 @@ class ChoiceIndustryViewModel @Inject constructor(
 
     fun getIndustries() {
         if (originalList.isNotEmpty()) {
-            _state.postValue(IndustryScreenState.Content(originalList))
+            _state.postValue(
+                IndustryScreenState.Content(
+                    industries = originalList,
+                    applyBtnVisible = lastSelectedIndustry != null
+                )
+            )
             return
         }
         viewModelScope.launch {
@@ -51,7 +56,12 @@ class ChoiceIndustryViewModel @Inject constructor(
                             _state.postValue(IndustryScreenState.Error(ErrorType.NO_CONTENT))
                         } else {
                             originalList.addAll(it.data)
-                            _state.postValue(IndustryScreenState.Content(originalList))
+                            _state.postValue(
+                                IndustryScreenState.Content(
+                                    industries = originalList,
+                                    applyBtnVisible = lastSelectedIndustry != null
+                                )
+                            )
                         }
                     }
 
@@ -84,7 +94,12 @@ class ChoiceIndustryViewModel @Inject constructor(
         if (filteredList.isEmpty()) {
             _state.postValue(IndustryScreenState.Error(ErrorType.NO_CONTENT))
         } else {
-            _state.postValue(IndustryScreenState.Content(filteredList))
+            _state.postValue(
+                IndustryScreenState.Content(
+                    industries = filteredList,
+                    applyBtnVisible = lastSelectedIndustry != null
+                )
+            )
         }
     }
 
@@ -93,22 +108,33 @@ class ChoiceIndustryViewModel @Inject constructor(
         val unselectedIndustry = industry.copy(selected = false)
         val selectedIndustry = industry.copy(selected = true)
 
+        // Если находимся на полном списке, а не результатх поиска
         if (currentList == null) {
+            // Если отрасль была выбрана, снимаем с нее выделение
             if (industry.selected) {
                 originalList[position] = unselectedIndustry
                 lastSelectedIndustry = null
                 lastSelectedIndex = -1
             } else {
+                // Если хотим выбрать тек. отрасль, то сначала снимаем выделение с последней выбранной
                 if (lastSelectedIndustry != null) {
                     originalList[lastSelectedIndex] = lastSelectedIndustry!!.copy(selected = false)
                 }
+                // делаем новую выбранной и меняем последнюю выбранную
                 originalList[position] = selectedIndustry
                 lastSelectedIndustry = selectedIndustry
                 lastSelectedIndex = position
             }
-            _state.postValue(IndustryScreenState.Content(originalList))
+            _state.postValue(
+                IndustryScreenState.Content(
+                    industries = originalList,
+                    applyBtnVisible = lastSelectedIndustry != null
+                )
+            )
+            // Если выделяем отрасль на списке результатов отрасли
         } else {
             val newList = currentList.toMutableList()
+
             if (industry.selected) {
                 newList[position] = industry.copy(selected = false)
                 originalList[lastSelectedIndex] = lastSelectedIndustry!!.copy(selected = false)
@@ -127,7 +153,12 @@ class ChoiceIndustryViewModel @Inject constructor(
                 newList[position] = selectedIndustry
                 originalList[lastSelectedIndex] = lastSelectedIndustry!!
             }
-            _state.postValue(IndustryScreenState.Content(newList))
+            _state.postValue(
+                IndustryScreenState.Content(
+                    industries = newList,
+                    applyBtnVisible = lastSelectedIndustry != null
+                )
+            )
         }
     }
 
