@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.filters.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -29,29 +28,16 @@ class IndustryAdapter(
     override fun getItemCount(): Int = industries.size
 
     override fun onBindViewHolder(holder: IndustryViewHolder, position: Int) {
-        val industry = industries[holder.layoutPosition]
-        Log.d("INDUSTRY", "onBindViewHolder for position: $position")
+        val industry = industries[position]
         holder.binding.checkBoxIndustry.setOnClickListener {
-            Log.d("INDUSTRY", "Inside checked changed")
-            onIndustryClickListener.invoke(industry, holder.layoutPosition)
+            onIndustryClickListener.invoke(industry, position)
         }
 
         holder.itemView.setOnClickListener {
-            Log.d("INDUSTRY", "inside clickListener")
-            onIndustryClickListener.invoke(industry, holder.layoutPosition)
+            onIndustryClickListener.invoke(industry, position)
         }
 
         holder.bind(industry)
-    }
-
-    override fun onBindViewHolder(holder: IndustryViewHolder, position: Int, payloads: MutableList<Any>) {
-        if (payloads.isEmpty()) {
-            super.onBindViewHolder(holder, position, payloads)
-        } else {
-            if (payloads.first() == true) {
-                holder.bindSelected(industries[holder.layoutPosition].selected)
-            }
-        }
     }
 
     class IndustryViewHolder(val binding: ItemIndustryBinding) :
@@ -61,11 +47,6 @@ class IndustryAdapter(
                 tvIndustryName.text = industry.name
                 checkBoxIndustry.isChecked = industry.selected
             }
-        }
-
-        fun bindSelected(isSelected: Boolean) {
-            binding.checkBoxIndustry.isChecked = isSelected
-            Log.d("INDUSTRY", "bindSelected for: ${this.layoutPosition}")
         }
     }
 }
