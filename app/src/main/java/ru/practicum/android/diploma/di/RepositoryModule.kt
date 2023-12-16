@@ -1,5 +1,7 @@
 package ru.practicum.android.diploma.di
 
+import android.content.SharedPreferences
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -7,11 +9,13 @@ import dagger.hilt.components.SingletonComponent
 import ru.practicum.android.diploma.core.data.network.NetworkClient
 import ru.practicum.android.diploma.core.data.room.AppDatabase
 import ru.practicum.android.diploma.core.data.room.dao.VacancyDao
+import ru.practicum.android.diploma.core.data.sharedprefs.filters.FiltersRepository
 import ru.practicum.android.diploma.core.domain.api.DeleteDataRepo
 import ru.practicum.android.diploma.core.domain.api.GetDataByIdRepo
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
 import ru.practicum.android.diploma.core.domain.api.SaveDataRepo
 import ru.practicum.android.diploma.core.domain.api.SearchRepo
+import ru.practicum.android.diploma.core.domain.models.Filters
 import ru.practicum.android.diploma.core.domain.models.VacancyDetails
 import ru.practicum.android.diploma.favorites.data.FavoritesVacancyListRepositoryImpl
 import ru.practicum.android.diploma.favorites.domain.api.FavoritesVacancyListRepository
@@ -77,13 +81,31 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideSearchRepository(networkClient: NetworkClient): SearchRepo<SearchResult> {
-        return SearchVacanciesRepository(networkClient)
+    fun provideSearchRepository(networkClient: NetworkClient, filtersRepo: FiltersRepository): SearchRepo<SearchResult> {
+        return SearchVacanciesRepository(networkClient, filtersRepo)
     }
 
     @Provides
     @Singleton
     fun provideCountryRepository(networkClient: NetworkClient): GetDataRepo<Resource<List<Country>>> {
         return CountriesRepositoryImpl(networkClient)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFiltersRepository(sharedPreferences: SharedPreferences, gson: Gson): FiltersRepository {
+        return FiltersRepository(sharedPreferences, gson)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetFiltersRepo(filtersRepo: FiltersRepository): GetDataRepo<Filters> {
+        return filtersRepo
+    }
+
+    @Provides
+    @Singleton
+    fun provideSaveFiltersRepo(filtersRepo: FiltersRepository): SaveDataRepo<Filters> {
+        return filtersRepo
     }
 }
