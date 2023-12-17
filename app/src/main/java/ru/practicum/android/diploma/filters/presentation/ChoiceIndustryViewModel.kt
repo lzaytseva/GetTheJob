@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
 import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.filters.domain.model.Industry
-import ru.practicum.android.diploma.filters.domain.model.IndustryScreenState
+import ru.practicum.android.diploma.filters.presentation.state.IndustryScreenState
 import ru.practicum.android.diploma.util.Resource
 import ru.practicum.android.diploma.util.debounce
 import javax.inject.Inject
@@ -20,6 +20,8 @@ class ChoiceIndustryViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val originalList = mutableListOf<Industry>()
+    private var lastSelectedIndustry: Industry? = null
+    private var lastSelectedIndex: Int = -1
 
     private val searchDebounce: (String) -> Unit =
         debounce(SEARCH_DELAY_IN_MILLIS, viewModelScope, true) { searchText ->
@@ -33,7 +35,12 @@ class ChoiceIndustryViewModel @Inject constructor(
 
     fun getIndustries() {
         if (originalList.isNotEmpty()) {
-            _state.postValue(IndustryScreenState.Content(originalList))
+            _state.postValue(
+                IndustryScreenState.Content(
+                    industries = originalList,
+                    applyBtnVisible = lastSelectedIndustry != null
+                )
+            )
             return
         }
         viewModelScope.launch {
@@ -49,7 +56,12 @@ class ChoiceIndustryViewModel @Inject constructor(
                             _state.postValue(IndustryScreenState.Error(ErrorType.NO_CONTENT))
                         } else {
                             originalList.addAll(it.data)
-                            _state.postValue(IndustryScreenState.Content(originalList))
+                            _state.postValue(
+                                IndustryScreenState.Content(
+                                    industries = originalList,
+                                    applyBtnVisible = lastSelectedIndustry != null
+                                )
+                            )
                         }
                     }
 
@@ -82,8 +94,47 @@ class ChoiceIndustryViewModel @Inject constructor(
         if (filteredList.isEmpty()) {
             _state.postValue(IndustryScreenState.Error(ErrorType.NO_CONTENT))
         } else {
-            _state.postValue(IndustryScreenState.Content(filteredList))
+            _state.postValue(
+                IndustryScreenState.Content(
+                    industries = filteredList,
+                    applyBtnVisible = lastSelectedIndustry != null
+                )
+            )
         }
+    }
+
+    fun updateIndustrySelected(industry: Industry, position: Int, currentList: List<Industry>? = null) {
+        val newList = currentList?.toMutableList()
+        val updatedIndustry = industry.copy(selected = !industry.selected)
+
+        if (lastSelectedIndustry != null) {
+            // Убираем выделение с последней отрасли
+            originalList[lastSelectedIndex] = lastSelectedIndustry!!.copy(selected = false)
+            val index = newList?.indexOf(lastSelectedIndustry)
+            if (index != null && index != -1) {
+                newList[index] = lastSelectedIndustry!!.copy(selected = false)
+            }
+        }
+        if (industry != lastSelectedIndustry) {
+            // Выделяем новую область, если она отличается от последней выбранной
+            val index = if (newList != null) originalList.indexOf(industry) else position
+            originalList[index] = updatedIndustry
+            newList?.set(position, updatedIndustry)
+            lastSelectedIndustry = updatedIndustry
+            lastSelectedIndex = index
+
+        } else {
+            // Если кликнули на ту же, то просто обнуляем значения
+            lastSelectedIndustry = null
+            lastSelectedIndex = -1
+        }
+
+        _state.postValue(
+            IndustryScreenState.Content(
+                industries = newList ?: originalList,
+                applyBtnVisible = lastSelectedIndustry != null
+            )
+        )
     }
 
     companion object {
