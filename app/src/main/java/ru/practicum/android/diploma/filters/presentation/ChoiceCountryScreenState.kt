@@ -8,5 +8,5 @@ sealed interface ChoiceCountryScreenState {
 
     object Loading : ChoiceCountryScreenState
 
-    data class Content(val countries: List<Country>) : ChoiceCountryScreenState
+    data class Content(val countries: List<Country>, val searchEnabled:Boolean = false) : ChoiceCountryScreenState
 }

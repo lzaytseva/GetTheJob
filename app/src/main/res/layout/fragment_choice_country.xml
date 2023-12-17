@@ -12,11 +12,12 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/elements_margin_16dp"
         android:theme="@style/salary_til_style"
+        android:hint="@string/country_hint_search"
+        android:visibility="gone"
         app:endIconDrawable="@drawable/ic_search"
         app:endIconMode="custom"
         app:expandedHintEnabled="false"
         app:hintEnabled="false"
-        android:hint="@string/country_hint_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

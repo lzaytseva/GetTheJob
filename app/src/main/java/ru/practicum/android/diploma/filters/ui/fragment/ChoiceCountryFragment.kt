@@ -15,7 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.databinding.FragmentChoiceCountryBinding
-import ru.practicum.android.diploma.filters.domain.model.Country
 import ru.practicum.android.diploma.filters.presentation.ChoiceCountryScreenState
 import ru.practicum.android.diploma.filters.presentation.ChoiceCountryViewModel
 import ru.practicum.android.diploma.filters.ui.adapter.CountryAdapter
@@ -40,7 +39,7 @@ class ChoiceCountryFragment : BindingFragment<FragmentChoiceCountryBinding>() {
         viewModel.screenState.observe(viewLifecycleOwner) { screenState ->
             when (screenState) {
                 is ChoiceCountryScreenState.Loading -> showLoading()
-                is ChoiceCountryScreenState.Content -> showContent(screenState.countries)
+                is ChoiceCountryScreenState.Content -> showContent(screenState)
                 is ChoiceCountryScreenState.Error -> showError(screenState.message)
             }
         }
@@ -90,7 +89,7 @@ class ChoiceCountryFragment : BindingFragment<FragmentChoiceCountryBinding>() {
         }
     }
 
-    private fun showContent(countries: List<Country>) {
+    private fun showContent(screenState: ChoiceCountryScreenState.Content) {
         binding.placeholder.visibility = View.GONE
         binding.progressBar.visibility = View.GONE
         binding.countries.visibility = View.VISIBLE
@@ -104,8 +103,18 @@ class ChoiceCountryFragment : BindingFragment<FragmentChoiceCountryBinding>() {
 
         })
         binding.countries.adapter = adapter
-        adapter.submitList(countries)
+        adapter.submitList(screenState.countries)
+        manageEditTextVisibility(screenState.searchEnabled)
+    }
 
+    private fun manageEditTextVisibility(isVisible: Boolean) {
+        if (isVisible) {
+            binding.tilSearchCountry.visibility = View.VISIBLE
+            setMargins(binding.countries, 0, 160, 0, 0)
+        } else {
+            binding.tilSearchCountry.visibility = View.GONE
+            setMargins(binding.countries, 0, 0, 0, 0)
+        }
     }
 
     private fun setFilterTextWatcher() {
@@ -143,6 +152,15 @@ class ChoiceCountryFragment : BindingFragment<FragmentChoiceCountryBinding>() {
         val keyboard =
             requireActivity().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
         keyboard.hideSoftInputFromWindow(binding.etSearchCountry.windowToken, 0)
+    }
+
+    private fun setMargins(view: View, left: Int, top: Int, right: Int, bottom: Int) {
+        if (view.layoutParams is ViewGroup.MarginLayoutParams) {
+            val params = view.layoutParams as ViewGroup.MarginLayoutParams
+            params.setMargins(left, top, right, bottom)
+            view.requestLayout()
+        }
+
     }
 
 }

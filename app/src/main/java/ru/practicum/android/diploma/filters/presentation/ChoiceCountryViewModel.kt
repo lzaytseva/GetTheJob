@@ -67,7 +67,7 @@ class ChoiceCountryViewModel @Inject constructor(
     }
 
     fun showAllCountries() {
-        _screenState.value = ChoiceCountryScreenState.Content(allCountries)
+        _screenState.value = ChoiceCountryScreenState.Content(allCountries, true)
     }
 
     private fun filterDefaultCountries(countries: List<Country>): List<Country> {
@@ -98,7 +98,7 @@ class ChoiceCountryViewModel @Inject constructor(
         if (filtered.isEmpty()) {
             _screenState.value = ChoiceCountryScreenState.Error(ErrorType.NO_CONTENT)
         } else {
-            _screenState.value = ChoiceCountryScreenState.Content(filtered)
+            _screenState.value = ChoiceCountryScreenState.Content(filtered, true)
         }
     }
 
