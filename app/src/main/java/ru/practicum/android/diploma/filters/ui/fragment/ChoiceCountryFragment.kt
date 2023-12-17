@@ -15,8 +15,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.databinding.FragmentChoiceCountryBinding
-import ru.practicum.android.diploma.filters.presentation.ChoiceCountryScreenState
-import ru.practicum.android.diploma.filters.presentation.ChoiceCountryViewModel
+import ru.practicum.android.diploma.filters.presentation.state.ChoiceCountryScreenState
+import ru.practicum.android.diploma.filters.presentation.viewmodel.ChoiceCountryViewModel
 import ru.practicum.android.diploma.filters.ui.adapter.CountryAdapter
 import ru.practicum.android.diploma.util.BindingFragment
 import ru.practicum.android.diploma.util.ToolbarUtils

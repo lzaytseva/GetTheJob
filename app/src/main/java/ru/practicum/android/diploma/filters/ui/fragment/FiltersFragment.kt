@@ -15,8 +15,8 @@ import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
-import ru.practicum.android.diploma.filters.presentation.FiltersViewModel
 import ru.practicum.android.diploma.filters.presentation.state.FiltersScreenState
+import ru.practicum.android.diploma.filters.presentation.viewmodel.FiltersViewModel
 import ru.practicum.android.diploma.filters.ui.util.TextInputLayoutUtils
 import ru.practicum.android.diploma.util.BindingFragment
 import ru.practicum.android.diploma.util.ToolbarUtils

@@ -14,8 +14,8 @@ import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentChoiceWorkplaceBinding
-import ru.practicum.android.diploma.filters.presentation.ChoiceWorkplaceScreenState
-import ru.practicum.android.diploma.filters.presentation.ChoiceWorkplaceViewModel
+import ru.practicum.android.diploma.filters.presentation.state.ChoiceWorkplaceScreenState
+import ru.practicum.android.diploma.filters.presentation.viewmodel.ChoiceWorkplaceViewModel
 import ru.practicum.android.diploma.filters.ui.util.TextInputLayoutUtils
 import ru.practicum.android.diploma.util.BindingFragment
 import ru.practicum.android.diploma.util.ToolbarUtils
