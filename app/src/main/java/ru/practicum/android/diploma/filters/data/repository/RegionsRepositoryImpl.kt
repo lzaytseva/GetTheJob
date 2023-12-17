@@ -27,7 +27,7 @@ class RegionsRepositoryImpl @Inject constructor(
             }
 
             RetrofitNetworkClient.CODE_SUCCESS -> {
-                emit(Resource.Success(AreaMapper.mapRegion((response as CountryByIdResponse).country)))
+                emit(Resource.Success(AreaMapper.map((response as CountryByIdResponse).country)))
             }
 
             else -> {
@@ -44,11 +44,10 @@ class RegionsRepositoryImpl @Inject constructor(
             }
 
             RetrofitNetworkClient.CODE_SUCCESS -> {
-                val list = AreaMapper.mapList((response as AllAreasResponse).areas)
-                    .filter { item ->
-                        item.parentId != null && item.parentId != "1001"
-                    }
-                emit(Resource.Success(list))
+                emit(
+                    Resource.Success(
+                        AreaMapper.mapList((response as AllAreasResponse).areas).filter { it.parentId != null })
+                )
             }
 
             else -> {

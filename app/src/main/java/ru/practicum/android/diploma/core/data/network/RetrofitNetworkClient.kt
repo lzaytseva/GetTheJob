@@ -133,7 +133,7 @@ class RetrofitNetworkClient(
         return try {
             val response = hhService.getAreaById(id)
             if (response.body() != null) {
-                if (response.body()!!.parentId != null && response.body()!!.parentId != "1001") {
+                if (response.body()!!.parentId != null) {
                     getRegionsByCountryId(response.body()!!.parentId!!)
                 } else {
                     CountryByIdResponse(response.body()!!).apply { resultCode = CODE_SUCCESS }
