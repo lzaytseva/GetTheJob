@@ -64,7 +64,7 @@ class ChoiceRegionViewModel @Inject constructor(
             is Resource.Success -> {
                 if (resource.data.isNullOrEmpty()) {
                     // Empty или Error???
-                    _state.postValue(ChoiceRegionScreenState.Empty)
+                    _state.postValue(ChoiceRegionScreenState.Error)
                 } else {
                     _state.postValue(ChoiceRegionScreenState.Content(regions = resource.data))
                 }
