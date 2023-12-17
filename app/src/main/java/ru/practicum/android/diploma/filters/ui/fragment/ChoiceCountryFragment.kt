@@ -110,7 +110,13 @@ class ChoiceCountryFragment : BindingFragment<FragmentChoiceCountryBinding>() {
     private fun manageEditTextVisibility(isVisible: Boolean) {
         if (isVisible) {
             binding.tilSearchCountry.visibility = View.VISIBLE
-            setMargins(binding.countries, 0, 160, 0, 0)
+            setMargins(
+                binding.countries,
+                0,
+                resources.getInteger(R.integer.country_screen_top_margin),
+                0,
+                0
+            )
         } else {
             binding.tilSearchCountry.visibility = View.GONE
             setMargins(binding.countries, 0, 0, 0, 0)

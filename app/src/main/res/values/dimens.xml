@@ -41,6 +41,7 @@
     <dimen name="elements_margin_16dp">16dp</dimen>
     <dimen name="rv_industry_elements_margin">8dp</dimen>
     <dimen name="root_layout_padding">16dp</dimen>
+    <integer name="country_screen_top_margin">160</integer>
 
     <!--  Экран избранных вакансий  -->
     <dimen name="favorites_margin_16">16dp</dimen>
