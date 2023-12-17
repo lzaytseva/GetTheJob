@@ -30,6 +30,7 @@ import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.util.Resource
 import ru.practicum.android.diploma.vacancydetails.data.SimilarVacanciesRepoImpl
 import ru.practicum.android.diploma.vacancydetails.data.VacancyRepositoryDb
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -91,6 +92,7 @@ class RepositoryModule {
 
     @Provides
     @Singleton
+    @Named(COUNTRIES_REPOSITORY_IMPL)
     fun provideCountryRepository(networkClient: NetworkClient): GetDataRepo<Resource<List<Country>>> {
         return CountriesRepositoryImpl(networkClient)
     }
@@ -127,7 +129,13 @@ class RepositoryModule {
 
     @Provides
     @Singleton
+    @Named(REGIONS_REPOSITORY_IMPL)
     fun provideGetDataRepo(regionsRepositoryImpl: RegionsRepositoryImpl): GetDataRepo<Resource<List<Country>>> {
         return regionsRepositoryImpl
+    }
+
+    companion object {
+        const val COUNTRIES_REPOSITORY_IMPL = "CountriesRepositoryImpl"
+        const val REGIONS_REPOSITORY_IMPL = "RegionsRepositoryImpl"
     }
 }
