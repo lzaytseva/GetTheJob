@@ -29,6 +29,11 @@ class ChoiceWorkplaceFragment : BindingFragment<FragmentChoiceWorkplaceBinding>(
         setFieldsTextWatchers()
         configureCountryField()
         configureRegionField()
+
+        binding.etCountry.setOnClickListener {
+            val action = ChoiceWorkplaceFragmentDirections.actionChoiceWorkplaceFragmentToChoiceCountryFragment()
+            findNavController().navigate(action)
+        }
     }
 
     private fun configureToolbar() {
