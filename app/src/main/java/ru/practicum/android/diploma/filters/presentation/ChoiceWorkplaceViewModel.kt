@@ -43,10 +43,12 @@ class ChoiceWorkplaceViewModel @Inject constructor(
                             }
                         }
                     }
+                    val isBtnSelectVisible = countryName != null || currentFilters.regionName != null
                     _screenState.postValue(
                         ChoiceWorkplaceScreenState(
                             country = countryName,
-                            region = currentFilters.regionName
+                            region = currentFilters.regionName,
+                            isBtnSelectVisible = isBtnSelectVisible
                         )
                     )
                 }
