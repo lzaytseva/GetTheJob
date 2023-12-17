@@ -98,8 +98,7 @@ class ChoiceCountryFragment : BindingFragment<FragmentChoiceCountryBinding>() {
                 viewModel.showAllCountries()
             } else {
                 viewModel.selectCountry(country.id)
-                val action = ChoiceCountryFragmentDirections.actionChoiceCountryFragmentToChoiceWorkplaceFragment()
-                findNavController().navigate(action)
+                findNavController().navigateUp()
             }
 
         })
