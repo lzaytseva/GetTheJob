@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/screen_bg"
-    android:paddingHorizontal="@dimen/root_layout_padding"
     android:paddingTop="@dimen/root_layout_padding"
     tools:context=".filters.ui.fragment.ChoiceRegionFragment">
 
@@ -14,6 +13,7 @@
         style="@style/salary_til_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/root_layout_padding"
         android:theme="@style/salary_til_style"
         app:endIconDrawable="@drawable/ic_search"
         app:endIconMode="custom"

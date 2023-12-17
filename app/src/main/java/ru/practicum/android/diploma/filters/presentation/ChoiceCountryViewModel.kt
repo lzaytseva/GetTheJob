@@ -80,18 +80,22 @@ class ChoiceCountryViewModel @Inject constructor(
     fun selectCountry(country: Country) {
         viewModelScope.launch {
             getFiltersRepository.get().collect() { currentFilters ->
-                val updatedFilters = currentFilters?.copy(countryId = country.id, countryName = country.name)
-                    ?: Filters(
-                        regionId = null,
-                        regionName = null,
-                        countryId = country.id,
-                        countryName = country.name,
-                        salary = null,
-                        salaryFlag = null,
-                        industryId = null,
-                        industryName = null,
-                        currency = null
-                    )
+                val updatedFilters = currentFilters?.copy(
+                    countryId = country.id,
+                    countryName = country.name,
+                    regionId = null,
+                    regionName = null
+                ) ?: Filters(
+                    regionId = null,
+                    regionName = null,
+                    countryId = country.id,
+                    countryName = country.name,
+                    salary = null,
+                    salaryFlag = null,
+                    industryId = null,
+                    industryName = null,
+                    currency = null
+                )
                 saveFiltersRepository.save(updatedFilters)
             }
         }

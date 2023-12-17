@@ -30,11 +30,23 @@ object AreaMapper {
         return regions + subRegions
     }
 
-    fun map(country: AreaDto): List<Country> = country.areas.map { areaDto ->
-        Country(
-            id = areaDto.id,
-            name = areaDto.name,
-            parentId = areaDto.parentId
-        )
+    fun map(country: AreaDto): List<Country> {
+        val regions = country.areas.map { region ->
+            Country(
+                id = region.id,
+                name = region.name,
+                parentId = region.parentId
+            )
+        }
+        val subRegions = country.areas.flatMap { region ->
+            region.areas
+        }.map { subRegion ->
+            Country(
+                id = subRegion.id,
+                name = subRegion.name,
+                parentId = subRegion.parentId
+            )
+        }
+        return regions + subRegions
     }
 }
