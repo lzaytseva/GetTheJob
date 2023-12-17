@@ -24,7 +24,7 @@ class FiltersViewModel @Inject constructor(
 
     fun loadFilters() {
         viewModelScope.launch {
-            getFiltersRepository.get().collect {filters ->
+            getFiltersRepository.get().collect { filters ->
                 if (filters != null) {
                     _state.postValue(FiltersScreenState.Content(filters))
                 }

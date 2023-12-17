@@ -53,7 +53,7 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
     }
 
     private fun setFiltersValues(filters: Filters) {
-        with (binding) {
+        with(binding) {
             etIndustry.setText(filters.industryName)
 
         }
