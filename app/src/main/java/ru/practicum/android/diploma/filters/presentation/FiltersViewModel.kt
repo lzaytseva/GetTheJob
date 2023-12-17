@@ -23,7 +23,17 @@ class FiltersViewModel @Inject constructor(
         viewModelScope.launch {
             filtersRepository.get().collect { filters ->
                 if (filters != null) {
-                    _state.postValue(FiltersScreenState.Content(filters))
+                    val workplace = if (filters.regionName == null) {
+                        filters.countryName.orEmpty()
+                    } else {
+                        "${filters.countryName}, ${filters.regionName}"
+                    }
+                    _state.postValue(FiltersScreenState.Settings(
+                        workPlace = workplace,
+                        industry = filters.industryName.orEmpty(),
+                        onlyWithSalary = filters.salaryFlag ?: false,
+                        salary = filters.salary.orEmpty()
+                    ))
                 }
             }
         }
