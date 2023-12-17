@@ -11,4 +11,7 @@
     <!--  Snackbar  -->
     <color name="snackbar_bg">@color/white</color>
     <color name="snackbar_text_color">@color/black</color>
+
+    <!--  Цвет фона при удалении свайпом в первой трети  -->
+    <color name="favorite_delete_bg">@color/dark_gray</color>
 </resources>

@@ -47,6 +47,7 @@
     <dimen name="favorites_margin_16">16dp</dimen>
     <dimen name="favorites_margin_160">160dp</dimen>
     <dimen name="favorites_margin_32">32dp</dimen>
+    <dimen name="favorites_ic_delete_height">32dp</dimen>
 
     <!--  country item  -->
     <dimen name="country_horizontal_margin">16dp</dimen>

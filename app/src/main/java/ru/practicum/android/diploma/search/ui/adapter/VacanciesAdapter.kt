@@ -40,6 +40,10 @@ class VacanciesAdapter(
         diffVacancies.dispatchUpdatesTo(this)
     }
 
+    fun getItemByPosition(position: Int) =
+        vacanciesList[position]
+
+
     inner class VacancyViewHolder(private val binding: VacancyCardBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(vacancy: Vacancy) {
