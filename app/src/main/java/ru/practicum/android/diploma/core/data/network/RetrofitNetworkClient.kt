@@ -39,7 +39,7 @@ class RetrofitNetworkClient(
                 is SimilarVacanciesSearchRequest -> getSimilarVacanciesById(request.id)
                 is CountriesRequest -> getCountries()
                 is AllAreasRequest -> getAllAreas()
-                is CountryByIdRequest -> getCountryById(request.id)
+                is CountryByIdRequest -> getRegionsByCountryId(request.id)
                 else -> Response().apply { resultCode = CODE_WRONG_REQUEST }
             }
         }
@@ -129,12 +129,12 @@ class RetrofitNetworkClient(
         }
     }
 
-    private suspend fun getCountryById(id: String): Response {
+    private suspend fun getRegionsByCountryId(id: String): Response {
         return try {
             val response = hhService.getAreaById(id)
             if (response.body() != null) {
-                if (response.body()!!.parentId.trim() != "null") {
-                    getCountryById(response.body()!!.parentId)
+                if (response.body()!!.parentId != null && response.body()!!.parentId != "1001") {
+                    getRegionsByCountryId(response.body()!!.parentId!!)
                 } else {
                     CountryByIdResponse(response.body()!!).apply { resultCode = CODE_SUCCESS }
                 }
