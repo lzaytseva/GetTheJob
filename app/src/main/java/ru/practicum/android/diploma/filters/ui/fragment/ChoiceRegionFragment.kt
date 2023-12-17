@@ -4,6 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,6 +41,8 @@ class ChoiceRegionFragment : BindingFragment<FragmentChoiceRegionBinding>() {
         }
         binding.rvRegions.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         binding.rvRegions.adapter = adapter
+        setRegionSearchTextWatcher()
+        setEditorActionListener()
     }
 
     override fun onDestroyView() {
@@ -88,5 +95,56 @@ class ChoiceRegionFragment : BindingFragment<FragmentChoiceRegionBinding>() {
         binding.groupEmpty.visibility = View.GONE
         binding.groupError.visibility = View.GONE
         adapter?.submitList(state.regions)
+    }
+
+    private fun setRegionSearchTextWatcher() {
+        binding.etSearchRegion.doOnTextChanged { text, _, _, _ ->
+            if (!text.isNullOrBlank()) {
+                search(text.toString())
+                setEndIconClear()
+
+            } else {
+                setEndIconSearch()
+                viewModel.getRegions()
+            }
+        }
+    }
+
+    private fun search(text: String) {
+        viewModel.search(text)
+    }
+
+    private fun setEndIconClear() {
+        binding.tilSearchRegion.endIconDrawable =
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_clear)
+        binding.tilSearchRegion.setEndIconOnClickListener {
+            binding.etSearchRegion.text?.clear()
+            hideKeyboard()
+        }
+    }
+
+    private fun hideKeyboard() {
+        val keyboard =
+            requireActivity().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+        keyboard.hideSoftInputFromWindow(binding.etSearchRegion.windowToken, 0)
+    }
+
+    private fun setEndIconSearch() {
+        binding.tilSearchRegion.endIconDrawable =
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_search)
+    }
+
+    private fun setEditorActionListener() {
+        binding.etSearchRegion.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                val text = binding.etSearchRegion.text
+                if (text != null) {
+                    search(text.toString())
+                }
+                binding.etSearchRegion.clearFocus()
+                true
+            }
+            false
+        }
     }
 }

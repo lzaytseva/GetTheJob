@@ -14,14 +14,14 @@ import ru.practicum.android.diploma.core.domain.models.Filters
 import ru.practicum.android.diploma.di.RepositoryModule
 import ru.practicum.android.diploma.filters.domain.model.Country
 import ru.practicum.android.diploma.util.Resource
+import ru.practicum.android.diploma.util.debounce
 import javax.inject.Inject
 import javax.inject.Named
 
 @HiltViewModel
 class ChoiceRegionViewModel @Inject constructor(
     private val regionsByIdRepo: GetDataByIdRepo<Resource<List<Country>>>,
-    @Named(RepositoryModule.REGIONS_REPOSITORY_IMPL)
-    private val allRegionsRepo: GetDataRepo<Resource<List<Country>>>,
+    @Named(RepositoryModule.REGIONS_REPOSITORY_IMPL) private val allRegionsRepo: GetDataRepo<Resource<List<Country>>>,
     private val getFiltersRepository: GetDataRepo<Filters>,
     private val saveFiltersRepository: SaveDataRepo<Filters>,
 ) : ViewModel() {
@@ -29,6 +29,12 @@ class ChoiceRegionViewModel @Inject constructor(
     private val _state = MutableLiveData<ChoiceRegionScreenState>()
     val state: LiveData<ChoiceRegionScreenState>
         get() = _state
+    private var lastSearchedText: String? = null
+    private val searchDebounce: (String) -> Unit =
+        debounce(SEARCH_DELAY_IN_MILLIS, viewModelScope, true) { searchText ->
+            searchRequest(searchText)
+        }
+    private var regions: List<Country> = emptyList()
 
     init {
         _state.postValue(ChoiceRegionScreenState.Loading)
@@ -45,6 +51,10 @@ class ChoiceRegionViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun getRegions() {
+        _state.postValue(ChoiceRegionScreenState.Content(regions))
     }
 
     private suspend fun searchAllRegions() {
@@ -66,6 +76,7 @@ class ChoiceRegionViewModel @Inject constructor(
                     _state.postValue(ChoiceRegionScreenState.Error)
                 } else {
                     _state.postValue(ChoiceRegionScreenState.Content(regions = resource.data))
+                    regions = resource.data
                 }
             }
 
@@ -93,5 +104,29 @@ class ChoiceRegionViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    fun search(text: String) {
+        if ((state.value is ChoiceRegionScreenState.Content || state.value is ChoiceRegionScreenState.Empty) &&
+            text != lastSearchedText
+        ) {
+            searchDebounce(text)
+            lastSearchedText = text
+        }
+    }
+
+    private fun searchRequest(text: String) {
+        val contentList = regions.filter { item ->
+            item.name.lowercase().contains(text.lowercase())
+        }
+        if (contentList.isEmpty()) {
+            _state.postValue(ChoiceRegionScreenState.Empty)
+        } else {
+            _state.postValue(ChoiceRegionScreenState.Content(contentList))
+        }
+    }
+
+    companion object {
+        const val SEARCH_DELAY_IN_MILLIS = 2000L
     }
 }
