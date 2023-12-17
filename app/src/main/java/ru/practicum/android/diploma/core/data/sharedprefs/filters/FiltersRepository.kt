@@ -24,6 +24,10 @@ class FiltersRepository(
         sharedPreferences.edit().putString(FILTERS_KEY, filtersJson).apply()
     }
 
+    fun clear() {
+        sharedPreferences.edit().remove(FILTERS_KEY).apply()
+    }
+
     companion object {
         private const val FILTERS_KEY = "FiltersKey"
     }
