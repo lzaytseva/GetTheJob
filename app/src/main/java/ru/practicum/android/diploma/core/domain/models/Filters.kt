@@ -1,6 +1,6 @@
 package ru.practicum.android.diploma.core.domain.models
 
-data class Filters(
+    data class Filters(
     val regionId: String?,
     val countryId: String?,
     val salary: String?,

@@ -4,18 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentChoiceWorkplaceBinding
+import ru.practicum.android.diploma.filters.presentation.ChoiceWorkplaceScreenState
 import ru.practicum.android.diploma.filters.presentation.ChoiceWorkplaceViewModel
 import ru.practicum.android.diploma.filters.ui.util.TextInputLayoutUtils
 import ru.practicum.android.diploma.util.BindingFragment
 import ru.practicum.android.diploma.util.ToolbarUtils
 
+@AndroidEntryPoint
 class ChoiceWorkplaceFragment : BindingFragment<FragmentChoiceWorkplaceBinding>() {
 
     private val viewModel: ChoiceWorkplaceViewModel by viewModels()
@@ -34,6 +38,16 @@ class ChoiceWorkplaceFragment : BindingFragment<FragmentChoiceWorkplaceBinding>(
             val action = ChoiceWorkplaceFragmentDirections.actionChoiceWorkplaceFragmentToChoiceCountryFragment()
             findNavController().navigate(action)
         }
+
+        viewModel.screenState.observe(viewLifecycleOwner) { state ->
+            showFiltersFields(state)
+        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getFilters()
     }
 
     private fun configureToolbar() {
@@ -124,5 +138,13 @@ class ChoiceWorkplaceFragment : BindingFragment<FragmentChoiceWorkplaceBinding>(
                 editText.text?.clear()
             }
         }
+    }
+
+    private fun showFiltersFields(screenState: ChoiceWorkplaceScreenState) {
+        binding.tilCountry.editText?.setText("AAAAAAAAAAAAAAAAAA")
+
+//        if (!screenState.country.isNullOrBlank()) {
+//            binding.etCountry.setText(screenState.country, TextView.BufferType.EDITABLE)
+//        }
     }
 }
