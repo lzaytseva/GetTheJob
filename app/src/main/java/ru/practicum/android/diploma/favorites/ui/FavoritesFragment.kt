@@ -1,12 +1,16 @@
 package ru.practicum.android.diploma.favorites.ui
 
+import android.graphics.Canvas
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,6 +21,9 @@ import ru.practicum.android.diploma.favorites.presentation.FavoritesState
 import ru.practicum.android.diploma.favorites.presentation.FavoritesViewModel
 import ru.practicum.android.diploma.search.ui.adapter.VacanciesAdapter
 import ru.practicum.android.diploma.util.BindingFragment
+
+private const val ITEM_VIEW_WIDTH_DIVIDER = 3
+private const val ITEM_VIEW_HEIGHT_DIVIDER = 2.8
 
 @AndroidEntryPoint
 class FavoritesFragment : BindingFragment<FragmentFavoritesBinding>() {
@@ -40,6 +47,9 @@ class FavoritesFragment : BindingFragment<FragmentFavoritesBinding>() {
         }
         binding.rvVacancies.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         binding.rvVacancies.adapter = vacanciesAdapter
+
+        val itemTouchHelper = ItemTouchHelper(getSwipeCallback())
+        itemTouchHelper.attachToRecyclerView(binding.rvVacancies)
     }
 
     override fun onDestroyView() {
@@ -80,5 +90,65 @@ class FavoritesFragment : BindingFragment<FragmentFavoritesBinding>() {
         binding.groupEmpty.visibility = View.VISIBLE
         binding.groupError.visibility = View.GONE
         binding.rvVacancies.visibility = View.GONE
+    }
+
+    private fun getSwipeCallback(): ItemTouchHelper.SimpleCallback {
+        return object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.RIGHT
+        ) {
+
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val vacancyId = vacanciesAdapter?.getItemByPosition(viewHolder.adapterPosition)?.id
+                if (!vacancyId.isNullOrBlank()) {
+                    viewModel.deleteFromFavorite(vacancyId)
+                }
+            }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                val trashBinIcon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_delete)
+
+                c.clipRect(0f, viewHolder.itemView.top.toFloat(), dX, viewHolder.itemView.bottom.toFloat())
+
+                if (dX < viewHolder.itemView.width / ITEM_VIEW_WIDTH_DIVIDER) {
+                    c.drawColor(ContextCompat.getColor(requireContext(), R.color.favorite_delete_bg))
+                } else {
+                    c.drawColor(ContextCompat.getColor(requireContext(), R.color.soft_red))
+                }
+
+                val listItemHeight = (viewHolder.itemView.height / ITEM_VIEW_HEIGHT_DIVIDER).toInt()
+
+                if (trashBinIcon != null) {
+                    trashBinIcon.bounds = Rect(
+                        listItemHeight,
+                        viewHolder.itemView.top + listItemHeight,
+                        listItemHeight + trashBinIcon.intrinsicWidth,
+                        viewHolder.itemView.top + trashBinIcon.intrinsicHeight
+                            + listItemHeight
+                    )
+                }
+
+                trashBinIcon?.draw(c)
+
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+            }
+
+        }
     }
 }
