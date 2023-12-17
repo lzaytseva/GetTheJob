@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentChoiceRegionBinding
 import ru.practicum.android.diploma.filters.presentation.ChoiceRegionScreenState
@@ -16,6 +17,7 @@ import ru.practicum.android.diploma.filters.ui.adapter.CountryAdapter
 import ru.practicum.android.diploma.util.BindingFragment
 import ru.practicum.android.diploma.util.ToolbarUtils
 
+@AndroidEntryPoint
 class ChoiceRegionFragment : BindingFragment<FragmentChoiceRegionBinding>() {
 
     private val viewModel: ChoiceRegionViewModel by viewModels()
