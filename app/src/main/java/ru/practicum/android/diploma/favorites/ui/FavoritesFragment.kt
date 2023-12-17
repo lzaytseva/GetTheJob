@@ -119,20 +119,24 @@ class FavoritesFragment : BindingFragment<FragmentFavoritesBinding>() {
                 actionState: Int,
                 isCurrentlyActive: Boolean
             ) {
+                val itemViewWidthDivider = 3
+                val itemViewHeightDivider = 2.8
                 val trashBinIcon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_delete)
 
                 c.clipRect(
-                    0f, viewHolder.itemView.top.toFloat(),
-                    dX, viewHolder.itemView.bottom.toFloat()
+                    0f,
+                    viewHolder.itemView.top.toFloat(),
+                    dX,
+                    viewHolder.itemView.bottom.toFloat()
                 )
 
-                if (dX < viewHolder.itemView.width / 3) {
+                if (dX < viewHolder.itemView.width / itemViewWidthDivider) {
                     c.drawColor(ContextCompat.getColor(requireContext(), R.color.favorite_delete_bg))
                 } else {
                     c.drawColor(ContextCompat.getColor(requireContext(), R.color.soft_red))
                 }
 
-                val listItemHeight = (viewHolder.itemView.height / 2.8).toInt()
+                val listItemHeight = (viewHolder.itemView.height / itemViewHeightDivider).toInt()
 
                 if (trashBinIcon != null) {
                     trashBinIcon.bounds = Rect(
