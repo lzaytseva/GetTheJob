@@ -8,6 +8,6 @@ data class Filters(
     val salary: String?,
     val salaryFlag: Boolean?,
     val industryId: String?,
-    val industryName: String,
+    val industryName: String?,
     val currency: String?
 )
