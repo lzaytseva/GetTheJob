@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isGone
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -33,6 +34,7 @@ class ChoiceWorkplaceFragment : BindingFragment<FragmentChoiceWorkplaceBinding>(
         setFieldsTextWatchers()
         configureCountryField()
         configureRegionField()
+        setBtnSelectClickListener()
 
         binding.etCountry.setOnClickListener {
             val action = ChoiceWorkplaceFragmentDirections.actionChoiceWorkplaceFragmentToChoiceCountryFragment()
@@ -41,6 +43,7 @@ class ChoiceWorkplaceFragment : BindingFragment<FragmentChoiceWorkplaceBinding>(
 
         viewModel.screenState.observe(viewLifecycleOwner) { state ->
             showFiltersFields(state)
+            setBtnSelectVisible(state.isBtnSelectVisible)
         }
 
         binding.etRegion.setOnClickListener {
@@ -65,9 +68,11 @@ class ChoiceWorkplaceFragment : BindingFragment<FragmentChoiceWorkplaceBinding>(
     private fun setFieldsTextWatchers() {
         binding.etCountry.doOnTextChanged { _, _, _, _ ->
             configureCountryField()
+            updateBtnSelectVisibility()
         }
         binding.etRegion.doOnTextChanged { _, _, _, _ ->
             configureRegionField()
+            updateBtnSelectVisibility()
         }
     }
 
@@ -148,6 +153,22 @@ class ChoiceWorkplaceFragment : BindingFragment<FragmentChoiceWorkplaceBinding>(
         if (!screenState.country.isNullOrBlank()) {
             binding.etCountry.setText(screenState.country, TextView.BufferType.EDITABLE)
             binding.etRegion.setText(screenState.region, TextView.BufferType.EDITABLE)
+        }
+    }
+
+    private fun setBtnSelectVisible(isVisible: Boolean) {
+        binding.btnSelect.isGone = !isVisible
+    }
+
+    private fun setBtnSelectClickListener() {
+        binding.btnSelect.setOnClickListener {
+            findNavController().navigateUp()
+        }
+    }
+
+    private fun updateBtnSelectVisibility() {
+        if (binding.etRegion.text.isNullOrBlank() && binding.etCountry.text.isNullOrBlank()) {
+            binding.btnSelect.isGone = true
         }
     }
 }
