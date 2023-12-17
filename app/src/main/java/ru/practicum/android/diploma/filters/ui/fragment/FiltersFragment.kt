@@ -14,7 +14,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
-import ru.practicum.android.diploma.core.domain.models.Filters
 import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
 import ru.practicum.android.diploma.filters.presentation.FiltersViewModel
 import ru.practicum.android.diploma.filters.presentation.state.FiltersScreenState
@@ -45,17 +44,19 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
 
     private fun observeViewModel() {
         viewModel.state.observe(viewLifecycleOwner) {
-            if (it is FiltersScreenState.Content) {
-                setFiltersValues(it.filters)
+            if (it is FiltersScreenState.Settings) {
+                setFiltersValues(it)
                 updateButtonsVisibility()
             }
         }
     }
 
-    private fun setFiltersValues(filters: Filters) {
+    private fun setFiltersValues(settings: FiltersScreenState.Settings) {
         with(binding) {
-            etIndustry.setText(filters.industryName)
-
+            etIndustry.setText(settings.industry)
+            etSalary.setText(settings.salary)
+            etPlace.setText(settings.workPlace)
+            checkBoxSalary.isChecked = settings.onlyWithSalary
         }
     }
 
