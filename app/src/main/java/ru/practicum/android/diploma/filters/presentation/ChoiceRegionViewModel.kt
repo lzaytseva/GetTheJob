@@ -34,7 +34,7 @@ class ChoiceRegionViewModel @Inject constructor(
         debounce(SEARCH_DELAY_IN_MILLIS, viewModelScope, true) { searchText ->
             searchRequest(searchText)
         }
-    private var regions: List<Country>? = null
+    private var regions: List<Country> = emptyList()
 
     init {
         _state.postValue(ChoiceRegionScreenState.Loading)
@@ -54,9 +54,7 @@ class ChoiceRegionViewModel @Inject constructor(
     }
 
     fun getRegions() {
-        if (regions != null) {
-            _state.postValue(ChoiceRegionScreenState.Content(regions!!))
-        }
+        _state.postValue(ChoiceRegionScreenState.Content(regions))
     }
 
     private suspend fun searchAllRegions() {
@@ -118,13 +116,14 @@ class ChoiceRegionViewModel @Inject constructor(
     }
 
     private fun searchRequest(text: String) {
-        _state.postValue(
-            ChoiceRegionScreenState.Content(
-                (state.value as ChoiceRegionScreenState.Content).regions.filter { item ->
-                    item.name.lowercase().contains(text.lowercase())
-                }
-            )
-        )
+        val contentList = regions.filter { item ->
+            item.name.lowercase().contains(text.lowercase())
+        }
+        if (contentList.isEmpty()) {
+            _state.postValue(ChoiceRegionScreenState.Empty)
+        } else {
+            _state.postValue(ChoiceRegionScreenState.Content(contentList))
+        }
     }
 
     companion object {
