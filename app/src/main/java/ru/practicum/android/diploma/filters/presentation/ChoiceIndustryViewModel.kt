@@ -33,6 +33,8 @@ class ChoiceIndustryViewModel @Inject constructor(
         }
     private var lastSearchedText: String? = null
 
+    private var currentFilters: Filters? = null
+
     private val _state = MutableLiveData<IndustryScreenState>()
     val state: LiveData<IndustryScreenState>
         get() = _state
@@ -45,8 +47,12 @@ class ChoiceIndustryViewModel @Inject constructor(
                     applyBtnVisible = lastSelectedIndustry != null
                 )
             )
-            return
+        } else {
+            loadList()
         }
+    }
+
+    private fun loadList() {
         viewModelScope.launch {
             _state.postValue(IndustryScreenState.Loading)
             industryRepository.get().collect {
@@ -60,6 +66,7 @@ class ChoiceIndustryViewModel @Inject constructor(
                             _state.postValue(IndustryScreenState.Error(ErrorType.NO_CONTENT))
                         } else {
                             originalList.addAll(it.data)
+                            selectIndustryFromSettings()
                             _state.postValue(
                                 IndustryScreenState.Content(
                                     industries = originalList,
@@ -75,6 +82,25 @@ class ChoiceIndustryViewModel @Inject constructor(
         }
     }
 
+    private fun selectIndustryFromSettings() {
+        loadFiltersSettings()
+        val name = currentFilters?.industryName
+        val id = currentFilters?.industryId
+        if (name != null && id != null) {
+            val industry = Industry(id, name)
+            lastSelectedIndex = originalList.indexOf(industry)
+            lastSelectedIndustry = industry.copy(selected = true)
+            originalList[lastSelectedIndex] = lastSelectedIndustry!!
+        }
+    }
+
+    private fun loadFiltersSettings() {
+        viewModelScope.launch {
+            getFiltersRepository.get().collect {
+                currentFilters = it
+            }
+        }
+    }
 
     fun search(searchText: String) {
         if (searchText != lastSearchedText) {
@@ -143,24 +169,22 @@ class ChoiceIndustryViewModel @Inject constructor(
 
     fun saveIndustry() {
         viewModelScope.launch {
-            getFiltersRepository.get().collect() { currentFilters ->
-                val updatedFilters = currentFilters?.copy(
+            val updatedFilters = currentFilters?.copy(
+                industryId = lastSelectedIndustry?.id,
+                industryName = lastSelectedIndustry?.name
+            )
+                ?: Filters(
+                    regionId = null,
+                    regionName = null,
+                    countryId = null,
+                    countryName = null,
+                    salary = null,
+                    salaryFlag = null,
                     industryId = lastSelectedIndustry?.id,
-                    industryName = lastSelectedIndustry?.name
+                    industryName = lastSelectedIndustry?.name,
+                    currency = null
                 )
-                    ?: Filters(
-                        regionId = null,
-                        regionName = null,
-                        countryId = null,
-                        countryName = null,
-                        salary = null,
-                        salaryFlag = null,
-                        industryId = lastSelectedIndustry?.id,
-                        industryName = lastSelectedIndustry?.name,
-                        currency = null
-                    )
-                saveFiltersRepository.save(updatedFilters)
-            }
+            saveFiltersRepository.save(updatedFilters)
         }
     }
 
