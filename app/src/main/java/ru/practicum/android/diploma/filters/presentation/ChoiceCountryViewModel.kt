@@ -1,7 +1,6 @@
 package ru.practicum.android.diploma.filters.presentation
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,13 +13,16 @@ import ru.practicum.android.diploma.core.domain.api.GetDataRepo
 import ru.practicum.android.diploma.core.domain.api.SaveDataRepo
 import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.core.domain.models.Filters
+import ru.practicum.android.diploma.di.RepositoryModule
 import ru.practicum.android.diploma.filters.domain.model.Country
 import ru.practicum.android.diploma.util.Resource
 import ru.practicum.android.diploma.util.debounce
 import javax.inject.Inject
+import javax.inject.Named
 
 @HiltViewModel
 class ChoiceCountryViewModel @Inject constructor(
+    @Named(RepositoryModule.COUNTRIES_REPOSITORY_IMPL)
     private val countryRepository: GetDataRepo<Resource<List<Country>>>,
     private val getFiltersRepository: GetDataRepo<Filters>,
     private val saveFiltersRepository: SaveDataRepo<Filters>,
