@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.filters.presentation
+package ru.practicum.android.diploma.filters.presentation.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.LiveData
@@ -15,6 +15,7 @@ import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.core.domain.models.Filters
 import ru.practicum.android.diploma.di.RepositoryModule
 import ru.practicum.android.diploma.filters.domain.model.Country
+import ru.practicum.android.diploma.filters.presentation.state.ChoiceCountryScreenState
 import ru.practicum.android.diploma.util.Resource
 import ru.practicum.android.diploma.util.debounce
 import javax.inject.Inject

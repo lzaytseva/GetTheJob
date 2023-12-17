@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.filters.presentation
+package ru.practicum.android.diploma.filters.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,6 +13,7 @@ import ru.practicum.android.diploma.core.domain.api.SaveDataRepo
 import ru.practicum.android.diploma.core.domain.models.Filters
 import ru.practicum.android.diploma.di.RepositoryModule
 import ru.practicum.android.diploma.filters.domain.model.Country
+import ru.practicum.android.diploma.filters.presentation.state.ChoiceRegionScreenState
 import ru.practicum.android.diploma.util.Resource
 import ru.practicum.android.diploma.util.debounce
 import javax.inject.Inject
