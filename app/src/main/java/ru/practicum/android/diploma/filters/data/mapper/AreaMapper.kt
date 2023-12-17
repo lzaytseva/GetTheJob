@@ -10,7 +10,7 @@ object AreaMapper {
             Country(
                 id = region.id,
                 name = region.name,
-                parentId = if (region.parentId == "null") {
+                parentId = if (region.parentId.trim() == "null") {
                     null
                 } else {
                     region.parentId
