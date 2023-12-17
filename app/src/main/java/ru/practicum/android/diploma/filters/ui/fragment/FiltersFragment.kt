@@ -62,7 +62,7 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
     private fun setBtnApplyClickListener() {
         with(binding) {
             btnApplyChanges.setOnClickListener {
-                // Сохранить настройки в SP
+                // Выполнить поиск с актуальными настройками
             }
         }
     }
@@ -71,7 +71,7 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
         binding.btnDiscardChanges.setOnClickListener {
             clearFields()
             setButtonsVisibility(isVisible = false)
-            // И удалить настрйоки из sp
+            viewModel.clearFilters()
         }
     }
 
