@@ -107,7 +107,7 @@ class ChoiceRegionViewModel @Inject constructor(
     }
 
     fun search(text: String) {
-        if (state.value is ChoiceRegionScreenState.Content) {
+        if (state.value is ChoiceRegionScreenState.Content || state.value is ChoiceRegionScreenState.Empty) {
             if (text != lastSearchedText) {
                 searchDebounce(text)
                 lastSearchedText = text
