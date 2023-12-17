@@ -43,6 +43,10 @@ class ChoiceWorkplaceFragment : BindingFragment<FragmentChoiceWorkplaceBinding>(
             showFiltersFields(state)
         }
 
+        binding.etRegion.setOnClickListener {
+            val action = ChoiceWorkplaceFragmentDirections.actionChoiceWorkplaceFragmentToChoiceRegionFragment()
+            findNavController().navigate(action)
+        }
     }
 
     override fun onResume() {
