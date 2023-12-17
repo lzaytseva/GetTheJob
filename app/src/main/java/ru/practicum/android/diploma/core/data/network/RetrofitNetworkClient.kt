@@ -132,16 +132,15 @@ class RetrofitNetworkClient(
     private suspend fun getRegionsById(id: String): Response {
         return try {
             val response = hhService.getAreaById(id)
-            if (response.body() != null) {
-                if (response.body()!!.parentId != null) {
-                    getRegionsById(response.body()!!.parentId!!)
-                } else {
-                    CountryByIdResponse(response.body()!!).apply { resultCode = CODE_SUCCESS }
-                }
+            if (response.body()!!.parentId != null) {
+                getRegionsById(response.body()!!.parentId!!)
             } else {
-                Response().apply { resultCode = CODE_SERVER_ERROR }
+                CountryByIdResponse(response.body()!!).apply { resultCode = CODE_SUCCESS }
             }
         } catch (e: HttpException) {
+            Log.e(TAG, e.toString())
+            Response().apply { resultCode = CODE_SERVER_ERROR }
+        } catch (e: NullPointerException) {
             Log.e(TAG, e.toString())
             Response().apply { resultCode = CODE_SERVER_ERROR }
         }
