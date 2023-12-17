@@ -12,13 +12,17 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
+import ru.practicum.android.diploma.core.domain.models.Filters
 import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
 import ru.practicum.android.diploma.filters.presentation.FiltersViewModel
+import ru.practicum.android.diploma.filters.presentation.state.FiltersScreenState
 import ru.practicum.android.diploma.filters.ui.util.TextInputLayoutUtils
 import ru.practicum.android.diploma.util.BindingFragment
 import ru.practicum.android.diploma.util.ToolbarUtils
 
+@AndroidEntryPoint
 class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
 
     private val viewModel: FiltersViewModel by viewModels()
@@ -28,12 +32,31 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.loadFilters()
+        observeViewModel()
+
         setBtnApplyClickListener()
         setBtnDiscardClickListener()
         configureSalaryField()
         configureFiltersFields()
-        updateButtonsVisibility()
         configureToolbar()
+    }
+
+    private fun observeViewModel() {
+        viewModel.state.observe(viewLifecycleOwner) {
+            if (it is FiltersScreenState.Content) {
+                setFiltersValues(it.filters)
+                updateButtonsVisibility()
+            }
+        }
+    }
+
+    private fun setFiltersValues(filters: Filters) {
+        with (binding) {
+            etIndustry.setText(filters.industryName)
+
+        }
     }
 
     private fun setBtnApplyClickListener() {
@@ -46,8 +69,6 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
 
     private fun setBtnDiscardClickListener() {
         binding.btnDiscardChanges.setOnClickListener {
-            // Вот эти два метода вероятно не понадобятся, если будет подписка на обновления SP и будут
-            // устанавливаться пустые строки, тогда сработают TextWatchers
             clearFields()
             setButtonsVisibility(isVisible = false)
             // И удалить настрйоки из sp

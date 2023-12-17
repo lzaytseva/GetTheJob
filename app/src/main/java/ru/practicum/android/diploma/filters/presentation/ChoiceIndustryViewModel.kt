@@ -144,7 +144,10 @@ class ChoiceIndustryViewModel @Inject constructor(
     fun saveIndustry() {
         viewModelScope.launch {
             getFiltersRepository.get().collect() { currentFilters ->
-                val updatedFilters = currentFilters?.copy(industryId = lastSelectedIndustry?.id)
+                val updatedFilters = currentFilters?.copy(
+                    industryId = lastSelectedIndustry?.id,
+                    industryName = lastSelectedIndustry?.name
+                )
                     ?: Filters(
                         regionId = null,
                         regionName = null,
