@@ -21,6 +21,7 @@ import ru.practicum.android.diploma.favorites.data.FavoritesVacancyListRepositor
 import ru.practicum.android.diploma.favorites.domain.api.FavoritesVacancyListRepository
 import ru.practicum.android.diploma.filters.data.repository.CountriesRepositoryImpl
 import ru.practicum.android.diploma.filters.data.repository.IndustriesRepositoryImpl
+import ru.practicum.android.diploma.filters.data.repository.RegionsRepositoryImpl
 import ru.practicum.android.diploma.filters.domain.model.Country
 import ru.practicum.android.diploma.filters.domain.model.Industry
 import ru.practicum.android.diploma.search.data.repository.SearchVacanciesRepository
@@ -110,5 +111,23 @@ class RepositoryModule {
     @Singleton
     fun provideSaveFiltersRepo(filtersRepo: FiltersRepository): SaveDataRepo<Filters> {
         return filtersRepo
+    }
+
+    @Provides
+    @Singleton
+    fun provideRegionsRepository(networkClient: NetworkClient): RegionsRepositoryImpl {
+        return RegionsRepositoryImpl(networkClient)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetDataByIdRepo(regionsRepositoryImpl: RegionsRepositoryImpl): GetDataByIdRepo<Resource<List<Country>>> {
+        return regionsRepositoryImpl
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetDataRepo(regionsRepositoryImpl: RegionsRepositoryImpl): GetDataRepo<Resource<List<Country>>> {
+        return regionsRepositoryImpl
     }
 }
