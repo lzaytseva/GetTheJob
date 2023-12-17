@@ -10,15 +10,15 @@ import ru.practicum.android.diploma.core.data.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.core.domain.api.GetDataByIdRepo
 import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.search.data.responses.VacancySearchResponse
-import ru.practicum.android.diploma.search.domain.model.VacancyInList
+import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.search.util.toVacancyInList
 import ru.practicum.android.diploma.util.Resource
 
 class SimilarVacanciesRepoImpl(
     private val networkClient: NetworkClient
-) : GetDataByIdRepo<Resource<List<VacancyInList>>> {
+) : GetDataByIdRepo<Resource<List<Vacancy>>> {
 
-    override fun getById(id: String): Flow<Resource<List<VacancyInList>>> = flow {
+    override fun getById(id: String): Flow<Resource<List<Vacancy>>> = flow {
         val response = networkClient.doRequest(SimilarVacanciesSearchRequest(id))
         when (response.resultCode) {
             RetrofitNetworkClient.CODE_NO_INTERNET -> emit(Resource.Error(ErrorType.NO_INTERNET))

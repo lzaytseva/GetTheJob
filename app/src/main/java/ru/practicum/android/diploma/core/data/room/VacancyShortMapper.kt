@@ -1,11 +1,11 @@
 package ru.practicum.android.diploma.core.data.room
 
 import ru.practicum.android.diploma.core.data.room.entity.VacancyShort
-import ru.practicum.android.diploma.search.domain.model.VacancyInList
+import ru.practicum.android.diploma.search.domain.model.Vacancy
 
 object VacancyShortMapper {
 
-    fun map(vacancyShort: VacancyShort): VacancyInList = VacancyInList(
+    fun map(vacancyShort: VacancyShort): Vacancy = Vacancy(
         id = vacancyShort.vacancyId,
         name = vacancyShort.name,
         salaryCurrency = vacancyShort.salaryCurrency,

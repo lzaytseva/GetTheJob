@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.core.domain.api.SearchRepo
 import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.search.domain.model.SearchResult
-import ru.practicum.android.diploma.search.domain.model.VacancyInList
+import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.search.presentation.SearchScreenState.Content
 import ru.practicum.android.diploma.search.presentation.SearchScreenState.Error
 import ru.practicum.android.diploma.search.presentation.SearchScreenState.Loading
@@ -27,7 +27,7 @@ class SearchViewModel @Inject constructor(
     private var pages = 0
     private var currentPage = 0
     private var found = 0
-    private val vacancies = mutableListOf<VacancyInList>()
+    private val vacancies = mutableListOf<Vacancy>()
     private var isNextPageLoading = false
 
     // В эту переменную сохраняется текст первого запроса
