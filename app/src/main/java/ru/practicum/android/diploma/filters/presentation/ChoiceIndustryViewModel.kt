@@ -104,69 +104,34 @@ class ChoiceIndustryViewModel @Inject constructor(
     }
 
     fun updateIndustrySelected(industry: Industry, position: Int, currentList: List<Industry>? = null) {
-        // Не смотрите ради христа в этот код, это высер моего сознания
+        val newList = currentList?.toMutableList()
+        val updatedIndustry = industry.copy(selected = !industry.selected)
 
-        // Если находимся на полном списке, а не результатх поиска
-        if (currentList == null) {
-            updateOriginalList(industry, position)
-            // Если выделяем отрасль на списке результатов отрасли
-        } else {
-            updateBothLists(industry, position, currentList)
-        }
-    }
-
-    private fun updateOriginalList(industry: Industry, position: Int) {
-        val unselectedIndustry = industry.copy(selected = false)
-        val selectedIndustry = industry.copy(selected = true)
-
-        // Если отрасль была выбрана, снимаем с нее выделение
-        if (industry.selected) {
-            originalList[position] = unselectedIndustry
-            lastSelectedIndustry = null
-            lastSelectedIndex = -1
-        } else {
-            // Если хотим выбрать тек. отрасль, то сначала снимаем выделение с последней выбранной
-            if (lastSelectedIndustry != null) {
-                originalList[lastSelectedIndex] = lastSelectedIndustry!!.copy(selected = false)
-            }
-            // делаем новую выбранной и меняем последнюю выбранную
-            originalList[position] = selectedIndustry
-            lastSelectedIndustry = selectedIndustry
-            lastSelectedIndex = position
-        }
-        _state.postValue(
-            IndustryScreenState.Content(
-                industries = originalList,
-                applyBtnVisible = lastSelectedIndustry != null
-            )
-        )
-    }
-
-    private fun updateBothLists(industry: Industry, position: Int, currentList: List<Industry>) {
-        val selectedIndustry = industry.copy(selected = true)
-        val newList = currentList.toMutableList()
-
-        if (industry.selected) {
-            newList[position] = industry.copy(selected = false)
+        if (lastSelectedIndustry != null) {
+            // Убираем выделение с последней отрасли
             originalList[lastSelectedIndex] = lastSelectedIndustry!!.copy(selected = false)
+            val index = newList?.indexOf(lastSelectedIndustry)
+            if (index != null && index != -1) {
+                newList[index] = lastSelectedIndustry!!.copy(selected = false)
+            }
+        }
+        if (industry != lastSelectedIndustry) {
+            // Выделяем новую область, если она отличается от последней выбранной
+            val index = if (newList != null) originalList.indexOf(industry) else position
+            originalList[index] = updatedIndustry
+            newList?.set(position, updatedIndustry)
+            lastSelectedIndustry = updatedIndustry
+            lastSelectedIndex = index
+
+        } else {
+            // Если кликнули на ту же, то просто обнуляем значения
             lastSelectedIndustry = null
             lastSelectedIndex = -1
-        } else {
-            if (lastSelectedIndustry != null) {
-                val lastSelectedIndexCurrent = newList.indexOf(lastSelectedIndustry)
-                if (lastSelectedIndexCurrent != -1) {
-                    newList[lastSelectedIndexCurrent] = newList[lastSelectedIndexCurrent].copy(selected = false)
-                }
-                originalList[lastSelectedIndex] = lastSelectedIndustry!!.copy(selected = false)
-            }
-            lastSelectedIndex = originalList.indexOf(industry)
-            lastSelectedIndustry = selectedIndustry
-            newList[position] = selectedIndustry
-            originalList[lastSelectedIndex] = lastSelectedIndustry!!
         }
+
         _state.postValue(
             IndustryScreenState.Content(
-                industries = newList,
+                industries = newList ?: originalList,
                 applyBtnVisible = lastSelectedIndustry != null
             )
         )
