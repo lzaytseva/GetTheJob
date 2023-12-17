@@ -81,10 +81,13 @@ class ChoiceRegionViewModel @Inject constructor(
                 saveFiltersRepository.save(
                     filters?.copy(regionId = item.id) ?: Filters(
                         regionId = item.id,
+                        regionName = item.name,
                         countryId = null,
+                        countryName = null,
                         salary = null,
                         salaryFlag = null,
                         industryId = null,
+                        industryName = null,
                         currency = null
                     )
                 )
