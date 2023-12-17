@@ -22,6 +22,9 @@ import ru.practicum.android.diploma.favorites.presentation.FavoritesViewModel
 import ru.practicum.android.diploma.search.ui.adapter.VacanciesAdapter
 import ru.practicum.android.diploma.util.BindingFragment
 
+private const val ITEM_VIEW_WIDTH_DIVIDER = 3
+private const val ITEM_VIEW_HEIGHT_DIVIDER = 2.8
+
 @AndroidEntryPoint
 class FavoritesFragment : BindingFragment<FragmentFavoritesBinding>() {
 
@@ -119,24 +122,17 @@ class FavoritesFragment : BindingFragment<FragmentFavoritesBinding>() {
                 actionState: Int,
                 isCurrentlyActive: Boolean
             ) {
-                val itemViewWidthDivider = 3
-                val itemViewHeightDivider = 2.8
                 val trashBinIcon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_delete)
 
-                c.clipRect(
-                    0f,
-                    viewHolder.itemView.top.toFloat(),
-                    dX,
-                    viewHolder.itemView.bottom.toFloat()
-                )
+                c.clipRect(0f, viewHolder.itemView.top.toFloat(), dX, viewHolder.itemView.bottom.toFloat())
 
-                if (dX < viewHolder.itemView.width / itemViewWidthDivider) {
+                if (dX < viewHolder.itemView.width / ITEM_VIEW_WIDTH_DIVIDER) {
                     c.drawColor(ContextCompat.getColor(requireContext(), R.color.favorite_delete_bg))
                 } else {
                     c.drawColor(ContextCompat.getColor(requireContext(), R.color.soft_red))
                 }
 
-                val listItemHeight = (viewHolder.itemView.height / itemViewHeightDivider).toInt()
+                val listItemHeight = (viewHolder.itemView.height / ITEM_VIEW_HEIGHT_DIVIDER).toInt()
 
                 if (trashBinIcon != null) {
                     trashBinIcon.bounds = Rect(
@@ -150,15 +146,7 @@ class FavoritesFragment : BindingFragment<FragmentFavoritesBinding>() {
 
                 trashBinIcon?.draw(c)
 
-                super.onChildDraw(
-                    c,
-                    recyclerView,
-                    viewHolder,
-                    dX,
-                    dY,
-                    actionState,
-                    isCurrentlyActive
-                )
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
             }
 
         }
