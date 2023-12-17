@@ -46,7 +46,8 @@ class RegionsRepositoryImpl @Inject constructor(
             RetrofitNetworkClient.CODE_SUCCESS -> {
                 emit(
                     Resource.Success(
-                        AreaMapper.mapList((response as AllAreasResponse).areas).filter { it.parentId != null })
+                        AreaMapper.mapList((response as AllAreasResponse).areas).filter { it.parentId != null }
+                    )
                 )
             }
 
