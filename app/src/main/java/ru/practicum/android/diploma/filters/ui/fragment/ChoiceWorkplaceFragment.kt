@@ -141,10 +141,8 @@ class ChoiceWorkplaceFragment : BindingFragment<FragmentChoiceWorkplaceBinding>(
     }
 
     private fun showFiltersFields(screenState: ChoiceWorkplaceScreenState) {
-        binding.tilCountry.editText?.setText("AAAAAAAAAAAAAAAAAA")
-
-//        if (!screenState.country.isNullOrBlank()) {
-//            binding.etCountry.setText(screenState.country, TextView.BufferType.EDITABLE)
-//        }
+        if (!screenState.country.isNullOrBlank()) {
+            binding.etCountry.setText(screenState.country, TextView.BufferType.EDITABLE)
+        }
     }
 }

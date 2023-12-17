@@ -111,4 +111,10 @@ class RepositoryModule {
     fun provideSaveFiltersRepo(filtersRepo: FiltersRepository): SaveDataRepo<Filters> {
         return filtersRepo
     }
+
+    @Provides
+    @Singleton
+    fun provideGetCountryByIdRepository(networkClient: NetworkClient): GetDataByIdRepo<Resource<Country>> {
+        return CountriesRepositoryImpl(networkClient)
+    }
 }

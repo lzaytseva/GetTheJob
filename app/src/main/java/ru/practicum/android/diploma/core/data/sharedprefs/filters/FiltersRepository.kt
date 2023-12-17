@@ -16,7 +16,7 @@ class FiltersRepository(
     override fun get(): Flow<Filters?> = flow {
         sharedPreferences.getString(FILTERS_KEY, null)?.let { filtersJson ->
             emit(gson.fromJson(filtersJson, Filters::class.java))
-        }
+        } ?: emit(null)
     }
 
     override suspend fun save(data: Filters?) {
