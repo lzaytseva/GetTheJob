@@ -2,14 +2,19 @@ package ru.practicum.android.diploma.filters.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.databinding.ItemIndustryBinding
 import ru.practicum.android.diploma.filters.domain.model.Industry
 
 class IndustryAdapter(
     private val onIndustryClickListener: (Industry, Int) -> Unit
-) : ListAdapter<Industry, IndustryAdapter.IndustryViewHolder>(IndustryDiffCallback) {
+) : RecyclerView.Adapter<IndustryAdapter.IndustryViewHolder>() {
+    var industries = mutableListOf<Industry>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IndustryViewHolder {
         val binding = ItemIndustryBinding.inflate(
@@ -20,9 +25,10 @@ class IndustryAdapter(
         return IndustryViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: IndustryViewHolder, position: Int) {
-        val industry = getItem(position)
+    override fun getItemCount(): Int = industries.size
 
+    override fun onBindViewHolder(holder: IndustryViewHolder, position: Int) {
+        val industry = industries[position]
         holder.binding.checkBoxIndustry.setOnClickListener {
             onIndustryClickListener.invoke(industry, position)
         }
