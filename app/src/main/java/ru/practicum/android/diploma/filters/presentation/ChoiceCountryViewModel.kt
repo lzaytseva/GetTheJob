@@ -10,7 +10,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
+import ru.practicum.android.diploma.core.domain.api.SaveDataRepo
 import ru.practicum.android.diploma.core.domain.models.ErrorType
+import ru.practicum.android.diploma.core.domain.models.Filters
 import ru.practicum.android.diploma.di.RepositoryModule
 import ru.practicum.android.diploma.filters.domain.model.Country
 import ru.practicum.android.diploma.util.Resource
@@ -22,8 +24,9 @@ import javax.inject.Named
 class ChoiceCountryViewModel @Inject constructor(
     @Named(RepositoryModule.COUNTRIES_REPOSITORY_IMPL)
     private val countryRepository: GetDataRepo<Resource<List<Country>>>,
-    @ApplicationContext
-    private val context: Context
+    private val getFiltersRepository: GetDataRepo<Filters>,
+    private val saveFiltersRepository: SaveDataRepo<Filters>,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     private val _screenState = MutableLiveData<ChoiceCountryScreenState>()
@@ -72,6 +75,23 @@ class ChoiceCountryViewModel @Inject constructor(
 
     fun showAllCountries() {
         _screenState.value = ChoiceCountryScreenState.Content(allCountries, true)
+    }
+
+    fun selectCountry(countryId: String) {
+        viewModelScope.launch {
+            getFiltersRepository.get().collect() { currentFilters ->
+                val updatedFilters = currentFilters?.copy(countryId = countryId)
+                    ?: Filters(
+                        regionId = null,
+                        countryId = countryId,
+                        salary = null,
+                        salaryFlag = null,
+                        industryId = null,
+                        currency = null
+                    )
+                saveFiltersRepository.save(updatedFilters)
+            }
+        }
     }
 
     private fun filterDefaultCountries(countries: List<Country>): List<Country> {
