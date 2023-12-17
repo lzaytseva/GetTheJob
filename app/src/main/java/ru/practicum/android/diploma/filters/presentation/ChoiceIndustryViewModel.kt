@@ -7,7 +7,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
+import ru.practicum.android.diploma.core.domain.api.SaveDataRepo
 import ru.practicum.android.diploma.core.domain.models.ErrorType
+import ru.practicum.android.diploma.core.domain.models.Filters
 import ru.practicum.android.diploma.filters.domain.model.Industry
 import ru.practicum.android.diploma.filters.presentation.state.IndustryScreenState
 import ru.practicum.android.diploma.util.Resource
@@ -16,7 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChoiceIndustryViewModel @Inject constructor(
-    private val repository: GetDataRepo<Resource<List<Industry>>>
+    private val industryRepository: GetDataRepo<Resource<List<Industry>>>,
+    private val getFiltersRepository: GetDataRepo<Filters>,
+    private val saveFiltersRepository: SaveDataRepo<Filters>,
 ) : ViewModel() {
 
     private val originalList = mutableListOf<Industry>()
@@ -45,7 +49,7 @@ class ChoiceIndustryViewModel @Inject constructor(
         }
         viewModelScope.launch {
             _state.postValue(IndustryScreenState.Loading)
-            repository.get().collect {
+            industryRepository.get().collect {
                 when (it) {
                     is Resource.Error -> {
                         _state.postValue(IndustryScreenState.Error(it.errorType!!))
@@ -135,6 +139,23 @@ class ChoiceIndustryViewModel @Inject constructor(
                 applyBtnVisible = lastSelectedIndustry != null
             )
         )
+    }
+
+    fun saveIndustry() {
+        viewModelScope.launch {
+            getFiltersRepository.get().collect() { currentFilters ->
+                val updatedFilters = currentFilters?.copy(industryId = lastSelectedIndustry?.id)
+                    ?: Filters(
+                        regionId = null,
+                        countryId = null,
+                        salary = null,
+                        salaryFlag = null,
+                        industryId = lastSelectedIndustry?.id,
+                        currency = null
+                    )
+                saveFiltersRepository.save(updatedFilters)
+            }
+        }
     }
 
     companion object {
