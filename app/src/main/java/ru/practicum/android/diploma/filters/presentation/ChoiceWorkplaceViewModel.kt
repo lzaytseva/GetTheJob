@@ -38,7 +38,8 @@ class ChoiceWorkplaceViewModel @Inject constructor(
                     }
                     _screenState.postValue(
                         ChoiceWorkplaceScreenState(
-                            country = countryName
+                            country = countryName,
+                            region = currentFilters.regionName
                         )
                     )
                 }
@@ -51,6 +52,4 @@ class ChoiceWorkplaceViewModel @Inject constructor(
     } else {
         getCountryByIdRepository.getById(id)
     }
-
-
 }

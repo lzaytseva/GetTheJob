@@ -87,28 +87,26 @@ class ChoiceRegionViewModel @Inject constructor(
     }
 
     fun clickItem(item: Country) {
+        var firstLevelItem = regions.find {
+            it.id == item.parentId
+        }
+        if (firstLevelItem == null) {
+            firstLevelItem = regions.find {
+                it.id == item.id
+            }
+        }
         viewModelScope.launch(Dispatchers.IO) {
             getFiltersRepository.get().collect { filters ->
-                var countryItem = regions.find {
-                    it.parentId == item.parentId
-                }
-                if (countryItem?.parentId != null) {
-                    countryItem = regions.find {
-                        it.parentId == countryItem!!.parentId
-                    }
-                }
-
                 saveFiltersRepository.save(
                     filters?.copy(
                         regionId = item.id,
                         regionName = item.name,
-                        countryId = countryItem?.id,
-                        countryName = countryItem?.name
+                        countryId = firstLevelItem?.parentId,
                     ) ?: Filters(
                         regionId = item.id,
                         regionName = item.name,
-                        countryId = countryItem?.id,
-                        countryName = countryItem?.name,
+                        countryId = firstLevelItem?.id,
+                        countryName = null,
                         salary = null,
                         salaryFlag = null,
                         industryId = null,
