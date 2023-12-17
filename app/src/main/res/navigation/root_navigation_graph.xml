@@ -89,7 +89,11 @@
         android:id="@+id/choiceCountryFragment"
         android:name="ru.practicum.android.diploma.filters.ui.fragment.ChoiceCountryFragment"
         android:label="fragment_choice_country"
-        tools:layout="@layout/fragment_choice_country" />
+        tools:layout="@layout/fragment_choice_country" >
+        <action
+            android:id="@+id/action_choiceCountryFragment_to_choiceWorkplaceFragment"
+            app:destination="@id/choiceWorkplaceFragment" />
+    </fragment>
     <fragment
         android:id="@+id/choiceRegionFragment"
         android:name="ru.practicum.android.diploma.filters.ui.fragment.ChoiceRegionFragment"
