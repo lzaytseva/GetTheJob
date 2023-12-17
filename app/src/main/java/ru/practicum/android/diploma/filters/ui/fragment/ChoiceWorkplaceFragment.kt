@@ -34,6 +34,11 @@ class ChoiceWorkplaceFragment : BindingFragment<FragmentChoiceWorkplaceBinding>(
             val action = ChoiceWorkplaceFragmentDirections.actionChoiceWorkplaceFragmentToChoiceCountryFragment()
             findNavController().navigate(action)
         }
+
+        binding.etRegion.setOnClickListener {
+            val action = ChoiceWorkplaceFragmentDirections.actionChoiceWorkplaceFragmentToChoiceRegionFragment()
+            findNavController().navigate(action)
+        }
     }
 
     private fun configureToolbar() {
