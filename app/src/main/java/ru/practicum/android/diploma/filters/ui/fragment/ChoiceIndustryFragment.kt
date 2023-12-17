@@ -45,6 +45,7 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
         setEditorActionListener()
         initRecyclerView()
         configureToolbar()
+        setBtnSelectClickListener()
     }
 
     override fun onResume() {
@@ -216,6 +217,12 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
         }
     }
 
+    private fun setBtnSelectClickListener() {
+        binding.btnSelect.setOnClickListener {
+            viewModel.saveIndustry()
+            findNavController().navigateUp()
+        }
+    }
     private fun configureToolbar() {
         ToolbarUtils.configureToolbar(
             activity = requireActivity(),

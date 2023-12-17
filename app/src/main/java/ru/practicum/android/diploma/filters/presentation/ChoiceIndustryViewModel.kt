@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import ru.practicum.android.diploma.core.data.sharedprefs.filters.FiltersRepository
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
 import ru.practicum.android.diploma.core.domain.models.ErrorType
+import ru.practicum.android.diploma.core.domain.models.Filters
 import ru.practicum.android.diploma.filters.domain.model.Industry
 import ru.practicum.android.diploma.filters.presentation.state.IndustryScreenState
 import ru.practicum.android.diploma.util.Resource
@@ -16,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChoiceIndustryViewModel @Inject constructor(
-    private val repository: GetDataRepo<Resource<List<Industry>>>
+    private val industryRepository: GetDataRepo<Resource<List<Industry>>>,
+    private val filtersRepository: FiltersRepository
 ) : ViewModel() {
 
     private val originalList = mutableListOf<Industry>()
@@ -28,6 +31,8 @@ class ChoiceIndustryViewModel @Inject constructor(
             searchRequest(searchText)
         }
     private var lastSearchedText: String? = null
+
+    private var currentFilters: Filters? = null
 
     private val _state = MutableLiveData<IndustryScreenState>()
     val state: LiveData<IndustryScreenState>
@@ -41,11 +46,15 @@ class ChoiceIndustryViewModel @Inject constructor(
                     applyBtnVisible = lastSelectedIndustry != null
                 )
             )
-            return
+        } else {
+            loadList()
         }
+    }
+
+    private fun loadList() {
         viewModelScope.launch {
             _state.postValue(IndustryScreenState.Loading)
-            repository.get().collect {
+            industryRepository.get().collect {
                 when (it) {
                     is Resource.Error -> {
                         _state.postValue(IndustryScreenState.Error(it.errorType!!))
@@ -56,6 +65,7 @@ class ChoiceIndustryViewModel @Inject constructor(
                             _state.postValue(IndustryScreenState.Error(ErrorType.NO_CONTENT))
                         } else {
                             originalList.addAll(it.data)
+                            selectIndustryFromSettings()
                             _state.postValue(
                                 IndustryScreenState.Content(
                                     industries = originalList,
@@ -71,6 +81,25 @@ class ChoiceIndustryViewModel @Inject constructor(
         }
     }
 
+    private fun selectIndustryFromSettings() {
+        loadFiltersSettings()
+        val name = currentFilters?.industryName
+        val id = currentFilters?.industryId
+        if (name != null && id != null) {
+            val industry = Industry(id, name)
+            lastSelectedIndex = originalList.indexOf(industry)
+            lastSelectedIndustry = industry.copy(selected = true)
+            originalList[lastSelectedIndex] = lastSelectedIndustry!!
+        }
+    }
+
+    private fun loadFiltersSettings() {
+        viewModelScope.launch {
+            filtersRepository.get().collect {
+                currentFilters = it
+            }
+        }
+    }
 
     fun search(searchText: String) {
         if (searchText != lastSearchedText) {
@@ -135,6 +164,27 @@ class ChoiceIndustryViewModel @Inject constructor(
                 applyBtnVisible = lastSelectedIndustry != null
             )
         )
+    }
+
+    fun saveIndustry() {
+        viewModelScope.launch {
+            val updatedFilters = currentFilters?.copy(
+                industryId = lastSelectedIndustry?.id,
+                industryName = lastSelectedIndustry?.name
+            )
+                ?: Filters(
+                    regionId = null,
+                    regionName = null,
+                    countryId = null,
+                    countryName = null,
+                    salary = null,
+                    salaryFlag = null,
+                    industryId = lastSelectedIndustry?.id,
+                    industryName = lastSelectedIndustry?.name,
+                    currency = null
+                )
+            filtersRepository.save(updatedFilters)
+        }
     }
 
     companion object {

@@ -6,6 +6,7 @@
     <color name="soft_red">#F56B6C</color>
     <color name="gray">#AEAFB4</color>
     <color name="light_gray">#E6E8EB</color>
+    <color name="dark_gray">#41424C</color>
 
     <!--  цвет фона экранов и BottomNavigationView  -->
     <color name="screen_bg">@color/white</color>
@@ -32,5 +33,9 @@
     <!--  Snackbar  -->
     <color name="snackbar_bg">@color/black</color>
     <color name="snackbar_text_color">@color/white</color>
+
+    <!--  Цвет фона при удалении свайпом в первой трети  -->
+    <color name="favorite_delete_bg">@color/gray</color>
+
 
 </resources>
