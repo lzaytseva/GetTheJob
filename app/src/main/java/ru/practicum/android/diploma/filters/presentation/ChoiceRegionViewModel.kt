@@ -37,10 +37,10 @@ class ChoiceRegionViewModel @Inject constructor(
                 if (filters == null) {
                     searchAllRegions()
                 } else {
-                    if (filters.regionId == null) {
-                        searchAllRegions()
-                    } else {
-                        searchRegionsById(filters.regionId)
+                    when {
+                        filters.countryId != null -> searchRegionsById(filters.countryId)
+                        filters.regionId != null -> searchRegionsById(filters.regionId)
+                        else -> searchAllRegions()
                     }
                 }
             }
@@ -81,6 +81,7 @@ class ChoiceRegionViewModel @Inject constructor(
                 saveFiltersRepository.save(
                     filters?.copy(regionId = item.id) ?: Filters(
                         regionId = item.id,
+                        countryId = null,
                         salary = null,
                         salaryFlag = null,
                         industryId = null,
