@@ -147,10 +147,13 @@ class ChoiceIndustryViewModel @Inject constructor(
                 val updatedFilters = currentFilters?.copy(industryId = lastSelectedIndustry?.id)
                     ?: Filters(
                         regionId = null,
+                        regionName = null,
                         countryId = null,
+                        countryName = null,
                         salary = null,
                         salaryFlag = null,
                         industryId = lastSelectedIndustry?.id,
+                        industryName = lastSelectedIndustry?.name,
                         currency = null
                     )
                 saveFiltersRepository.save(updatedFilters)
