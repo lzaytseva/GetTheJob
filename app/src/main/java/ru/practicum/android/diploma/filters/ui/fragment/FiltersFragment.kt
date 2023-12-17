@@ -90,6 +90,7 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
         setSalaryCheckBoxChangeListener()
         setSalaryTextWatcher()
         setEditorActionListener()
+        setSalaryFocusChangedListener()
     }
 
     private fun configureFiltersFields() {
@@ -114,6 +115,7 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
     private fun setSalaryCheckBoxChangeListener() {
         binding.checkBoxSalary.setOnCheckedChangeListener { buttonView, isChecked ->
             updateButtonsVisibility()
+            viewModel.updateOnlyWithSalary(isChecked)
         }
     }
 
@@ -131,6 +133,14 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
                 true
             }
             false
+        }
+    }
+
+    private fun setSalaryFocusChangedListener() {
+        binding.etSalary.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                viewModel.updateSalary(binding.etSalary.text?.toString() ?: "")
+            }
         }
     }
 
