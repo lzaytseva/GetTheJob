@@ -134,12 +134,6 @@ class RepositoryModule {
         return regionsRepositoryImpl
     }
 
-    @Provides
-    @Singleton
-    fun provideGetCountryByIdRepo(networkClient: NetworkClient): GetDataByIdRepo<Resource<Country>> {
-        return CountriesRepositoryImpl(networkClient)
-    }
-
     companion object {
         const val COUNTRIES_REPOSITORY_IMPL = "CountriesRepositoryImpl"
         const val REGIONS_REPOSITORY_IMPL = "RegionsRepositoryImpl"
