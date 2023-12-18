@@ -8,5 +8,6 @@ data class Vacancy(
     val salaryTo: Int?,
     val salaryGross: Boolean?,
     val employerName: String,
-    val logo: String?
+    val logo: String?,
+    val areaName: String? = ""
 )

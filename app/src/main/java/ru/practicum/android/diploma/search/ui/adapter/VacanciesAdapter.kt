@@ -49,7 +49,8 @@ class VacanciesAdapter(
         fun bind(vacancy: Vacancy) {
             with(binding) {
                 setImage(vacancy.logo)
-                vacancyNameTextView.text = vacancy.name
+                val name = vacancy.name + ", " + vacancy.areaName
+                vacancyNameTextView.text = name
                 employerNameTextView.text = vacancy.employerName
                 salaryInfoTextView.text = getSalaryDescription(
                     itemView.resources,

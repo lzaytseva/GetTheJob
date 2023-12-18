@@ -87,4 +87,11 @@
     <string name="hint_region_edit_text">Введите регион</string>
     <string name="other_regions">Другие регионы</string>
 
+    <plurals name="search_result_message">
+        <item quantity="one">Найдена %d вакансия</item>
+        <item quantity="few">Найдено %d вакансии</item>
+        <item quantity="many">Найдено %d вакансий</item>
+        <item quantity="zero">Найдено %d вакансий</item>
+        <item quantity="other">Найдено %d вакансий</item>
+    </plurals>
 </resources>

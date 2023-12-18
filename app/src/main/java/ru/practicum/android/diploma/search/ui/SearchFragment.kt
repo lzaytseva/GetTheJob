@@ -69,7 +69,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
             when (screenState) {
                 is SearchScreenState.Loading -> hideContent(progressBarFlag = false)
                 is SearchScreenState.Error -> onError(screenState.error)
-                is SearchScreenState.Content -> onContent(screenState.content, screenState.resultMessage)
+                is SearchScreenState.Content -> onContent(screenState.content, screenState.found)
                 is SearchScreenState.LoadingNextPage -> binding.progressBar.isVisible = true
                 is SearchScreenState.LoadingNextPageError -> onLoadingPageError(screenState.error)
             }
@@ -159,9 +159,10 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
         binding.onErrorTextView.setText(stringResId)
     }
 
-    private fun onContent(content: List<Vacancy>, resultMessage: String) {
+    private fun onContent(content: List<Vacancy>, found: Int) {
         val adapter = binding.resultsListRecyclerView.adapter as? VacanciesAdapter
         adapter?.setContent(content)
+        val resultMessage = resources.getQuantityString(R.plurals.search_result_message, found, found)
         binding.resultMessageTextView.text = resultMessage
         hideContent(resultsFlag = false, resultsMessageFlag = false)
     }

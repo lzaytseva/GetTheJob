@@ -97,13 +97,13 @@ class SearchViewModel @Inject constructor(
 
             vacancies.isEmpty() -> _screenState.postValue(Error(ErrorType.NO_CONTENT))
 
-            else -> _screenState.postValue(Content(vacancies, getResultMessage(found.toString())))
+            else -> _screenState.postValue(Content(vacancies, found))
         }
     }
 
     fun switchState() {
         if (screenState.value is LoadingNextPageError) {
-            _screenState.postValue(Content(vacancies, getResultMessage(found.toString())))
+            _screenState.postValue(Content(vacancies, found))
         }
     }
 
