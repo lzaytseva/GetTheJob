@@ -1,18 +1,19 @@
 package ru.practicum.android.diploma.filters.data.mapper
 
-import ru.practicum.android.diploma.filters.data.dto.CountryDto
+import ru.practicum.android.diploma.filters.data.dto.AreaDto
 import ru.practicum.android.diploma.filters.domain.model.Country
 
 object CountryMapper {
 
-    fun map(countryDto: CountryDto) = Country(
-        id = countryDto.id,
-        name = countryDto.name
+    fun map(areasDto: AreaDto) = Country(
+        id = areasDto.id,
+        name = areasDto.name,
+        parentId = areasDto.parentId
     )
 
-    fun mapList(countriesDto: List<CountryDto>): List<Country> {
+    fun mapList(areasDto: List<AreaDto>): List<Country> {
         val countries = mutableListOf<Country>()
-        countriesDto.forEach { dto ->
+        areasDto.forEach { dto ->
             countries.add(map(dto))
         }
         return countries
