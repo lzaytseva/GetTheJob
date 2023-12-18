@@ -201,6 +201,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
                 findNavController().navigate(R.id.action_searchFragment_to_filtersFragment)
                 true
             }
+            toolbar.navigationIcon = null
         }
     }
 
