@@ -3,7 +3,9 @@ package ru.practicum.android.diploma.core.ui
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.LocaleListCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +22,8 @@ class RootActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setLocale()
+
         setContentView(binding.root)
 
         setupToolbar()
@@ -78,6 +82,11 @@ class RootActivity : AppCompatActivity() {
     private fun setupToolbar() {
         menuInflater.inflate(R.menu.toolbar_menu, binding.toolbar.menu)
         binding.toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
+    }
+
+    private fun setLocale() {
+        val localeList = LocaleListCompat.forLanguageTags("ru")
+        AppCompatDelegate.setApplicationLocales(localeList)
     }
 }
 

@@ -7,8 +7,10 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.coroutines.launch
+import ru.practicum.android.diploma.core.domain.api.GetDataRepo
 import ru.practicum.android.diploma.core.domain.api.SearchRepo
 import ru.practicum.android.diploma.core.domain.models.ErrorType
+import ru.practicum.android.diploma.core.domain.models.Filters
 import ru.practicum.android.diploma.search.domain.model.SearchResult
 import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.search.presentation.SearchScreenState.Content
@@ -22,8 +24,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val searchRepository: SearchRepo<SearchResult>
+    private val searchRepository: SearchRepo<SearchResult>,
+    private val getFiltersRepo: GetDataRepo<Filters>
 ) : ViewModel() {
+
     private var pages = 0
     private var currentPage = 0
     private var found = 0
@@ -34,11 +38,22 @@ class SearchViewModel @Inject constructor(
     private var lastSearchedText = ""
 
     private val _screenState: MutableLiveData<SearchScreenState> = MutableLiveData()
-    val screenState: LiveData<SearchScreenState> get() = _screenState
+    val screenState: LiveData<SearchScreenState>
+        get() = _screenState
 
     private val _savedQueryState: SingleLiveEvent<String> = SingleLiveEvent()
     val savedQueryState: LiveData<String>
         get() = _savedQueryState
+
+    private val _filtersState: SingleLiveEvent<Boolean> = SingleLiveEvent()
+    val filtersState: LiveData<Boolean>
+        get() = _filtersState
+
+    init {
+        viewModelScope.launch {
+            _filtersState.postValue(getFiltersRepo.get().singleOrNull()?.filtersNotNull() ?: false)
+        }
+    }
 
     private val searchRequest: (String) -> Unit = debounce(SEARCH_DELAY, viewModelScope, true) { text ->
         _screenState.postValue(Loading)
@@ -97,25 +112,26 @@ class SearchViewModel @Inject constructor(
 
             vacancies.isEmpty() -> _screenState.postValue(Error(ErrorType.NO_CONTENT))
 
-            else -> _screenState.postValue(Content(vacancies, getResultMessage(found.toString())))
+            else -> _screenState.postValue(Content(vacancies, found))
         }
     }
 
     fun switchState() {
         if (screenState.value is LoadingNextPageError) {
-            _screenState.postValue(Content(vacancies, getResultMessage(found.toString())))
+            _screenState.postValue(Content(vacancies, found))
         }
     }
 
-    private fun getResultMessage(num: String): String {
-        return when {
-            num.last() == '1' && if (num.length > 1) num[num.lastIndex - 1] != '1' else true ->
-                "Найдена $num вакансия"
-            num.last() in '2'..'4' && if (num.length > 1) num[num.lastIndex - 1] != '1' else true ->
-                "Найдено $num вакансии"
-            else -> "Найдено $num вакансий"
-        }
-    }
+    private fun Filters.filtersNotNull(): Boolean =
+        regionId != null
+            || regionName != null
+            || countryId != null
+            || countryName != null
+            || salary != null
+            || salaryFlag != null
+            || industryId != null
+            || industryName != null
+            || currency != null
 
     companion object {
         private const val SEARCH_DELAY = 2000L

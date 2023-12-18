@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.core.data.dto
 
 import com.google.gson.annotations.SerializedName
+import ru.practicum.android.diploma.core.data.dto.innerdto.AreaInVacancyResponseDto
 import ru.practicum.android.diploma.core.data.dto.innerdto.EmployerDto
 import ru.practicum.android.diploma.core.data.dto.innerdto.SalaryDto
 
@@ -10,5 +11,6 @@ data class VacancySearchDto(
     @SerializedName("salary")
     val salaryDto: SalaryDto?,
     @SerializedName("employer")
-    val employerDto: EmployerDto
+    val employerDto: EmployerDto,
+    val area: AreaInVacancyResponseDto
 )

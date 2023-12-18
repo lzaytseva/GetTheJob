@@ -22,7 +22,8 @@ fun VacancySearchDto.toVacancyInList(): Vacancy =
         salaryGross = salaryDto?.gross,
         salaryCurrency = salaryDto?.currency,
         employerName = employerDto.name,
-        logo = employerDto.logoUrlsDto?.art240
+        logo = employerDto.logoUrlsDto?.art240,
+        areaName = area.areaName
     )
 
 fun VacanciesSearchRequest.toQueryMap(): Map<String, String> = buildMap {
