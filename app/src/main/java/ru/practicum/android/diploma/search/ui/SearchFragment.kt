@@ -57,6 +57,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
     override fun onResume() {
         super.onResume()
         setFiltersVisibility(true)
+        viewModel.checkFiltersIcon()
     }
 
     override fun onPause() {
@@ -109,6 +110,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
     private fun configureSearchField() {
         searchIsNotEmpty = binding.searchEditText.text.isNotBlank()
         binding.searchEditText.doOnTextChanged { text, _, _, _ ->
+            if (text.isNullOrBlank()) viewModel.cancelSearch()
             text?.toString()?.run {
                 searchIsNotEmpty = this.isNotBlank()
                 binding.searchFieldImageView.isEnabled = searchIsNotEmpty
