@@ -48,6 +48,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
         configureSearchField()
         setObserver()
         setQueryStateObserver()
+        setFilterIconStateObserver()
         configureToolbar()
         setupAdapter()
         setOnScrollListener()
@@ -79,6 +80,13 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
     private fun setQueryStateObserver() {
         viewModel.savedQueryState.observe(viewLifecycleOwner) {
             binding.searchEditText.setText(it)
+        }
+    }
+
+    private fun setFilterIconStateObserver() {
+        viewModel.filtersState.observe(viewLifecycleOwner) {
+            val icon = (requireActivity() as RootActivity).toolbar.menu.findItem(R.id.filters)
+            icon.setIcon(if (it) R.drawable.ic_filters_on else R.drawable.ic_filters_off)
         }
     }
 
