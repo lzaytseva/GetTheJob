@@ -49,14 +49,9 @@ class SearchViewModel @Inject constructor(
     val filtersState: LiveData<Boolean>
         get() = _filtersState
 
-    init {
-        viewModelScope.launch {
-            _filtersState.postValue(getFiltersRepo.get().singleOrNull()?.filtersNotNull() ?: false)
-        }
-    }
-
-    private val searchRequest: (String) -> Unit = debounce(SEARCH_DELAY, viewModelScope, true) { text ->
+    private val searchRequest: (String?) -> Unit = debounce(SEARCH_DELAY, viewModelScope, true) { text ->
         _screenState.postValue(Loading)
+        lastSearchedText = text!!
 
         viewModelScope.launch {
             searchRepository.search(text, currentPage)
@@ -69,8 +64,15 @@ class SearchViewModel @Inject constructor(
         if (text != lastSearchedText) {
             currentPage = 0
             vacancies.clear()
-            lastSearchedText = text
             searchRequest(text)
+        }
+    }
+
+    fun cancelSearch() {
+        searchRequest(null)
+        if (screenState.value !is Content) {
+            lastSearchedText = ""
+            currentPage = 0
         }
     }
 
@@ -92,6 +94,12 @@ class SearchViewModel @Inject constructor(
     fun saveQueryState(queryState: String) {
         if (queryState != savedQueryState.value) {
             _savedQueryState.value = queryState
+        }
+    }
+
+    fun checkFiltersIcon() {
+        viewModelScope.launch {
+            _filtersState.postValue(getFiltersRepo.get().singleOrNull()?.filtersNotNull() ?: false)
         }
     }
 
@@ -128,7 +136,7 @@ class SearchViewModel @Inject constructor(
             || countryId != null
             || countryName != null
             || salary != null
-            || salaryFlag != null
+            || salaryFlag != null && salaryFlag != false
             || industryId != null
             || industryName != null
             || currency != null

@@ -64,6 +64,7 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
         with(binding) {
             btnApplyChanges.setOnClickListener {
                 // Выполнить поиск с актуальными настройками
+                findNavController().popBackStack()
             }
         }
     }
@@ -130,7 +131,6 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
         binding.etSalary.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 binding.etSalary.clearFocus()
-                true
             }
             false
         }
