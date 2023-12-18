@@ -136,7 +136,7 @@ class SearchViewModel @Inject constructor(
             || countryId != null
             || countryName != null
             || salary != null
-            || (salaryFlag != null && salaryFlag != false)
+            || salaryFlag != null && salaryFlag != false
             || industryId != null
             || industryName != null
             || currency != null
