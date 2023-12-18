@@ -50,15 +50,7 @@ class FiltersViewModel @Inject constructor(
     fun updateOnlyWithSalary(isChecked: Boolean) {
         viewModelScope.launch {
             val updatedFilters = currentFilters?.copy(salaryFlag = isChecked) ?: Filters(
-                salaryFlag = isChecked,
-                countryName = null,
-                regionName = null,
-                regionId = null,
-                currency = null,
-                industryName = null,
-                industryId = null,
-                countryId = null,
-                salary = null
+                salaryFlag = isChecked
             )
             filtersRepository.save(updatedFilters)
         }
@@ -66,17 +58,7 @@ class FiltersViewModel @Inject constructor(
 
     fun updateSalary(salary: String) {
         viewModelScope.launch {
-            val updatedFilters = currentFilters?.copy(salary = salary) ?: Filters(
-                salaryFlag = null,
-                countryName = null,
-                regionName = null,
-                regionId = null,
-                currency = null,
-                industryName = null,
-                industryId = null,
-                countryId = null,
-                salary = salary
-            )
+            val updatedFilters = currentFilters?.copy(salary = salary) ?: Filters(salary = salary)
             filtersRepository.save(updatedFilters)
         }
     }

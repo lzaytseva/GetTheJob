@@ -106,13 +106,7 @@ class ChoiceRegionViewModel @Inject constructor(
                     ) ?: Filters(
                         regionId = item.id,
                         regionName = item.name,
-                        countryId = firstLevelItem?.parentId,
-                        countryName = null,
-                        salary = null,
-                        salaryFlag = null,
-                        industryId = null,
-                        industryName = null,
-                        currency = null
+                        countryId = firstLevelItem?.parentId
                     )
                 )
             }

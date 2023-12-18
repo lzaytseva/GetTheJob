@@ -173,15 +173,8 @@ class ChoiceIndustryViewModel @Inject constructor(
                 industryName = lastSelectedIndustry?.name
             )
                 ?: Filters(
-                    regionId = null,
-                    regionName = null,
-                    countryId = null,
-                    countryName = null,
-                    salary = null,
-                    salaryFlag = null,
                     industryId = lastSelectedIndustry?.id,
-                    industryName = lastSelectedIndustry?.name,
-                    currency = null
+                    industryName = lastSelectedIndustry?.name
                 )
             filtersRepository.save(updatedFilters)
         }

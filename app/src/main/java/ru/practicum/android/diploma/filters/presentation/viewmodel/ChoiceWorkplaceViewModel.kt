@@ -27,7 +27,7 @@ class ChoiceWorkplaceViewModel @Inject constructor(
         viewModelScope.launch {
             getFiltersRepository.get().collect() { currentFilters ->
                 if (currentFilters != null) {
-                    var countryName: String? = currentFilters.countryName
+                    val countryName: String? = currentFilters.countryName
                     val isBtnSelectVisible = countryName != null || currentFilters.regionName != null
                     _screenState.postValue(
                         ChoiceWorkplaceScreenState(
