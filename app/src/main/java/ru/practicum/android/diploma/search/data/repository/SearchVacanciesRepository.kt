@@ -58,6 +58,7 @@ class SearchVacanciesRepository(
             salary = filters?.salary,
             salaryFlag = filters?.salaryFlag,
             industryId = filters?.industryId,
-            currency = filters?.currency
+            currency = filters?.currency,
+            regionId = filters?.regionId ?: filters?.countryId
         )
 }
