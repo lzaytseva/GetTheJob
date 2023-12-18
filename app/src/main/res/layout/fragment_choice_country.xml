@@ -5,40 +5,11 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_search_country"
-        style="@style/salary_til_style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/elements_margin_16dp"
-        android:theme="@style/salary_til_style"
-        android:hint="@string/country_hint_search"
-        android:visibility="gone"
-        app:endIconDrawable="@drawable/ic_search"
-        app:endIconMode="custom"
-        app:expandedHintEnabled="false"
-        app:hintEnabled="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_search_country"
-            style="@style/salary_edit_text_style"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_bg"
-            android:inputType="textShortMessage"
-            android:maxLines="1"
-            android:padding="16dp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/countries"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="20dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     <ProgressBar

@@ -117,12 +117,6 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideGetCountryByIdRepository(networkClient: NetworkClient): GetDataByIdRepo<Resource<Country>> {
-        return CountriesRepositoryImpl(networkClient)
-    }
-
-    @Provides
-    @Singleton
     fun provideRegionsRepository(networkClient: NetworkClient): RegionsRepositoryImpl {
         return RegionsRepositoryImpl(networkClient)
     }
