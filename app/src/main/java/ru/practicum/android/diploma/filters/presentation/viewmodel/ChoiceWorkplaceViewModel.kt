@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ChoiceWorkplaceViewModel @Inject constructor(
     private val getFiltersRepository: GetDataRepo<Filters>,
-    private val saveFiltersRepository: SaveDataRepo<Filters>
+    private val saveFiltersRepository: SaveDataRepo<Filters>,
     private val getCountryByIdRepo: GetDataByIdRepo<Resource<Country>>
 ) : ViewModel() {
 
