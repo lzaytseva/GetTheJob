@@ -145,6 +145,12 @@ class ChoiceWorkplaceFragment : BindingFragment<FragmentChoiceWorkplaceBinding>(
         } else {
             textInputLayout.setEndIconOnClickListener {
                 editText.text?.clear()
+                if (textInputLayout == binding.tilCountry) {
+                    binding.etRegion.text?.clear()
+                    viewModel.deleteCountryRegion()
+                } else {
+                    viewModel.deleteRegion()
+                }
             }
         }
     }
