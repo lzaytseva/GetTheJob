@@ -8,7 +8,6 @@ import ru.practicum.android.diploma.core.domain.api.GetDataRepo
 import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.filters.data.dto.AllAreasRequest
 import ru.practicum.android.diploma.filters.data.dto.AllAreasResponse
-import ru.practicum.android.diploma.filters.data.mapper.AreaMapper
 import ru.practicum.android.diploma.filters.data.mapper.CountryMapper
 import ru.practicum.android.diploma.filters.domain.model.Country
 import ru.practicum.android.diploma.util.Resource
