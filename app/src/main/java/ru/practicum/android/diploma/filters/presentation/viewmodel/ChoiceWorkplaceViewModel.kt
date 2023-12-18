@@ -6,20 +6,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import ru.practicum.android.diploma.core.domain.api.GetDataByIdRepo
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
 import ru.practicum.android.diploma.core.domain.api.SaveDataRepo
 import ru.practicum.android.diploma.core.domain.models.Filters
-import ru.practicum.android.diploma.filters.domain.model.Country
 import ru.practicum.android.diploma.filters.presentation.state.ChoiceWorkplaceScreenState
-import ru.practicum.android.diploma.util.Resource
 import javax.inject.Inject
 
 @HiltViewModel
 class ChoiceWorkplaceViewModel @Inject constructor(
     private val getFiltersRepository: GetDataRepo<Filters>,
     private val saveFiltersRepository: SaveDataRepo<Filters>,
-    private val getCountryByIdRepo: GetDataByIdRepo<Resource<Country>>
 ) : ViewModel() {
 
     private val _screenState = MutableLiveData<ChoiceWorkplaceScreenState>()
