@@ -51,7 +51,7 @@ class SearchViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _filtersState.postValue(getFiltersRepo.get().singleOrNull() != null)
+            _filtersState.postValue(getFiltersRepo.get().singleOrNull()?.filtersNotNull() ?: false)
         }
     }
 
@@ -121,6 +121,17 @@ class SearchViewModel @Inject constructor(
             _screenState.postValue(Content(vacancies, found))
         }
     }
+
+    private fun Filters.filtersNotNull(): Boolean =
+        regionId != null
+            || regionName != null
+            || countryId != null
+            || countryName != null
+            || salary != null
+            || salaryFlag != null
+            || industryId != null
+            || industryName != null
+            || currency != null
 
     companion object {
         private const val SEARCH_DELAY = 2000L
