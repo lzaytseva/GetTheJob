@@ -23,7 +23,9 @@ import javax.inject.Named
 class ChoiceCountryViewModel @Inject constructor(
     @Named(RepositoryModule.COUNTRIES_REPOSITORY_IMPL)
     private val countryRepository: GetDataRepo<Resource<List<Country>>>,
+    @Named(RepositoryModule.FILTERS_TEMP_GET_REPOSITORY)
     private val getFiltersRepository: GetDataRepo<Filters>,
+    @Named(RepositoryModule.FILTERS_TEMP_SAVE_REPOSITORY)
     private val saveFiltersRepository: SaveDataRepo<Filters>,
     @ApplicationContext private val context: Context
 ) : ViewModel() {

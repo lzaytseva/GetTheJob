@@ -8,11 +8,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
 import ru.practicum.android.diploma.core.domain.models.Filters
+import ru.practicum.android.diploma.di.RepositoryModule
 import ru.practicum.android.diploma.filters.presentation.state.ChoiceWorkplaceScreenState
 import javax.inject.Inject
+import javax.inject.Named
 
 @HiltViewModel
 class ChoiceWorkplaceViewModel @Inject constructor(
+    @Named(RepositoryModule.FILTERS_TEMP_GET_REPOSITORY)
     private val getFiltersRepository: GetDataRepo<Filters>,
 ) : ViewModel() {
 

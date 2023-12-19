@@ -14,6 +14,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
+import ru.practicum.android.diploma.core.ui.RootActivity
 import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
 import ru.practicum.android.diploma.filters.presentation.state.FiltersScreenState
 import ru.practicum.android.diploma.filters.presentation.viewmodel.FiltersViewModel
@@ -42,6 +43,16 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
         configureToolbar()
     }
 
+    override fun onPause() {
+        super.onPause()
+        (requireActivity() as RootActivity).toolbar.navigationIcon = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as RootActivity).toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+    }
+
     private fun observeViewModel() {
         viewModel.state.observe(viewLifecycleOwner) {
             if (it is FiltersScreenState.Settings) {
@@ -64,7 +75,8 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
         with(binding) {
             btnApplyChanges.setOnClickListener {
                 // Выполнить поиск с актуальными настройками
-                findNavController().popBackStack()
+                findNavController().popBackStack(R.id.searchFragment, false)
+                viewModel.refreshSearch()
             }
         }
     }

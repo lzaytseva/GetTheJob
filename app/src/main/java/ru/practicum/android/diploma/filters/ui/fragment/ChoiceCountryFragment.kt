@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.domain.models.ErrorType
+import ru.practicum.android.diploma.core.ui.RootActivity
 import ru.practicum.android.diploma.databinding.FragmentChoiceCountryBinding
 import ru.practicum.android.diploma.filters.presentation.state.ChoiceCountryScreenState
 import ru.practicum.android.diploma.filters.presentation.viewmodel.ChoiceCountryViewModel
@@ -37,6 +38,16 @@ class ChoiceCountryFragment : BindingFragment<FragmentChoiceCountryBinding>() {
                 is ChoiceCountryScreenState.Error -> showError(screenState.message)
             }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        (requireActivity() as RootActivity).toolbar.navigationIcon = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as RootActivity).toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
     }
 
     private fun configureToolbar() {

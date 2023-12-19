@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
+import ru.practicum.android.diploma.core.ui.RootActivity
 import ru.practicum.android.diploma.databinding.FragmentChoiceRegionBinding
 import ru.practicum.android.diploma.filters.presentation.state.ChoiceRegionScreenState
 import ru.practicum.android.diploma.filters.presentation.viewmodel.ChoiceRegionViewModel
@@ -49,6 +50,16 @@ class ChoiceRegionFragment : BindingFragment<FragmentChoiceRegionBinding>() {
         binding.rvRegions.adapter = null
         super.onDestroyView()
         adapter = null
+    }
+
+    override fun onPause() {
+        super.onPause()
+        (requireActivity() as RootActivity).toolbar.navigationIcon = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as RootActivity).toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
     }
 
     private fun configureToolbar() {
