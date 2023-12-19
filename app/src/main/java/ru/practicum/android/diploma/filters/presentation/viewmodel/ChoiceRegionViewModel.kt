@@ -22,8 +22,11 @@ import javax.inject.Named
 @HiltViewModel
 class ChoiceRegionViewModel @Inject constructor(
     private val regionsByIdRepo: GetDataByIdRepo<Resource<List<Country>>>,
-    @Named(RepositoryModule.REGIONS_REPOSITORY_IMPL) private val allRegionsRepo: GetDataRepo<Resource<List<Country>>>,
+    @Named(RepositoryModule.REGIONS_REPOSITORY_IMPL)
+    private val allRegionsRepo: GetDataRepo<Resource<List<Country>>>,
+    @Named(RepositoryModule.FILTERS_TEMP_GET_REPOSITORY)
     private val getFiltersRepository: GetDataRepo<Filters>,
+    @Named(RepositoryModule.FILTERS_TEMP_SAVE_REPOSITORY)
     private val saveFiltersRepository: SaveDataRepo<Filters>,
 ) : ViewModel() {
 
@@ -138,7 +141,7 @@ class ChoiceRegionViewModel @Inject constructor(
 
     private fun searchRequest(text: String) {
         val contentList = regions.filter { item ->
-            item.name.lowercase().contains(text.lowercase())
+            item.name.lowercase().contains(text.lowercase().trim())
         }
         if (contentList.isEmpty()) {
             _state.postValue(ChoiceRegionScreenState.Empty)

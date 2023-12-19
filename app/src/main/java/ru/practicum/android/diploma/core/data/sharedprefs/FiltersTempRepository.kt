@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.core.data.sharedprefs.filters
+package ru.practicum.android.diploma.core.data.sharedprefs
 
 import android.content.SharedPreferences
 import com.google.gson.Gson
@@ -8,23 +8,23 @@ import ru.practicum.android.diploma.core.domain.api.GetDataRepo
 import ru.practicum.android.diploma.core.domain.api.SaveDataRepo
 import ru.practicum.android.diploma.core.domain.models.Filters
 
-class FiltersRepository(
+class FiltersTempRepository(
     private val sharedPreferences: SharedPreferences,
     private val gson: Gson
 ) : SaveDataRepo<Filters>, GetDataRepo<Filters> {
 
     override fun get(): Flow<Filters?> = flow {
-        sharedPreferences.getString(FILTERS_KEY, null)?.let { filtersJson ->
+        sharedPreferences.getString(FILTERS_TEMP_KEY, null)?.let { filtersJson ->
             emit(gson.fromJson(filtersJson, Filters::class.java))
         } ?: emit(null)
     }
 
     override suspend fun save(data: Filters?) {
         val filtersJson = gson.toJson(data, Filters::class.java)
-        sharedPreferences.edit().putString(FILTERS_KEY, filtersJson).apply()
+        sharedPreferences.edit().putString(FILTERS_TEMP_KEY, filtersJson).apply()
     }
 
     companion object {
-        private const val FILTERS_KEY = "FiltersKey"
+        private const val FILTERS_TEMP_KEY = "FiltersTempKey"
     }
 }

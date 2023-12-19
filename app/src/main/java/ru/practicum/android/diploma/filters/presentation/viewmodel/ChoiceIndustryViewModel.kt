@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import ru.practicum.android.diploma.core.data.sharedprefs.filters.FiltersRepository
+import ru.practicum.android.diploma.core.data.sharedprefs.FiltersTempRepository
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
 import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.core.domain.models.Filters
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ChoiceIndustryViewModel @Inject constructor(
     private val industryRepository: GetDataRepo<Resource<List<Industry>>>,
-    private val filtersRepository: FiltersRepository
+    private val filtersRepository: FiltersTempRepository
 ) : ViewModel() {
 
     private val originalList = mutableListOf<Industry>()

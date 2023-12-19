@@ -9,7 +9,8 @@ import dagger.hilt.components.SingletonComponent
 import ru.practicum.android.diploma.core.data.network.NetworkClient
 import ru.practicum.android.diploma.core.data.room.AppDatabase
 import ru.practicum.android.diploma.core.data.room.dao.VacancyDao
-import ru.practicum.android.diploma.core.data.sharedprefs.filters.FiltersRepository
+import ru.practicum.android.diploma.core.data.sharedprefs.FiltersRepository
+import ru.practicum.android.diploma.core.data.sharedprefs.FiltersTempRepository
 import ru.practicum.android.diploma.core.domain.api.DeleteDataRepo
 import ru.practicum.android.diploma.core.domain.api.GetDataByIdRepo
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
@@ -105,13 +106,35 @@ class RepositoryModule {
 
     @Provides
     @Singleton
+    @Named(FILTERS_GET_REPOSITORY)
     fun provideGetFiltersRepo(filtersRepo: FiltersRepository): GetDataRepo<Filters> {
         return filtersRepo
     }
 
     @Provides
     @Singleton
+    @Named(FILTERS_SAVE_REPOSITORY)
     fun provideSaveFiltersRepo(filtersRepo: FiltersRepository): SaveDataRepo<Filters> {
+        return filtersRepo
+    }
+
+    @Provides
+    @Singleton
+    fun provideFiltersTempRepository(sharedPreferences: SharedPreferences, gson: Gson): FiltersTempRepository {
+        return FiltersTempRepository(sharedPreferences, gson)
+    }
+
+    @Provides
+    @Singleton
+    @Named(FILTERS_TEMP_SAVE_REPOSITORY)
+    fun provideSaveFiltersTempRepo(filtersRepo: FiltersTempRepository): SaveDataRepo<Filters> {
+        return filtersRepo
+    }
+
+    @Provides
+    @Singleton
+    @Named(FILTERS_TEMP_GET_REPOSITORY)
+    fun provideGetFiltersTempRepo(filtersRepo: FiltersTempRepository): GetDataRepo<Filters> {
         return filtersRepo
     }
 
@@ -137,5 +160,9 @@ class RepositoryModule {
     companion object {
         const val COUNTRIES_REPOSITORY_IMPL = "CountriesRepositoryImpl"
         const val REGIONS_REPOSITORY_IMPL = "RegionsRepositoryImpl"
+        const val FILTERS_SAVE_REPOSITORY = "FiltersSaveRepository"
+        const val FILTERS_GET_REPOSITORY = "FiltersGetRepository"
+        const val FILTERS_TEMP_SAVE_REPOSITORY = "FiltersTempSaveRepository"
+        const val FILTERS_TEMP_GET_REPOSITORY = "FiltersTempGetRepository"
     }
 }

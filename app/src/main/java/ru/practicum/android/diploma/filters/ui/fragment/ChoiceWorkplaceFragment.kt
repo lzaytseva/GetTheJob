@@ -13,6 +13,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
+import ru.practicum.android.diploma.core.ui.RootActivity
 import ru.practicum.android.diploma.databinding.FragmentChoiceWorkplaceBinding
 import ru.practicum.android.diploma.filters.presentation.state.ChoiceWorkplaceScreenState
 import ru.practicum.android.diploma.filters.presentation.viewmodel.ChoiceWorkplaceViewModel
@@ -55,6 +56,12 @@ class ChoiceWorkplaceFragment : BindingFragment<FragmentChoiceWorkplaceBinding>(
     override fun onResume() {
         super.onResume()
         viewModel.getFilters()
+        (requireActivity() as RootActivity).toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        (requireActivity() as RootActivity).toolbar.navigationIcon = null
     }
 
     private fun configureToolbar() {

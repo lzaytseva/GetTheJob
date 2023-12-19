@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.domain.models.ErrorType
+import ru.practicum.android.diploma.core.ui.RootActivity
 import ru.practicum.android.diploma.databinding.FragmentChoiceIndustryBinding
 import ru.practicum.android.diploma.filters.domain.model.Industry
 import ru.practicum.android.diploma.filters.presentation.state.IndustryScreenState
@@ -54,6 +55,12 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
         if (searchText.isNullOrBlank()) {
             viewModel.getIndustries()
         }
+        (requireActivity() as RootActivity).toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        (requireActivity() as RootActivity).toolbar.navigationIcon = null
     }
 
     private fun observeViewModel() {

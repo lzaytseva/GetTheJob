@@ -1,16 +1,20 @@
 package ru.practicum.android.diploma.search.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
+import ru.practicum.android.diploma.core.domain.api.SaveDataRepo
 import ru.practicum.android.diploma.core.domain.api.SearchRepo
 import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.core.domain.models.Filters
+import ru.practicum.android.diploma.di.RepositoryModule
 import ru.practicum.android.diploma.search.domain.model.SearchResult
 import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.search.presentation.SearchScreenState.Content
@@ -21,11 +25,17 @@ import ru.practicum.android.diploma.util.Resource
 import ru.practicum.android.diploma.util.SingleLiveEvent
 import ru.practicum.android.diploma.util.debounce
 import javax.inject.Inject
+import javax.inject.Named
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val searchRepository: SearchRepo<SearchResult>,
-    private val getFiltersRepo: GetDataRepo<Filters>
+    @Named(RepositoryModule.FILTERS_GET_REPOSITORY)
+    private val getFiltersRepo: GetDataRepo<Filters>,
+    @Named(RepositoryModule.FILTERS_TEMP_GET_REPOSITORY)
+    private val getFiltersTempRepo: GetDataRepo<Filters>,
+    @Named(RepositoryModule.FILTERS_SAVE_REPOSITORY)
+    private val saveFiltersRepo: SaveDataRepo<Filters>
 ) : ViewModel() {
 
     private var pages = 0
@@ -62,8 +72,8 @@ class SearchViewModel @Inject constructor(
 
     fun search(text: String) {
         if (text != lastSearchedText) {
+            clearSearch()
             currentPage = 0
-            vacancies.clear()
             searchRequest(text)
         }
     }
@@ -91,6 +101,26 @@ class SearchViewModel @Inject constructor(
         }
     }
 
+    fun clearSearch() {
+        vacancies.clear()
+        lastSearchedText = ""
+        viewModelScope.launch(Dispatchers.IO) {
+            val oldFilters = getFiltersRepo.get().singleOrNull()
+            val newFilters = getFiltersTempRepo.get().singleOrNull()
+            if (oldFilters != newFilters) {
+                saveFiltersRepo.save(newFilters)
+            }
+        }
+    }
+
+    fun refreshSearch() {
+        if (refresh_search && screenState.value is Content) {
+            val tempText = lastSearchedText
+            lastSearchedText = ""
+            search(tempText)
+        }
+    }
+
     fun saveQueryState(queryState: String) {
         if (queryState != savedQueryState.value) {
             _savedQueryState.value = queryState
@@ -99,7 +129,7 @@ class SearchViewModel @Inject constructor(
 
     fun checkFiltersIcon() {
         viewModelScope.launch {
-            _filtersState.postValue(getFiltersRepo.get().singleOrNull()?.filtersNotNull() ?: false)
+            _filtersState.postValue(getFiltersTempRepo.get().singleOrNull()?.filtersNotNull() ?: false)
         }
     }
 
@@ -110,6 +140,7 @@ class SearchViewModel @Inject constructor(
             pages = data.pages
             found = data.found
         }
+        Log.wtf("AAA", "Result")
 
         when {
             errorType != null -> if (currentPage == 0) {
@@ -143,5 +174,6 @@ class SearchViewModel @Inject constructor(
 
     companion object {
         private const val SEARCH_DELAY = 2000L
+        var refresh_search = false
     }
 }

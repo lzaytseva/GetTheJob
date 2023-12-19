@@ -52,12 +52,14 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
         configureToolbar()
         setupAdapter()
         setOnScrollListener()
+
     }
 
     override fun onResume() {
         super.onResume()
         setFiltersVisibility(true)
         viewModel.checkFiltersIcon()
+        viewModel.refreshSearch()
     }
 
     override fun onPause() {
@@ -121,6 +123,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
         binding.searchFieldImageView.setOnClickListener {
             binding.searchEditText.setText("")
             inputMethodManager?.hideSoftInputFromWindow(binding.searchEditText.windowToken, 0)
+            viewModel.clearSearch()
             showSearchNotStarted()
         }
     }
