@@ -33,21 +33,24 @@ class TeamFragment : BindingFragment<FragmentTeamBinding>() {
             FeedbackUtils.showSnackbar(root = requireView(), text = it)
         }
 
-        binding.developer1Name.setOnClickListener {
+        binding.developer1.setOnClickListener {
             viewModel.contactWithDeveloper(TeamViewModel.Developers.DEV1)
             openEnvelopeAnimation(binding.developer1Mail)
         }
 
-        binding.developer2Name.setOnClickListener {
+        binding.developer2.setOnClickListener {
             viewModel.contactWithDeveloper(TeamViewModel.Developers.DEV2)
+            openEnvelopeAnimation(binding.developer1Mail)
         }
 
-        binding.developer3Name.setOnClickListener {
+        binding.developer3.setOnClickListener {
             viewModel.contactWithDeveloper(TeamViewModel.Developers.DEV3)
+            openEnvelopeAnimation(binding.developer1Mail)
         }
 
-        binding.developer4Name.setOnClickListener {
+        binding.developer4.setOnClickListener {
             viewModel.contactWithDeveloper(TeamViewModel.Developers.DEV4)
+            openEnvelopeAnimation(binding.developer1Mail)
         }
     }
 

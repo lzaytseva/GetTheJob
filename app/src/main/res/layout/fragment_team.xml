@@ -33,80 +33,109 @@
         app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <TextView
-        android:id="@+id/developer1_name"
-        style="@style/bold_regular_text_style"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:id="@+id/developer1"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/team_screen_developer_1"
-        app:layout_constraintStart_toStartOf="@id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@id/team_screen_subtitle"/>
-
-    <ImageView
-        android:id="@+id/developer1_mail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/mail_not_open"
         app:layout_constraintEnd_toEndOf="@id/guideline_end"
-        app:layout_constraintTop_toBottomOf="@id/team_screen_subtitle"/>
-
-    <TextView
-        android:id="@+id/developer2_name"
-        style="@style/bold_regular_text_style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/team_screen_developer_2"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@id/developer1_name" />
+        app:layout_constraintTop_toBottomOf="@id/team_screen_subtitle">
 
-    <ImageView
-        android:id="@+id/developer2_mail"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/developer1_name"
+            style="@style/bold_regular_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/team_screen_developer_1" />
+
+        <ImageView
+            android:id="@+id/developer1_mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:src="@drawable/mail_not_open" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/developer2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:src="@drawable/mail_not_open"
         app:layout_constraintEnd_toEndOf="@id/guideline_end"
-        app:layout_constraintTop_toBottomOf="@id/developer1_name"/>
-
-    <TextView
-        android:id="@+id/developer3_name"
-        style="@style/bold_regular_text_style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/team_screen_developer_3"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@id/developer2_name" />
+        app:layout_constraintTop_toBottomOf="@id/developer1">
 
-    <ImageView
-        android:id="@+id/developer3_mail"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/developer2_name"
+            style="@style/bold_regular_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/team_screen_developer_2" />
+
+        <ImageView
+            android:id="@+id/developer2_mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:src="@drawable/mail_not_open" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/developer3"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:src="@drawable/mail_not_open"
         app:layout_constraintEnd_toEndOf="@id/guideline_end"
-        app:layout_constraintTop_toBottomOf="@id/developer2_name"/>
-
-    <TextView
-        android:id="@+id/developer4_name"
-        style="@style/bold_regular_text_style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/team_screen_developer_4"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@id/developer3_name" />
+        app:layout_constraintTop_toBottomOf="@id/developer2">
 
-    <ImageView
-        android:id="@+id/developer4_mail"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/developer3_name"
+            style="@style/bold_regular_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/team_screen_developer_3" />
+
+        <ImageView
+            android:id="@+id/developer3_mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:src="@drawable/mail_not_open"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintTop_toBottomOf="@id/developer2_name" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/developer4"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:src="@drawable/mail_not_open"
         app:layout_constraintEnd_toEndOf="@id/guideline_end"
-        app:layout_constraintTop_toBottomOf="@id/developer3_name"/>
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@id/developer3">
+
+        <TextView
+            android:id="@+id/developer4_name"
+            style="@style/bold_regular_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/team_screen_developer_4" />
+
+        <ImageView
+            android:id="@+id/developer4_mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:src="@drawable/mail_not_open"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintTop_toBottomOf="@id/developer3_name" />
+    </FrameLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
