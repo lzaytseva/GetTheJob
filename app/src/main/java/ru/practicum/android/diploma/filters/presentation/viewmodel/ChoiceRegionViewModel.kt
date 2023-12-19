@@ -72,22 +72,22 @@ class ChoiceRegionViewModel @Inject constructor(
     }
 
     private fun handleResource(resource: Resource<List<Country>>?) {
-        when (resource) {
-            is Resource.Success -> {
-                if (resource.data.isNullOrEmpty()) {
-                    _state.postValue(ChoiceRegionScreenState.Error)
-                } else {
-                    countries.clear()
-                    regions.clear()
-                    resource.data.forEach {
-                        if (it.parentId == null) {
-                            countries.add(it)
-                        } else {
-                            regions.add(it)
-                        }
+        when {
+            resource is Resource.Success && resource.data.isNullOrEmpty() -> {
+                _state.postValue(ChoiceRegionScreenState.Error)
+            }
+
+            resource is Resource.Success -> {
+                countries.clear()
+                regions.clear()
+                resource.data!!.forEach {
+                    if (it.parentId == null) {
+                        countries.add(it)
+                    } else {
+                        regions.add(it)
                     }
-                    _state.postValue(ChoiceRegionScreenState.Content(regions = regions))
                 }
+                _state.postValue(ChoiceRegionScreenState.Content(regions = regions))
             }
 
             else -> {
