@@ -64,9 +64,9 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
         configureToolbar()
     }
 
-    override fun onPause() {
-        super.onPause()
-        toolbarIconsOnPause()
+    override fun onStop() {
+        super.onStop()
+        hideToolbarIcons()
     }
 
     override fun onDestroyView() {
@@ -232,7 +232,7 @@ class VacancyDetailsFragment : BindingFragment<FragmentVacancyDetailsBinding>() 
         }
     }
 
-    private fun toolbarIconsOnPause() {
+    private fun hideToolbarIcons() {
         toolbar.navigationIcon = null
         toolbar.menu.findItem(R.id.favorite).isVisible = false
         toolbar.menu.findItem(R.id.share).isVisible = false

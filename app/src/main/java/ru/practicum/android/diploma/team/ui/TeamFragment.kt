@@ -1,9 +1,12 @@
 package ru.practicum.android.diploma.team.ui
 
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import ru.practicum.android.diploma.R
@@ -30,21 +33,36 @@ class TeamFragment : BindingFragment<FragmentTeamBinding>() {
             FeedbackUtils.showSnackbar(root = requireView(), text = it)
         }
 
-        binding.developer1.setOnClickListener {
+        binding.developer1Name.setOnClickListener {
             viewModel.contactWithDeveloper(TeamViewModel.Developers.DEV1)
+            openEnvelopeAnimation(binding.developer1Mail)
         }
 
-        binding.developer2.setOnClickListener {
+        binding.developer2Name.setOnClickListener {
             viewModel.contactWithDeveloper(TeamViewModel.Developers.DEV2)
         }
 
-        binding.developer3.setOnClickListener {
+        binding.developer3Name.setOnClickListener {
             viewModel.contactWithDeveloper(TeamViewModel.Developers.DEV3)
         }
 
-        binding.developer4.setOnClickListener {
+        binding.developer4Name.setOnClickListener {
             viewModel.contactWithDeveloper(TeamViewModel.Developers.DEV4)
         }
+    }
+
+    private fun openEnvelopeAnimation(imageView: ImageView) {
+        imageView.setImageDrawable(
+            AppCompatResources.getDrawable(requireContext(), R.drawable.avd_open_mail)
+        )
+        (imageView.drawable as AnimatedVectorDrawable).start()
+    }
+
+    private fun closeEnvelopeAnimation(imageView: ImageView) {
+        imageView.setImageDrawable(
+            AppCompatResources.getDrawable(requireContext(), R.drawable.avd_close_mail)
+        )
+        (imageView.drawable as AnimatedVectorDrawable).start()
     }
 
     private fun configureToolbar() {
