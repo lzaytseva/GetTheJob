@@ -40,17 +40,17 @@ class TeamFragment : BindingFragment<FragmentTeamBinding>() {
 
         binding.developer2.setOnClickListener {
             viewModel.contactWithDeveloper(TeamViewModel.Developers.DEV2)
-            openEnvelopeAnimation(binding.developer1Mail)
+            openEnvelopeAnimation(binding.developer2Mail)
         }
 
         binding.developer3.setOnClickListener {
             viewModel.contactWithDeveloper(TeamViewModel.Developers.DEV3)
-            openEnvelopeAnimation(binding.developer1Mail)
+            openEnvelopeAnimation(binding.developer3Mail)
         }
 
         binding.developer4.setOnClickListener {
             viewModel.contactWithDeveloper(TeamViewModel.Developers.DEV4)
-            openEnvelopeAnimation(binding.developer1Mail)
+            openEnvelopeAnimation(binding.developer4Mail)
         }
     }
 
