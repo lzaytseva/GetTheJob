@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
+import ru.practicum.android.diploma.core.domain.api.SaveDataRepo
 import ru.practicum.android.diploma.core.domain.models.Filters
 import ru.practicum.android.diploma.di.RepositoryModule
 import ru.practicum.android.diploma.filters.presentation.state.ChoiceWorkplaceScreenState
@@ -17,6 +18,7 @@ import javax.inject.Named
 class ChoiceWorkplaceViewModel @Inject constructor(
     @Named(RepositoryModule.FILTERS_TEMP_GET_REPOSITORY)
     private val getFiltersRepository: GetDataRepo<Filters>,
+    private val saveFiltersRepository: SaveDataRepo<Filters>,
 ) : ViewModel() {
 
     private val _screenState = MutableLiveData<ChoiceWorkplaceScreenState>()
@@ -40,6 +42,34 @@ class ChoiceWorkplaceViewModel @Inject constructor(
                         )
                     )
                 }
+            }
+        }
+    }
+
+    fun deleteCountryRegion() {
+        viewModelScope.launch {
+            getFiltersRepository.get().collect { currentFilters ->
+                saveFiltersRepository.save(
+                    currentFilters?.copy(
+                        regionId = null,
+                        regionName = null,
+                        countryId = null,
+                        countryName = null
+                    )
+                )
+            }
+        }
+    }
+
+    fun deleteRegion() {
+        viewModelScope.launch {
+            getFiltersRepository.get().collect { currentFilters ->
+                saveFiltersRepository.save(
+                    currentFilters?.copy(
+                        regionId = null,
+                        regionName = null
+                    )
+                )
             }
         }
     }

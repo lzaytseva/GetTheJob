@@ -6,31 +6,41 @@ import ru.practicum.android.diploma.filters.domain.model.Country
 object AreaMapper {
 
     fun mapList(areasDto: List<AreaDto>): List<Country> {
-        val subRegions = areasDto.flatMap { areaDto ->
-            areaDto.areas
-        }.flatMap { areaDto ->
-            areaDto.areas
-        }.map {
+        val subRegions = areasDto.flatMap { it.areas }
+            .flatMap { it.areas }
+            .map {
+                Country(
+                    id = it.id,
+                    name = it.name,
+                    parentId = it.parentId
+                )
+            }
+        val regions = areasDto.flatMap { it.areas }
+            .map {
+                Country(
+                    id = it.id,
+                    name = it.name,
+                    parentId = it.parentId
+                )
+            }
+        val countries = areasDto.map {
             Country(
                 id = it.id,
                 name = it.name,
                 parentId = it.parentId
             )
         }
-
-        val regions = areasDto.flatMap { areaDto ->
-            areaDto.areas
-        }.map {
-            Country(
-                id = it.id,
-                name = it.name,
-                parentId = it.parentId
-            )
-        }
-        return regions + subRegions
+        return countries + regions + subRegions
     }
 
     fun map(country: AreaDto): List<Country> {
+        val countries = listOf(
+            Country(
+                id = country.id,
+                name = country.name,
+                parentId = country.parentId
+            )
+        )
         val regions = country.areas.map { region ->
             Country(
                 id = region.id,
@@ -47,6 +57,6 @@ object AreaMapper {
                 parentId = subRegion.parentId
             )
         }
-        return regions + subRegions
+        return countries + regions + subRegions
     }
 }

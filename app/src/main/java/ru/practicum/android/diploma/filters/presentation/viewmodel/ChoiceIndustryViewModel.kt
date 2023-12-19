@@ -156,6 +156,8 @@ class ChoiceIndustryViewModel @Inject constructor(
             // Если кликнули на ту же, то просто обнуляем значения
             lastSelectedIndustry = null
             lastSelectedIndex = -1
+            // И удаляем из настроек
+            saveIndustry()
         }
 
         _state.postValue(
