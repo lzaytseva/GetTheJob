@@ -1,9 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/screen_bg"
+    android:orientation="vertical"
     tools:context=".filters.ui.fragment.ChoiceWorkplaceFragment">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_country"
+        style="@style/filter_til_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_country">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_country"
+            style="@style/filter_edit_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/elements_margin_16dp"
+            android:background="@color/screen_bg"
+            android:clickable="true"
+            android:cursorVisible="false"
+            android:focusable="false"
+            tools:text="Россия" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_region"
+        style="@style/filter_til_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_region">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_region"
+            style="@style/filter_edit_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/screen_bg"
+            android:clickable="true"
+            android:cursorVisible="false"
+            android:focusable="false" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_select"
+        style="@style/btn_style"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/elements_margin_16dp"
+        android:layout_marginBottom="@dimen/elements_margin_24dp"
+        android:text="@string/btn_select" />
+
+</LinearLayout>
