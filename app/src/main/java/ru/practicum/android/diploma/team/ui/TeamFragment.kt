@@ -54,16 +54,14 @@ class TeamFragment : BindingFragment<FragmentTeamBinding>() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        setDevIcons()
+    }
+
     private fun openEnvelopeAnimation(imageView: ImageView) {
         imageView.setImageDrawable(
             AppCompatResources.getDrawable(requireContext(), R.drawable.avd_open_mail)
-        )
-        (imageView.drawable as AnimatedVectorDrawable).start()
-    }
-
-    private fun closeEnvelopeAnimation(imageView: ImageView) {
-        imageView.setImageDrawable(
-            AppCompatResources.getDrawable(requireContext(), R.drawable.avd_close_mail)
         )
         (imageView.drawable as AnimatedVectorDrawable).start()
     }
@@ -74,4 +72,22 @@ class TeamFragment : BindingFragment<FragmentTeamBinding>() {
         toolbar.hideMenu()
         toolbar.navigationIcon = null
     }
+
+    private fun setDevIcons() {
+        with(binding) {
+            developer1Mail.setImageDrawable(
+                AppCompatResources.getDrawable(requireContext(), R.drawable.ic_mail)
+            )
+            developer2Mail.setImageDrawable(
+                AppCompatResources.getDrawable(requireContext(), R.drawable.ic_mail)
+            )
+            developer3Mail.setImageDrawable(
+                AppCompatResources.getDrawable(requireContext(), R.drawable.ic_mail)
+            )
+            developer4Mail.setImageDrawable(
+                AppCompatResources.getDrawable(requireContext(), R.drawable.ic_mail)
+            )
+        }
+    }
+
 }
