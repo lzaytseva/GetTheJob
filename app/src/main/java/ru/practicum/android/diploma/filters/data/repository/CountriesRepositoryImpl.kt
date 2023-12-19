@@ -16,7 +16,6 @@ class CountriesRepositoryImpl(
     private val networkClient: NetworkClient
 ) : GetDataRepo<Resource<List<Country>>> {
     override fun get(): Flow<Resource<List<Country>>?> = flow {
-
         val response = networkClient.doRequest(AllAreasRequest)
         when (response.resultCode) {
             RetrofitNetworkClient.CODE_NO_INTERNET -> {
@@ -36,5 +35,4 @@ class CountriesRepositoryImpl(
             }
         }
     }
-
 }
