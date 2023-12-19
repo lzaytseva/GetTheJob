@@ -141,7 +141,7 @@ class ChoiceRegionViewModel @Inject constructor(
 
     private fun searchRequest(text: String) {
         val contentList = regions.filter { item ->
-            item.name.lowercase().contains(text.lowercase())
+            item.name.lowercase().contains(text.lowercase().trim())
         }
         if (contentList.isEmpty()) {
             _state.postValue(ChoiceRegionScreenState.Empty)
