@@ -38,7 +38,8 @@ class ChoiceRegionViewModel @Inject constructor(
         debounce(SEARCH_DELAY_IN_MILLIS, viewModelScope, true) { searchText ->
             searchRequest(searchText)
         }
-    private var regions: List<Country> = emptyList()
+    private var regions: MutableList<Country> = mutableListOf()
+    private var countries: MutableList<Country> = mutableListOf()
 
     init {
         _state.postValue(ChoiceRegionScreenState.Loading)
@@ -79,8 +80,16 @@ class ChoiceRegionViewModel @Inject constructor(
                 if (resource.data.isNullOrEmpty()) {
                     _state.postValue(ChoiceRegionScreenState.Error)
                 } else {
-                    _state.postValue(ChoiceRegionScreenState.Content(regions = resource.data))
-                    regions = resource.data
+                    countries.clear()
+                    regions.clear()
+                    resource.data.forEach {
+                        if (it.parentId == null) {
+                            countries.add(it)
+                        } else {
+                            regions.add(it)
+                        }
+                    }
+                    _state.postValue(ChoiceRegionScreenState.Content(regions = regions))
                 }
             }
 
@@ -99,17 +108,22 @@ class ChoiceRegionViewModel @Inject constructor(
                 it.id == item.id
             }
         }
+        val country = countries.find {
+            it.id == firstLevelItem?.parentId
+        }
         viewModelScope.launch(Dispatchers.IO) {
             getFiltersRepository.get().collect { filters ->
                 saveFiltersRepository.save(
                     filters?.copy(
                         regionId = item.id,
                         regionName = item.name,
-                        countryId = firstLevelItem?.parentId,
+                        countryId = country?.id,
+                        countryName = country?.name
                     ) ?: Filters(
                         regionId = item.id,
                         regionName = item.name,
-                        countryId = firstLevelItem?.parentId
+                        countryId = country?.id,
+                        countryName = country?.name
                     )
                 )
             }
