@@ -18,6 +18,7 @@ import javax.inject.Named
 class ChoiceWorkplaceViewModel @Inject constructor(
     @Named(RepositoryModule.FILTERS_TEMP_GET_REPOSITORY)
     private val getFiltersRepository: GetDataRepo<Filters>,
+    @Named(RepositoryModule.FILTERS_TEMP_SAVE_REPOSITORY)
     private val saveFiltersRepository: SaveDataRepo<Filters>,
 ) : ViewModel() {
 

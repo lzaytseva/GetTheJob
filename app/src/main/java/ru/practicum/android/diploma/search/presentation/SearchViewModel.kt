@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.search.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -139,6 +140,7 @@ class SearchViewModel @Inject constructor(
             pages = data.pages
             found = data.found
         }
+        Log.wtf("AAA", "Result")
 
         when {
             errorType != null -> if (currentPage == 0) {
