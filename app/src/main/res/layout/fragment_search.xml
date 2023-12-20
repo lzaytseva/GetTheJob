@@ -66,7 +66,7 @@
         app:layout_constraintBottom_toTopOf="@id/progress_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_field" />
+        app:layout_constraintTop_toBottomOf="@id/result_message_text_view" />
 
     <!-- Сообщение о результате -->
     <TextView

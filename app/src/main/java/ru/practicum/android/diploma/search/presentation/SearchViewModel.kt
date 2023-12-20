@@ -64,7 +64,7 @@ class SearchViewModel @Inject constructor(
         lastSearchedText = text!!
 
         viewModelScope.launch {
-            searchRepository.search(text, currentPage)
+            searchRepository.search(text.trim(), currentPage)
                 .singleOrNull()
                 ?.processResult()
         }

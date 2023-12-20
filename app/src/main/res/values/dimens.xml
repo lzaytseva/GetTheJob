@@ -34,6 +34,7 @@
 
     <!--  Экран настроек фильтрации  -->
     <dimen name="horizontal_padding">16dp</dimen>
+    <dimen name="vertical_padding">20dp</dimen>
     <dimen name="header_margin">16dp</dimen>
     <dimen name="arrow_back_padding">20dp</dimen>
     <dimen name="check_box_size">24dp</dimen>
