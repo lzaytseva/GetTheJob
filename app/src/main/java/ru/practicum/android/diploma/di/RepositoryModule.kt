@@ -161,7 +161,7 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideRefreshSearchFlagRepo(sharedPreferences: SharedPreferences): RefreshSearchFlagRepository {
-        return RefreshSearchFlagRepository((sharedPreferences))
+        return RefreshSearchFlagRepository(sharedPreferences)
     }
 
     @Provides
