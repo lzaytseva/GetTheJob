@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.search.presentation
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -47,7 +46,7 @@ class SearchViewModel @Inject constructor(
     // В эту переменную сохраняется текст первого запроса
     private var lastSearchedText = ""
 
-    private val _screenState: MutableLiveData<SearchScreenState> = MutableLiveData()
+    private val _screenState: MutableLiveData<SearchScreenState> = MutableLiveData(SearchScreenState.Empty)
     val screenState: LiveData<SearchScreenState>
         get() = _screenState
 
@@ -113,8 +112,13 @@ class SearchViewModel @Inject constructor(
         }
     }
 
+    fun clearState() {
+        _screenState.postValue(SearchScreenState.Empty)
+    }
+
     fun refreshSearch() {
         if (refresh_search && screenState.value is Content) {
+            refresh_search = false
             val tempText = lastSearchedText
             lastSearchedText = ""
             search(tempText)
@@ -140,7 +144,6 @@ class SearchViewModel @Inject constructor(
             pages = data.pages
             found = data.found
         }
-        Log.wtf("AAA", "Result")
 
         when {
             errorType != null -> if (currentPage == 0) {
@@ -162,18 +165,15 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun Filters.filtersNotNull(): Boolean =
-        when {
-            regionId != null -> true
-            regionName != null -> true
-            countryId != null -> true
-            countryName != null -> true
-            salary != null -> false
-            salaryFlag != null && salaryFlag != false -> true
-            industryId != null -> true
-            industryName != null -> true
-            currency != null -> true
-            else -> false
-        }
+            regionId != null ||
+            regionName != null ||
+            countryId != null ||
+            countryName != null ||
+            salary != null ||
+            (salaryFlag != null && salaryFlag != false) ||
+            industryId != null ||
+            industryName != null ||
+            currency != null
 
     companion object {
         private const val SEARCH_DELAY = 2000L
