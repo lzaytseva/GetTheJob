@@ -12,7 +12,6 @@ import ru.practicum.android.diploma.core.domain.api.SaveDataRepo
 import ru.practicum.android.diploma.core.domain.models.Filters
 import ru.practicum.android.diploma.di.RepositoryModule
 import ru.practicum.android.diploma.filters.presentation.state.FiltersScreenState
-import ru.practicum.android.diploma.search.presentation.SearchViewModel
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -21,7 +20,8 @@ class FiltersViewModel @Inject constructor(
     @Named(RepositoryModule.FILTERS_TEMP_GET_REPOSITORY)
     private val getFiltersRepository: GetDataRepo<Filters>,
     @Named(RepositoryModule.FILTERS_TEMP_SAVE_REPOSITORY)
-    private val saveFiltersRepository: SaveDataRepo<Filters>
+    private val saveFiltersRepository: SaveDataRepo<Filters>,
+    private val saveRefreshSearchFlagRepo: SaveDataRepo<Boolean>
 ) : ViewModel() {
 
     private val _state = MutableLiveData<FiltersScreenState>()
@@ -68,7 +68,9 @@ class FiltersViewModel @Inject constructor(
     }
 
     fun refreshSearch() {
-        SearchViewModel.refresh_search = true
+        viewModelScope.launch(Dispatchers.IO) {
+            saveRefreshSearchFlagRepo.save(true)
+        }
     }
 
     fun updateSalary(salary: String) {
