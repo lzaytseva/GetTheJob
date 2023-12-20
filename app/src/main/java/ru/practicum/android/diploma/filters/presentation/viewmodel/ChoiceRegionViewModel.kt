@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.core.domain.api.GetDataByIdRepo
@@ -153,7 +152,6 @@ class ChoiceRegionViewModel @Inject constructor(
             _state.postValue(ChoiceRegionScreenState.Content(contentList))
         }
     }
-
 
     companion object {
         const val SEARCH_DELAY_IN_MILLIS = 2000L
