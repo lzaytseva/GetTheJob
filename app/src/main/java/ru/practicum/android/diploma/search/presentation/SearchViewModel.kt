@@ -169,8 +169,8 @@ class SearchViewModel @Inject constructor(
             || regionName != null
             || countryId != null
             || countryName != null
-            || salary != null
-            || salaryFlag != null && salaryFlag != false
+            || !salary.isNullOrBlank()
+            || salaryFlag ?: false
             || industryId != null
             || industryName != null
             || currency != null
