@@ -165,15 +165,15 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun Filters.filtersNotNull(): Boolean =
-        regionId != null ||
-        regionName != null ||
-        countryId != null ||
-        countryName != null ||
-        salary != null ||
-        salaryFlag != null && salaryFlag != false ||
-        industryId != null ||
-        industryName != null ||
-        currency != null
+        regionId != null
+            || regionName != null
+            || countryId != null
+            || countryName != null
+            || salary != null
+            || salaryFlag != null && salaryFlag != false
+            || industryId != null
+            || industryName != null
+            || currency != null
 
     companion object {
         private const val SEARCH_DELAY = 2000L
