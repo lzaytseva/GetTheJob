@@ -34,7 +34,8 @@ class SearchViewModel @Inject constructor(
     @Named(RepositoryModule.FILTERS_TEMP_GET_REPOSITORY)
     private val getFiltersTempRepo: GetDataRepo<Filters>,
     @Named(RepositoryModule.FILTERS_SAVE_REPOSITORY)
-    private val saveFiltersRepo: SaveDataRepo<Filters>
+    private val saveFiltersRepo: SaveDataRepo<Filters>,
+    private val getRefreshSearchFlagRepo: GetDataRepo<Boolean>
 ) : ViewModel() {
 
     private var pages = 0
@@ -117,11 +118,13 @@ class SearchViewModel @Inject constructor(
     }
 
     fun refreshSearch() {
-        if (refresh_search && screenState.value is Content) {
-            refresh_search = false
-            val tempText = lastSearchedText
-            lastSearchedText = ""
-            search(tempText)
+        viewModelScope.launch(Dispatchers.IO) {
+            val refreshSearch = getRefreshSearchFlagRepo.get().singleOrNull()
+            if (refreshSearch == true && screenState.value is Content) {
+                val tempText = lastSearchedText
+                lastSearchedText = ""
+                search(tempText)
+            }
         }
     }
 
@@ -177,6 +180,5 @@ class SearchViewModel @Inject constructor(
 
     companion object {
         private const val SEARCH_DELAY = 2000L
-        var refresh_search = false
     }
 }
