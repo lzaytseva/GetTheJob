@@ -54,6 +54,7 @@ class FiltersViewModel @Inject constructor(
     fun clearFilters() {
         viewModelScope.launch(Dispatchers.IO) {
             saveFiltersRepository.save(null)
+            currentFilters = null
         }
     }
 
