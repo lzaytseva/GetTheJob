@@ -28,7 +28,7 @@ class ChoiceIndustryViewModel @Inject constructor(
 
     private val searchDebounce: (String) -> Unit =
         debounce(SEARCH_DELAY_IN_MILLIS, viewModelScope, true) { searchText ->
-            searchRequest(searchText)
+            searchRequest(searchText.trim())
         }
     private var lastSearchedText: String? = null
 

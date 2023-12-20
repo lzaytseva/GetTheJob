@@ -64,7 +64,7 @@ class SearchViewModel @Inject constructor(
         lastSearchedText = text!!
 
         viewModelScope.launch {
-            searchRepository.search(text, currentPage)
+            searchRepository.search(text.trim(), currentPage)
                 .singleOrNull()
                 ?.processResult()
         }
@@ -163,15 +163,18 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun Filters.filtersNotNull(): Boolean =
-        regionId != null
-            || regionName != null
-            || countryId != null
-            || countryName != null
-            || salary != null
-            || salaryFlag != null && salaryFlag != false
-            || industryId != null
-            || industryName != null
-            || currency != null
+        when {
+            regionId != null -> true
+            regionName != null -> true
+            countryId != null -> true
+            countryName != null -> true
+            salary != null -> false
+            salaryFlag != null && salaryFlag != false -> true
+            industryId != null -> true
+            industryName != null -> true
+            currency != null -> true
+            else -> false
+        }
 
     companion object {
         private const val SEARCH_DELAY = 2000L

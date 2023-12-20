@@ -45,15 +45,24 @@ class ChoiceRegionViewModel @Inject constructor(
         _state.postValue(ChoiceRegionScreenState.Loading)
         viewModelScope.launch(Dispatchers.IO) {
             getFiltersRepository.get().collect { filters ->
-                if (filters == null) {
-                    searchAllRegions()
-                } else {
-                    when {
-                        filters.countryId != null -> searchRegionsById(filters.countryId)
-                        filters.regionId != null -> searchRegionsById(filters.regionId)
-                        else -> searchAllRegions()
-                    }
+                when {
+                    filters == null -> searchRegions(null)
+                    filters.countryId != null -> searchRegions(filters.countryId)
+                    filters.regionId != null -> searchRegions(filters.regionId)
+                    else -> searchRegions(null)
                 }
+            }
+        }
+    }
+
+    private suspend fun searchRegions(id: String?) {
+        if (id == null) {
+            allRegionsRepo.get().collect { resource ->
+                handleResource(resource)
+            }
+        } else {
+            regionsByIdRepo.getById(id).collect { resource ->
+                handleResource(resource)
             }
         }
     }
@@ -62,35 +71,23 @@ class ChoiceRegionViewModel @Inject constructor(
         _state.postValue(ChoiceRegionScreenState.Content(regions))
     }
 
-    private suspend fun searchAllRegions() {
-        allRegionsRepo.get().collect { resource ->
-            handleResource(resource)
-        }
-    }
-
-    private suspend fun searchRegionsById(id: String) {
-        regionsByIdRepo.getById(id).collect { resource ->
-            handleResource(resource)
-        }
-    }
-
     private fun handleResource(resource: Resource<List<Country>>?) {
-        when (resource) {
-            is Resource.Success -> {
-                if (resource.data.isNullOrEmpty()) {
-                    _state.postValue(ChoiceRegionScreenState.Error)
-                } else {
-                    countries.clear()
-                    regions.clear()
-                    resource.data.forEach {
-                        if (it.parentId == null) {
-                            countries.add(it)
-                        } else {
-                            regions.add(it)
-                        }
+        when {
+            resource is Resource.Success && resource.data.isNullOrEmpty() -> {
+                _state.postValue(ChoiceRegionScreenState.Error)
+            }
+
+            resource is Resource.Success -> {
+                countries.clear()
+                regions.clear()
+                resource.data!!.forEach {
+                    if (it.parentId == null) {
+                        countries.add(it)
+                    } else {
+                        regions.add(it)
                     }
-                    _state.postValue(ChoiceRegionScreenState.Content(regions = regions))
                 }
+                _state.postValue(ChoiceRegionScreenState.Content(regions = regions))
             }
 
             else -> {
