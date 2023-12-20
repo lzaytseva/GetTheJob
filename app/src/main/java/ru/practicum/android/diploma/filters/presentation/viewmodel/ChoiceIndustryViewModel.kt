@@ -108,6 +108,11 @@ class ChoiceIndustryViewModel @Inject constructor(
         }
     }
 
+    fun cancelSearch() {
+        searchDebounce(EMPTY_STRING)
+        lastSearchedText = EMPTY_STRING
+    }
+
     private fun searchRequest(searchText: String) {
         if (searchText.isEmpty()) {
             getIndustries()
@@ -130,6 +135,7 @@ class ChoiceIndustryViewModel @Inject constructor(
                 )
             )
         }
+
     }
 
     fun updateIndustrySelected(industry: Industry, position: Int, currentList: List<Industry>? = null) {
@@ -184,5 +190,6 @@ class ChoiceIndustryViewModel @Inject constructor(
 
     companion object {
         private const val SEARCH_DELAY_IN_MILLIS = 2000L
+        private const val EMPTY_STRING = ""
     }
 }
