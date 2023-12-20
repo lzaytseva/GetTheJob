@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.core.domain.api.GetDataByIdRepo
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
@@ -136,6 +138,11 @@ class ChoiceRegionViewModel @Inject constructor(
         }
     }
 
+    fun cancelSearch() {
+        viewModelScope.coroutineContext.cancelChildren()
+        getRegions()
+    }
+
     private fun searchRequest(text: String) {
         val contentList = regions.filter { item ->
             item.name.lowercase().contains(text.lowercase().trim())
@@ -146,6 +153,7 @@ class ChoiceRegionViewModel @Inject constructor(
             _state.postValue(ChoiceRegionScreenState.Content(contentList))
         }
     }
+
 
     companion object {
         const val SEARCH_DELAY_IN_MILLIS = 2000L
