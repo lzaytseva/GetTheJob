@@ -5,6 +5,7 @@ import ru.practicum.android.diploma.search.domain.model.Vacancy
 
 sealed class SearchScreenState {
 
+    data object NotStarted : SearchScreenState()
     data object Loading : SearchScreenState()
     data class Error(val error: ErrorType) : SearchScreenState()
     data class Content(val content: List<Vacancy>, val found: Int) : SearchScreenState()
