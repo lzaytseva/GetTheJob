@@ -64,6 +64,7 @@ class FiltersViewModel @Inject constructor(
                 salaryFlag = isChecked
             )
             saveFiltersRepository.save(updatedFilters)
+            currentFilters = updatedFilters
         }
     }
 
@@ -77,6 +78,7 @@ class FiltersViewModel @Inject constructor(
         viewModelScope.launch {
             val updatedFilters = currentFilters?.copy(salary = salary) ?: Filters(salary = salary)
             saveFiltersRepository.save(updatedFilters)
+            currentFilters = updatedFilters
         }
     }
 }
