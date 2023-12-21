@@ -76,7 +76,8 @@ class FiltersViewModel @Inject constructor(
 
     fun updateSalary(salary: String) {
         viewModelScope.launch {
-            val updatedFilters = currentFilters?.copy(salary = salary) ?: Filters(salary = salary)
+            val updatedFilters = if (salary.isBlank()) currentFilters?.copy(salary = null)
+            else currentFilters?.copy(salary = salary) ?: Filters(salary = salary)
             saveFiltersRepository.save(updatedFilters)
             currentFilters = updatedFilters
         }
