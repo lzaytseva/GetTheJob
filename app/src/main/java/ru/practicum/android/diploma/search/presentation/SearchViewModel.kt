@@ -120,7 +120,7 @@ class SearchViewModel @Inject constructor(
     fun refreshSearch() {
         viewModelScope.launch(Dispatchers.IO) {
             val refreshSearch = getRefreshSearchFlagRepo.get().singleOrNull()
-            if (refreshSearch == true && screenState.value is Content) {
+            if (refreshSearch == true && lastSearchedText.isNotBlank()) {
                 val tempText = lastSearchedText
                 lastSearchedText = ""
                 search(tempText)
