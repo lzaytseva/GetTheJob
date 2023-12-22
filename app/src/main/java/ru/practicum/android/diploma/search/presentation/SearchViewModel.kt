@@ -48,6 +48,7 @@ class SearchViewModel @Inject constructor(
     private var lastSearchedText = ""
 
     private val _screenState: MutableLiveData<SearchScreenState> = MutableLiveData(SearchScreenState.Empty)
+
     val screenState: LiveData<SearchScreenState>
         get() = _screenState
 
@@ -102,6 +103,7 @@ class SearchViewModel @Inject constructor(
     }
 
     fun clearSearch() {
+        _screenState.value = SearchScreenState.NotStarted
         vacancies.clear()
         lastSearchedText = ""
         viewModelScope.launch(Dispatchers.IO) {
