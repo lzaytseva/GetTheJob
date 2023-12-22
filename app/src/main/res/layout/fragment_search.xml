@@ -105,16 +105,18 @@
     <!-- Сообщение об ошибке -->
     <TextView
         android:id="@+id/on_error_text_view"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/message_margin_32"
         android:layout_marginTop="@dimen/search_medium_padding"
+        android:textAlignment="center"
         android:textAppearance="@style/medium_text_style"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_image_view"
-        tools:text="@string/error_no_internet" />
+        tools:text="Some long text for commenting placeholder on a search screen" />
 
     <ProgressBar
         android:id="@+id/progress_bar"

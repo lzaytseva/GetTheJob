@@ -88,6 +88,7 @@ class RootActivity : AppCompatActivity() {
         val localeList = LocaleListCompat.forLanguageTags("ru")
         AppCompatDelegate.setApplicationLocales(localeList)
     }
+
 }
 
 

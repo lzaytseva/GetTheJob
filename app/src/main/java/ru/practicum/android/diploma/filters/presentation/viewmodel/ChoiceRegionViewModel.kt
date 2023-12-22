@@ -68,7 +68,9 @@ class ChoiceRegionViewModel @Inject constructor(
     }
 
     fun getRegions() {
-        _state.postValue(ChoiceRegionScreenState.Content(regions))
+        if (regions.isNotEmpty()) {
+            _state.postValue(ChoiceRegionScreenState.Content(regions))
+        }
     }
 
     private fun handleResource(resource: Resource<List<Country>>?) {
@@ -136,18 +138,26 @@ class ChoiceRegionViewModel @Inject constructor(
         }
     }
 
+    fun cancelSearch() {
+        searchDebounce(EMPTY_STRING)
+        getRegions()
+    }
+
     private fun searchRequest(text: String) {
-        val contentList = regions.filter { item ->
-            item.name.lowercase().contains(text.lowercase().trim())
-        }
-        if (contentList.isEmpty()) {
-            _state.postValue(ChoiceRegionScreenState.Empty)
-        } else {
-            _state.postValue(ChoiceRegionScreenState.Content(contentList))
+        if (text.isNotBlank()) {
+            val contentList = regions.filter { item ->
+                item.name.lowercase().contains(text.lowercase().trim())
+            }
+            if (contentList.isEmpty()) {
+                _state.postValue(ChoiceRegionScreenState.Empty)
+            } else {
+                _state.postValue(ChoiceRegionScreenState.Content(contentList))
+            }
         }
     }
 
     companion object {
         const val SEARCH_DELAY_IN_MILLIS = 2000L
+        private const val EMPTY_STRING = ""
     }
 }
