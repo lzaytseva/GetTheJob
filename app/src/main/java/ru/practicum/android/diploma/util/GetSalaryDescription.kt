@@ -12,21 +12,21 @@ fun getSalaryDescription(resources: Resources, salaryFrom: Int?, salaryTo: Int?,
                 R.string.vacancy_salary_from_to,
                 formatSalary(salaryFrom),
                 formatSalary(salaryTo),
-                salaryCurrency
+                salaryCurrency?.let { getCurrencySymbol(it) }
             )
 
         salaryFrom != null && salaryTo == null ->
             resources.getString(
                 R.string.vacancy_salary_from,
                 formatSalary(salaryFrom),
-                salaryCurrency
+                salaryCurrency?.let { getCurrencySymbol(it) }
             )
 
         salaryFrom == null && salaryTo != null ->
             resources.getString(
                 R.string.vacancy_salary_to,
                 formatSalary(salaryTo),
-                salaryCurrency
+                salaryCurrency?.let { getCurrencySymbol(it) }
             )
 
         else -> resources.getString(R.string.vacancy_salary_not_specified)
