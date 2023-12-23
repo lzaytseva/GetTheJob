@@ -7,7 +7,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ru.practicum.android.diploma.core.data.network.NetworkClient
-import ru.practicum.android.diploma.core.data.room.AppDatabase
 import ru.practicum.android.diploma.core.data.room.dao.VacancyDao
 import ru.practicum.android.diploma.core.data.sharedprefs.FiltersRepository
 import ru.practicum.android.diploma.core.data.sharedprefs.FiltersTempRepository
@@ -20,7 +19,6 @@ import ru.practicum.android.diploma.core.domain.api.SearchRepo
 import ru.practicum.android.diploma.core.domain.models.Filters
 import ru.practicum.android.diploma.core.domain.models.VacancyDetails
 import ru.practicum.android.diploma.favorites.data.FavoritesVacancyListRepositoryImpl
-import ru.practicum.android.diploma.favorites.domain.api.FavoritesVacancyListRepository
 import ru.practicum.android.diploma.filters.data.repository.CountriesRepositoryImpl
 import ru.practicum.android.diploma.filters.data.repository.IndustriesRepositoryImpl
 import ru.practicum.android.diploma.filters.data.repository.RegionsRepositoryImpl
@@ -79,8 +77,8 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideFavoritesVacancyListRepository(appDatabase: AppDatabase): FavoritesVacancyListRepository {
-        return FavoritesVacancyListRepositoryImpl(appDatabase)
+    fun provideFavoritesVacancyListRepository(vacancyDao: VacancyDao): GetDataRepo<List<Vacancy>> {
+        return FavoritesVacancyListRepositoryImpl(vacancyDao)
     }
 
     @Provides
