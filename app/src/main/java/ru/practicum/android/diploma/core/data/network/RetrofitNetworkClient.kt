@@ -1,10 +1,8 @@
 package ru.practicum.android.diploma.core.data.network
 
 import android.content.Context
-import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.HttpException
 import ru.practicum.android.diploma.core.data.dto.requests.SimilarVacanciesSearchRequest
 import ru.practicum.android.diploma.core.data.dto.requests.VacanciesSearchRequest
 import ru.practicum.android.diploma.core.data.dto.requests.VacancyDetailsSearchRequest
@@ -50,8 +48,7 @@ class RetrofitNetworkClient(
             } else {
                 Response().apply { resultCode = CODE_SERVER_ERROR }
             }
-        } catch (e: HttpException) {
-            Log.e(TAG, e.toString())
+        } catch (_: Exception) {
             Response().apply { resultCode = CODE_SERVER_ERROR }
         }
     }
@@ -78,8 +75,7 @@ class RetrofitNetworkClient(
             } else {
                 Response().apply { resultCode = CODE_SERVER_ERROR }
             }
-        } catch (e: HttpException) {
-            Log.e(TAG, e.toString())
+        } catch (_: Exception) {
             Response().apply { resultCode = CODE_SERVER_ERROR }
         }
     }
@@ -92,8 +88,7 @@ class RetrofitNetworkClient(
             } else {
                 Response().apply { resultCode = CODE_SERVER_ERROR }
             }
-        } catch (e: HttpException) {
-            Log.e(TAG, e.toString())
+        } catch (_: Exception) {
             Response().apply { resultCode = CODE_SERVER_ERROR }
         }
     }
@@ -106,8 +101,7 @@ class RetrofitNetworkClient(
             } else {
                 Response().apply { resultCode = CODE_SERVER_ERROR }
             }
-        } catch (e: HttpException) {
-            Log.e(TAG, e.toString())
+        } catch (_: Exception) {
             Response().apply { resultCode = CODE_SERVER_ERROR }
         }
     }
@@ -124,8 +118,7 @@ class RetrofitNetworkClient(
 
                 else -> Response().apply { resultCode = CODE_SERVER_ERROR }
             }
-        } catch (e: HttpException) {
-            Log.e(TAG, e.toString())
+        } catch (_: Exception) {
             Response().apply { resultCode = CODE_SERVER_ERROR }
         }
     }
@@ -135,6 +128,5 @@ class RetrofitNetworkClient(
         const val CODE_SUCCESS = 200
         const val CODE_WRONG_REQUEST = 400
         const val CODE_SERVER_ERROR = 500
-        private const val TAG = "RetrofitNetworkClient"
     }
 }
