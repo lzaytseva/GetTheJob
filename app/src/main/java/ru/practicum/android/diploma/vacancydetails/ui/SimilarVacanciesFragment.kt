@@ -52,6 +52,11 @@ class SimilarVacanciesFragment : BindingFragment<FragmentSimilarVacanciesBinding
         configureToolbar()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        adapter = null
+    }
+
     private fun showContent(vacancies: List<Vacancy>) {
         binding.progressBar.visibility = View.GONE
         binding.errorImage.visibility = View.GONE
