@@ -60,20 +60,22 @@
         android:layout_width="@dimen/zero"
         android:layout_height="@dimen/zero"
         android:layout_marginTop="@dimen/search_small_padding"
+        android:clipToPadding="false"
         android:orientation="vertical"
+        android:paddingTop="@dimen/message_margin_32"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/progress_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/result_message_text_view" />
+        app:layout_constraintTop_toBottomOf="@id/search_field" />
 
     <!-- Сообщение о результате -->
     <TextView
         android:id="@+id/result_message_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/search_small_padding"
+        android:layout_marginTop="@dimen/message_margin_12"
         android:background="@drawable/btn_bg"
         android:ellipsize="end"
         android:maxLength="40"
