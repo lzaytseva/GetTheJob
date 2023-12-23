@@ -27,6 +27,7 @@
     <dimen name="search_tiny_padding">4dp</dimen>
     <dimen name="zero">0dp</dimen>
     <dimen name="message_margin_32">32dp</dimen>
+    <dimen name="message_margin_12">12dp</dimen>
 
     <!-- Отступы на vacancyCard -->
     <dimen name="vacancy_card_horizontal_padding">@dimen/vacancy_screen_horizontal_margin</dimen>
