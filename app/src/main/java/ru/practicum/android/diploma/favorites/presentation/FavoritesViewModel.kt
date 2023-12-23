@@ -9,13 +9,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.core.domain.api.DeleteDataRepo
-import ru.practicum.android.diploma.favorites.domain.api.FavoritesVacancyListRepository
+import ru.practicum.android.diploma.core.domain.api.GetDataRepo
+import ru.practicum.android.diploma.search.domain.model.Vacancy
 import java.sql.SQLException
 import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
-    private val favoritesVacancyListRepository: FavoritesVacancyListRepository,
+    private val favoritesVacancyListRepository: GetDataRepo<List<Vacancy>>,
     private val deleteVacancyRepository: DeleteDataRepo<String>,
 ) : ViewModel() {
 
@@ -25,7 +26,7 @@ class FavoritesViewModel @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                favoritesVacancyListRepository.getFavoritesVacancyList().collect() { list ->
+                favoritesVacancyListRepository.get().collect { list ->
                     when {
                         list == null -> _screenState.postValue(FavoritesState.DbError)
                         list.isEmpty() -> _screenState.postValue(FavoritesState.Empty)
