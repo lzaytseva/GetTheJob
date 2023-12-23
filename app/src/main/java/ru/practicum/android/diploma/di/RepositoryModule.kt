@@ -17,7 +17,7 @@ import ru.practicum.android.diploma.core.domain.api.GetDataRepo
 import ru.practicum.android.diploma.core.domain.api.SaveDataRepo
 import ru.practicum.android.diploma.core.domain.api.SearchRepo
 import ru.practicum.android.diploma.core.domain.models.Filters
-import ru.practicum.android.diploma.core.domain.models.VacancyDetails
+import ru.practicum.android.diploma.vacancydetails.domain.model.VacancyDetails
 import ru.practicum.android.diploma.favorites.data.FavoritesVacancyListRepositoryImpl
 import ru.practicum.android.diploma.filters.data.repository.CountriesRepositoryImpl
 import ru.practicum.android.diploma.filters.data.repository.IndustriesRepositoryImpl

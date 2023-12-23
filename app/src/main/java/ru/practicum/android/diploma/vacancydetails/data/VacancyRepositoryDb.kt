@@ -14,7 +14,7 @@ import ru.practicum.android.diploma.core.domain.api.DeleteDataRepo
 import ru.practicum.android.diploma.core.domain.api.GetDataByIdRepo
 import ru.practicum.android.diploma.core.domain.api.SaveDataRepo
 import ru.practicum.android.diploma.core.domain.models.ErrorType
-import ru.practicum.android.diploma.core.domain.models.VacancyDetails
+import ru.practicum.android.diploma.vacancydetails.domain.model.VacancyDetails
 import ru.practicum.android.diploma.util.Resource
 
 class VacancyRepositoryDb(

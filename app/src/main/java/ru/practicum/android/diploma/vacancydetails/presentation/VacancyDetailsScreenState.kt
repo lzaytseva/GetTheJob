@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.vacancydetails.presentation
 
 import ru.practicum.android.diploma.core.domain.models.ErrorType
-import ru.practicum.android.diploma.core.domain.models.VacancyDetails
+import ru.practicum.android.diploma.vacancydetails.domain.model.VacancyDetails
 
 sealed interface VacancyDetailsScreenState {
     data class Error(val error: ErrorType?) : VacancyDetailsScreenState

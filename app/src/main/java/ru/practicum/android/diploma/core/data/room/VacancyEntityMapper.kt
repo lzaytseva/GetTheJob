@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.core.data.room
 
 import ru.practicum.android.diploma.core.data.room.entity.VacancyEntity
-import ru.practicum.android.diploma.core.domain.models.VacancyDetails
+import ru.practicum.android.diploma.vacancydetails.domain.model.VacancyDetails
 import java.util.stream.Collectors
 
 object VacancyEntityMapper {
