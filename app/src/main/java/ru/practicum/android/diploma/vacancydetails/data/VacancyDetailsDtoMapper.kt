@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.vacancydetails.data
 
 import ru.practicum.android.diploma.core.data.dto.VacancyDetailsDto
-import ru.practicum.android.diploma.core.domain.models.VacancyDetails
+import ru.practicum.android.diploma.vacancydetails.domain.model.VacancyDetails
 
 object VacancyDetailsDtoMapper {
 

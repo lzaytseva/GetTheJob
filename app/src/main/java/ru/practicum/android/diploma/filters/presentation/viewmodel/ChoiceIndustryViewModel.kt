@@ -6,20 +6,25 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import ru.practicum.android.diploma.core.data.sharedprefs.FiltersTempRepository
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
+import ru.practicum.android.diploma.core.domain.api.SaveDataRepo
 import ru.practicum.android.diploma.core.domain.models.ErrorType
 import ru.practicum.android.diploma.core.domain.models.Filters
+import ru.practicum.android.diploma.di.RepositoryModule
 import ru.practicum.android.diploma.filters.domain.model.Industry
 import ru.practicum.android.diploma.filters.presentation.state.IndustryScreenState
 import ru.practicum.android.diploma.util.Resource
 import ru.practicum.android.diploma.util.debounce
 import javax.inject.Inject
+import javax.inject.Named
 
 @HiltViewModel
 class ChoiceIndustryViewModel @Inject constructor(
     private val industryRepository: GetDataRepo<Resource<List<Industry>>>,
-    private val filtersRepository: FiltersTempRepository
+    @Named(RepositoryModule.FILTERS_TEMP_GET_REPOSITORY)
+    private val getFiltersTempRepo: GetDataRepo<Filters>,
+    @Named(RepositoryModule.FILTERS_TEMP_SAVE_REPOSITORY)
+    private val saveFiltersTempRepo: SaveDataRepo<Filters>
 ) : ViewModel() {
 
     private val originalList = mutableListOf<Industry>()
@@ -95,7 +100,7 @@ class ChoiceIndustryViewModel @Inject constructor(
 
     private fun loadFiltersSettings() {
         viewModelScope.launch {
-            filtersRepository.get().collect {
+            getFiltersTempRepo.get().collect {
                 currentFilters = it
             }
         }
@@ -106,6 +111,11 @@ class ChoiceIndustryViewModel @Inject constructor(
             searchDebounce(searchText)
             lastSearchedText = searchText
         }
+    }
+
+    fun cancelSearch() {
+        searchDebounce(EMPTY_STRING)
+        lastSearchedText = EMPTY_STRING
     }
 
     private fun searchRequest(searchText: String) {
@@ -130,6 +140,7 @@ class ChoiceIndustryViewModel @Inject constructor(
                 )
             )
         }
+
     }
 
     fun updateIndustrySelected(industry: Industry, position: Int, currentList: List<Industry>? = null) {
@@ -178,11 +189,12 @@ class ChoiceIndustryViewModel @Inject constructor(
                     industryId = lastSelectedIndustry?.id,
                     industryName = lastSelectedIndustry?.name
                 )
-            filtersRepository.save(updatedFilters)
+            saveFiltersTempRepo.save(updatedFilters)
         }
     }
 
     companion object {
         private const val SEARCH_DELAY_IN_MILLIS = 2000L
+        private const val EMPTY_STRING = ""
     }
 }

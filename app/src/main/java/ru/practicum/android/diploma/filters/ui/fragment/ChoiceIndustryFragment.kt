@@ -171,6 +171,7 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_clear)
         binding.tilSearchIndustry.setEndIconOnClickListener {
             binding.etSearchIndustry.text?.clear()
+            viewModel.cancelSearch()
             hideKeyboard()
         }
     }
@@ -187,14 +188,13 @@ class ChoiceIndustryFragment : BindingFragment<FragmentChoiceIndustryBinding>() 
     }
 
     private fun setEditorActionListener() {
-        binding.etSearchIndustry.setOnEditorActionListener { v, actionId, event ->
+        binding.etSearchIndustry.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val text = binding.etSearchIndustry.text
                 if (text != null) {
                     search(text.toString())
                 }
                 binding.etSearchIndustry.clearFocus()
-                true
             }
             false
         }

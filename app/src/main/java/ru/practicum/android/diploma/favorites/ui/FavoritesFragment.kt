@@ -53,7 +53,6 @@ class FavoritesFragment : BindingFragment<FragmentFavoritesBinding>() {
     }
 
     override fun onDestroyView() {
-        binding.rvVacancies.adapter = null
         super.onDestroyView()
         vacanciesAdapter = null
     }

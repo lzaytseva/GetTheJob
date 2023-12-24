@@ -29,12 +29,12 @@
             android:background="@android:color/transparent"
             android:ellipsize="end"
             android:hint="@string/et_search_hint"
+            android:inputType="text"
             android:maxLength="40"
             android:maxLines="1"
-            android:inputType="text"
             android:textAppearance="@style/et_text_style"
-            android:textColorHint="@color/et_hint_text_color"
             android:textColor="@color/basic_text_color"
+            android:textColorHint="@color/et_hint_text_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/search_field_image_view"
             app:layout_constraintStart_toStartOf="parent"
@@ -60,20 +60,22 @@
         android:layout_width="@dimen/zero"
         android:layout_height="@dimen/zero"
         android:layout_marginTop="@dimen/search_small_padding"
+        android:clipToPadding="false"
         android:orientation="vertical"
+        android:paddingTop="@dimen/message_margin_32"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/progress_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/result_message_text_view" />
+        app:layout_constraintTop_toBottomOf="@id/search_field" />
 
     <!-- Сообщение о результате -->
     <TextView
         android:id="@+id/result_message_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/search_small_padding"
+        android:layout_marginTop="@dimen/message_margin_12"
         android:background="@drawable/btn_bg"
         android:ellipsize="end"
         android:maxLength="40"
@@ -105,23 +107,25 @@
     <!-- Сообщение об ошибке -->
     <TextView
         android:id="@+id/on_error_text_view"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/message_margin_32"
         android:layout_marginTop="@dimen/search_medium_padding"
+        android:textAlignment="center"
         android:textAppearance="@style/medium_text_style"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_image_view"
-        tools:text="@string/error_no_internet" />
+        tools:text="Some long text for commenting placeholder on a search screen" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminateTint="@color/blue"
         android:layout_marginVertical="@dimen/elements_margin_24dp"
+        android:indeterminateTint="@color/blue"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

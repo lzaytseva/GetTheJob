@@ -13,7 +13,7 @@ import ru.practicum.android.diploma.core.domain.api.ExternalNavigator
 import ru.practicum.android.diploma.core.domain.api.GetDataByIdRepo
 import ru.practicum.android.diploma.core.domain.api.SaveDataRepo
 import ru.practicum.android.diploma.core.domain.models.EmailData
-import ru.practicum.android.diploma.core.domain.models.VacancyDetails
+import ru.practicum.android.diploma.vacancydetails.domain.model.VacancyDetails
 import ru.practicum.android.diploma.util.Resource
 import javax.inject.Inject
 

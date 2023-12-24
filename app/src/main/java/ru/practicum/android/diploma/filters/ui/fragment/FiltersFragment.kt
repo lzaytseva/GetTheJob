@@ -86,6 +86,8 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
             clearFields()
             setButtonsVisibility(isVisible = false)
             viewModel.clearFilters()
+            // Выполнить поиск с пустыми фильтрами
+            viewModel.refreshSearch()
         }
     }
 

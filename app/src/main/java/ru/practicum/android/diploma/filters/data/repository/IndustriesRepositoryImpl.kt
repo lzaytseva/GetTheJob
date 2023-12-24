@@ -11,9 +11,8 @@ import ru.practicum.android.diploma.filters.data.dto.IndustriesResponse
 import ru.practicum.android.diploma.filters.data.mapper.IndustryMapper
 import ru.practicum.android.diploma.filters.domain.model.Industry
 import ru.practicum.android.diploma.util.Resource
-import javax.inject.Inject
 
-class IndustriesRepositoryImpl @Inject constructor(
+class IndustriesRepositoryImpl(
     private val networkClient: NetworkClient
 ) : GetDataRepo<Resource<List<Industry>>> {
     override fun get(): Flow<Resource<List<Industry>>?> = flow {

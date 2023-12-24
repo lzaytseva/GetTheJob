@@ -14,9 +14,8 @@ import ru.practicum.android.diploma.filters.data.dto.CountryByIdResponse
 import ru.practicum.android.diploma.filters.data.mapper.AreaMapper
 import ru.practicum.android.diploma.filters.domain.model.Country
 import ru.practicum.android.diploma.util.Resource
-import javax.inject.Inject
 
-class RegionsRepositoryImpl @Inject constructor(
+class RegionsRepositoryImpl(
     private val networkClient: NetworkClient
 ) : GetDataByIdRepo<Resource<List<Country>>>, GetDataRepo<Resource<List<Country>>> {
     override fun getById(id: String): Flow<Resource<List<Country>>?> = flow {

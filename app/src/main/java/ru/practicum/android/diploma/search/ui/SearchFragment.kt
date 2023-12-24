@@ -71,6 +71,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
     private fun setObserver() {
         viewModel.screenState.observe(viewLifecycleOwner) { screenState ->
             when (screenState) {
+                is SearchScreenState.Empty -> showSearchNotStarted()
                 is SearchScreenState.Loading -> hideContent(progressBarFlag = false)
                 is SearchScreenState.Error -> onError(screenState.error)
                 is SearchScreenState.Content -> onContent(screenState.content, screenState.found)
@@ -124,7 +125,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
             binding.searchEditText.setText("")
             inputMethodManager?.hideSoftInputFromWindow(binding.searchEditText.windowToken, 0)
             viewModel.clearSearch()
-            showSearchNotStarted()
+            viewModel.clearState()
         }
     }
 

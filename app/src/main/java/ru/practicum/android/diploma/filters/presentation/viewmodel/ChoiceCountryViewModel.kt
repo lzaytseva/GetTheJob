@@ -1,12 +1,10 @@
 package ru.practicum.android.diploma.filters.presentation.viewmodel
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.core.domain.api.GetDataRepo
 import ru.practicum.android.diploma.core.domain.api.SaveDataRepo
@@ -26,8 +24,7 @@ class ChoiceCountryViewModel @Inject constructor(
     @Named(RepositoryModule.FILTERS_TEMP_GET_REPOSITORY)
     private val getFiltersRepository: GetDataRepo<Filters>,
     @Named(RepositoryModule.FILTERS_TEMP_SAVE_REPOSITORY)
-    private val saveFiltersRepository: SaveDataRepo<Filters>,
-    @ApplicationContext private val context: Context
+    private val saveFiltersRepository: SaveDataRepo<Filters>
 ) : ViewModel() {
 
     private val _screenState = MutableLiveData<ChoiceCountryScreenState>()
@@ -74,9 +71,4 @@ class ChoiceCountryViewModel @Inject constructor(
             }
         }
     }
-
-    companion object {
-        private const val FILTER_DELAY_IN_MILLIS = 2000L
-    }
-
 }
