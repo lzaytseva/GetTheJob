@@ -113,10 +113,10 @@ class ChoiceRegionFragment : BindingFragment<FragmentChoiceRegionBinding>() {
             if (!text.isNullOrBlank()) {
                 search(text.toString())
                 setEndIconClear()
-
             } else {
                 setEndIconSearch()
                 viewModel.getRegions()
+                viewModel.cancelSearch()
             }
         }
     }
