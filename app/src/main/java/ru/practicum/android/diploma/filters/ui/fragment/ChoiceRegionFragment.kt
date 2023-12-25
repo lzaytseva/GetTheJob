@@ -131,7 +131,6 @@ class ChoiceRegionFragment : BindingFragment<FragmentChoiceRegionBinding>() {
         binding.tilSearchRegion.setEndIconOnClickListener {
             binding.etSearchRegion.text?.clear()
             hideKeyboard()
-            viewModel.cancelSearch()
         }
     }
 
