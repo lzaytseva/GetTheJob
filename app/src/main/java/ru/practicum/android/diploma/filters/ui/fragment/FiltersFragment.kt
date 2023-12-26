@@ -51,6 +51,7 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
     override fun onResume() {
         super.onResume()
         (requireActivity() as RootActivity).toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+        setFilterFieldsEndIcon()
     }
 
     private fun observeViewModel() {
@@ -185,6 +186,7 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
         textInputEditText.doOnTextChanged { _, _, _, _ ->
             setFilterEndIcon(textInputLayout, textInputEditText)
             setFilterHintColor(textInputLayout, textInputEditText)
+            updateButtonsVisibility()
         }
     }
 
@@ -211,17 +213,38 @@ class FiltersFragment : BindingFragment<FragmentFiltersBinding>() {
     }
 
     private fun setFilterEndIcon(textInputLayout: TextInputLayout, textInputEditText: TextInputEditText) {
+        val isTextFieldEmpty = textInputEditText.text.isNullOrBlank()
         textInputLayout.endIconDrawable = TextInputLayoutUtils.getEndIconDrawable(
             context = requireContext(),
-            iconResId = getEndIconId(isTextFieldEmpty = textInputEditText.text.isNullOrBlank())
+            iconResId = getEndIconId(isTextFieldEmpty = isTextFieldEmpty)
         )
+        if (!isTextFieldEmpty) {
+            textInputLayout.setEndIconOnClickListener {
+                textInputEditText.text?.clear()
+                if (textInputEditText.id == R.id.et_place) {
+                    viewModel.clearPlace()
+                }
+                if (textInputEditText.id == R.id.et_industry) {
+                    viewModel.clearIndustry()
+                }
+            }
+        } else {
+            textInputLayout.setEndIconOnClickListener {
+                if (textInputEditText.id == R.id.et_place) {
+                    findNavController().navigate(R.id.action_filtersFragment_to_choiceWorkplaceFragment2)
+                }
+                if (textInputEditText.id == R.id.et_industry) {
+                    findNavController().navigate(R.id.action_filtersFragment_to_choiceIndustryFragment)
+                }
+            }
+        }
     }
 
-    private fun getEndIconId(isTextFieldEmpty: Boolean): Int? {
+    private fun getEndIconId(isTextFieldEmpty: Boolean): Int {
         return if (isTextFieldEmpty) {
             R.drawable.ic_arrow_forward
         } else {
-            null
+            R.drawable.ic_clear
         }
     }
 

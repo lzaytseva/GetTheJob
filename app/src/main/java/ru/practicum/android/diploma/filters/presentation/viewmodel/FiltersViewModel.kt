@@ -85,4 +85,28 @@ class FiltersViewModel @Inject constructor(
             currentFilters = updatedFilters
         }
     }
+
+    fun clearPlace() {
+        viewModelScope.launch {
+            val updatedFilters = currentFilters?.copy(
+                countryId = null,
+                countryName = null,
+                regionId = null,
+                regionName = null
+            )
+            saveFiltersRepository.save(updatedFilters)
+            currentFilters = updatedFilters
+        }
+    }
+
+    fun clearIndustry() {
+        viewModelScope.launch {
+            val updatedFilters = currentFilters?.copy(
+                industryId = null,
+                industryName = null
+            )
+            saveFiltersRepository.save(updatedFilters)
+            currentFilters = updatedFilters
+        }
+    }
 }
