@@ -12,6 +12,8 @@
 - RecyclerView, DiffUtil
 - SharedPreferences
 - Clean Architecture (MVVM)
+- Github Actions
+- CI
 
 ## Функционал приложения
 - Поиск вакансий по названию
